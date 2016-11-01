@@ -6,6 +6,7 @@
  */
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Scheduler {
@@ -20,7 +21,7 @@ public class Scheduler {
 
         // Initializing program
         Schedule s = new Schedule();
-        test(s.getTable()); //////////////////////////////// for debugging
+        test(s.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
 
 
         // Main program
@@ -74,10 +75,19 @@ public class Scheduler {
         }
     }
 
-    private static void test(Timeslot[][] table) {
+    private static void test(Timeslot[][] table, ArrayList<Employee> allEmployees) {
+        for (int i = 0; i < allEmployees.size(); i++) {
+            System.out.println("Employee: " + allEmployees.get(i).getFullName());
+        }
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
                 System.out.println("Day " + i + " Hour " + j + " Demand " + table[i][j].getRequiredEmployees());
+
+                for (int k = 0; k < allEmployees.size(); k++) {
+                    if (allEmployees.get(k).getHoursAvailable()[i][j]) {
+                        System.out.println(allEmployees.get(k).getFullName() + " is available.");
+                    }
+                }
             }
         }
     }

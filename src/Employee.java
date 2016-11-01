@@ -7,8 +7,6 @@
 
 class Employee {
 
-    // I changed something
-
     // Setting up variables
     private String fullName;
     private String address;
@@ -45,8 +43,8 @@ class Employee {
         return hoursAvailable;
     }
 
-    public void setHoursAvailable(boolean[][] hoursAvailable) {
-        this.hoursAvailable = hoursAvailable;
+    public void setHoursAvailable(int day, int hour, boolean availability) {
+        this.hoursAvailable[day][hour] = availability;
     }
 
     public boolean[][] getHoursWorking() {

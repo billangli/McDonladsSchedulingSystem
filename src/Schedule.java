@@ -1,8 +1,6 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by RobbieZhuang on 2016-10-31.
@@ -17,7 +15,6 @@ public class Schedule {
 
     // Employees
     ArrayList<Employee> allEmployees = new ArrayList<Employee>();
-    ArrayList<Employee> allWorkers = new ArrayList<Employee>();
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
@@ -29,6 +26,7 @@ public class Schedule {
             }
         }
         readHours();
+        readEmployeeInfo();
     }
 
     private static int determineHour(String str) {
@@ -131,13 +129,86 @@ public class Schedule {
 
             }
         } catch (Exception e) {
-            System.out.println("*** Something wrong with the buffered reader");
+            System.out.println("*** Something wrong with the buffered reader in readHours");
         }
 
+    }
 
+    private void readEmployeeInfo() {
+
+        // Creating variables
+        String str;
+        String employeeType;
+
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/EmployeeInfo.txt")));
+            while ((str = br.readLine()) != null) {
+
+                Employee e;
+
+                // Read the file to find out what type of employee this person is
+                employeeType = str;
+                if (employeeType.equalsIgnoreCase("Manager")) {
+                    e = new Manager();
+                    readManager((Manager) e, br);
+                    allEmployees.add(e);
+                } else if (employeeType.equalsIgnoreCase("Worker")) {
+                    e = new Worker();
+                    readWorker((Worker) e, br);
+                    allEmployees.add(e);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("*** Something wrong with the buffered reader in readEmployeeIno");
+        }
+
+    }
+
+    private Manager readManager(Manager m, BufferedReader br) throws IOException {
+
+        // Reading some general information
+        m.setFullName(br.readLine());
+        m.setAddress(br.readLine());
+        m.setSalary(Integer.parseInt(br.readLine()));
+
+        // Reading the availability information
+        for (int i = 0; i < 7; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < 24; j++) {
+                if (st.nextToken().equals("1")) {
+                    m.setHoursAvailable(i, j, true);
+                }
+            }
+        }
+
+        return m;
+    }
+
+    private Worker readWorker(Worker w, BufferedReader br) throws IOException {
+
+        // Reading some general information
+        w.setFullName(br.readLine());
+        w.setAddress(br.readLine());
+        w.setWage(Integer.parseInt(br.readLine()));
+
+        // Reading the availability information
+        for (int i = 0; i < 7; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < 24; j++) {
+                if (st.nextToken().equals("1")) {
+                    w.setHoursAvailable(i, j, true);
+                }
+            }
+        }
+
+        return w;
     }
 
     public Timeslot[][] getTable() {
         return table;
+    }
+
+    public ArrayList<Employee> getAllEmployees() {
+        return allEmployees;
     }
 }
