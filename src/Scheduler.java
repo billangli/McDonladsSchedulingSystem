@@ -29,6 +29,7 @@ public class Scheduler {
 
             displayMenu();
             response = input.next();
+            userChoice(response);
 
         }
     }
@@ -75,6 +76,134 @@ public class Scheduler {
         }
     }
 
+    private static void addEditOrRemoveWorker() {
+
+        System.out.println("Enter 1 to add worker");
+        System.out.println("Enter 2 to edit worker");
+        System.out.println("Enter 3 to remove employee");
+
+        Scanner input = new Scanner(System.in);
+        int response = input.nextInt();
+
+        if (response == 1) {
+            addWorker();
+        } else if (response == 2) {
+//            editWorker();
+        } else if (response == 3) {
+//            removeWorker();
+        }
+    }
+
+    private static void addWorker() {
+
+        Scanner input = new Scanner(System.in);
+        String response;
+        boolean repeat = true;
+        Worker w = new Worker();
+
+        System.out.println("What is the worker's name?");
+        response = input.nextLine();
+        w.setFullName(response);
+        System.out.println("What is the worker's address?");
+        response = input.nextLine();
+        w.setAddress(response);
+        System.out.println("What is the worker's wage?");
+        response = input.next();
+        w.setWage(Integer.parseInt(response));
+
+        while (repeat) {
+
+            int day;
+            int inHour;
+            int outHour;
+
+            System.out.println("Enter day when available:");
+            response = input.next();
+            day = dayToNum(response);
+            System.out.println("Enter hour in when available:");
+            response = input.next();
+            inHour = Integer.parseInt(response);
+            System.out.println("Enter hour out when available:");
+            response = input.next();
+            outHour = Integer.parseInt(response);
+            for (int i = inHour; i < outHour; i++) {
+                w.setHoursAvailable(day, i, true);
+            }
+
+            System.out.println("Enter -1 to add another available time");
+            response = input.next();
+            if (!response.equals("-1")) {
+                repeat = false;
+            }
+        }
+    }
+
+    private static void addManager() {
+
+        Scanner input = new Scanner(System.in);
+        String response;
+        boolean repeat = true;
+        Manager m = new Manager();
+
+        System.out.println("What is the manager's name?");
+        response = input.nextLine();
+        m.setFullName(response);
+        System.out.println("What is the manager's address?");
+        response = input.nextLine();
+        m.setAddress(response);
+        System.out.println("What is the manager's salary?");
+        response = input.next();
+        m.setSalary(Integer.parseInt(response));
+
+        while (repeat) {
+
+            int day;
+            int inHour;
+            int outHour;
+
+            System.out.println("Enter day when available:");
+            response = input.next();
+            day = dayToNum(response);
+            System.out.println("Enter hour in when available:");
+            response = input.next();
+            inHour = Integer.parseInt(response);
+            System.out.println("Enter hour out when available:");
+            response = input.next();
+            outHour = Integer.parseInt(response);
+            for (int i = inHour; i < outHour; i++) {
+                m.setHoursAvailable(day, i, true);
+            }
+
+            System.out.println("Enter -1 to add another available time");
+            response = input.next();
+            if (!response.equals("-1")) {
+                repeat = false;
+            }
+        }
+    }
+
+
+    private static int dayToNum(String day) {
+        if (day.equalsIgnoreCase("M")) {
+            return 0;
+        } else if (day.equalsIgnoreCase("T")) {
+            return 1;
+        } else if (day.equalsIgnoreCase("W")) {
+            return 2;
+        } else if (day.equalsIgnoreCase("U")) {
+            return 3;
+        } else if (day.equalsIgnoreCase("F")) {
+            return 4;
+        } else if (day.equalsIgnoreCase("S")) {
+            return 5;
+        } else if (day.equalsIgnoreCase("U")) {
+            return 6;
+        } else {
+            System.out.println("*** Day is wrong");
+            return -1;
+        }
+    }
+
     private static void test(Timeslot[][] table, ArrayList<Employee> allEmployees) {
         for (int i = 0; i < allEmployees.size(); i++) {
             System.out.println("Employee: " + allEmployees.get(i).getFullName());
@@ -94,9 +223,12 @@ public class Scheduler {
 
     private static void manageWorker() {
 
+        addEditOrRemoveWorker();
+
     }
 
     private static void manageManager() {
+
 
     }
 
