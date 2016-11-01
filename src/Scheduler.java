@@ -5,10 +5,11 @@
  Created by Bill Li on 2016-10-30.
  */
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Scheduler {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         // Setting up variables
         Scanner input = new Scanner(System.in);
@@ -16,6 +17,11 @@ public class Scheduler {
 
         // Selecting options
         System.out.println("Welcome to the McDonlads Scheduling System\n");
+
+        // Initializing program
+        Schedule s = new Schedule();
+        test(s.getTable()); //////////////////////////////// for debugging
+
 
         // Main program
         while (!response.equals("6")) {
@@ -30,7 +36,7 @@ public class Scheduler {
      * This is the menu that the user sees
      */
     private static void displayMenu() {
-        System.out.println("Enter 1 to add/edit/remove worker");
+        System.out.println("\nEnter 1 to add/edit/remove worker");
         System.out.println("Enter 2 to add/edit/remove manager");
         System.out.println("Enter 3 to list all employees");
         System.out.println("Enter 4 to run scheduler");
@@ -65,6 +71,14 @@ public class Scheduler {
                 displaySchedule();
 
                 break;
+        }
+    }
+
+    private static void test(Timeslot[][] table) {
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                System.out.println("Day " + i + " Hour " + j + " Demand " + table[i][j].getRequiredEmployees());
+            }
         }
     }
 
