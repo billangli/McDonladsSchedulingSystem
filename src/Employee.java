@@ -62,4 +62,8 @@ class Employee {
     public void setTotalHours(int totalHours) {
         this.totalHours = totalHours;
     }
+
+    public void addHourOfWork() {
+        this.totalHours++;
+    }
 }
