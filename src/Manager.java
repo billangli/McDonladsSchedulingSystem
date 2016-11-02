@@ -11,6 +11,11 @@ public class Manager extends Employee{
     // Setting up variables
     private double salary;
 
+    // Default constructor for manager
+    Manager() {
+        this.setEmployeeType("Manager");
+    }
+
     public double getSalary() {
         return salary;
     }

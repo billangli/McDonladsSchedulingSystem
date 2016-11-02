@@ -11,6 +11,11 @@ public class Worker extends Employee{
     // Setting up variables
     private double wage;
 
+    // Default constructor for worker
+    Worker() {
+        this.setEmployeeType("Worker");
+    }
+
     public double getWage() {
         return wage;
     }

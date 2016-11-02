@@ -1,77 +1,33 @@
-M
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-T
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-W
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-R
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-F
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-S
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
-U
-09:00-10:00 1
-10:00-11:00 1
-11:00-12:00 1
-12:00-13:00 1
-13:00-14:00 1
-14:00-15:00 1
-15:00-16:00 1
-16:00-17:00 1
-17:00-18:00 1
-18:00-19:00 1
+Manager
+Donald Dump
+123 Rich Lane
+100000.0
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+Worker
+Drake Drake
+123 Bottom Ave
+5.0
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+truetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetruetrue
+Worker
+LeBron James
+Cleveland
+10.0
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsetruetruefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse
+falsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalsefalse

@@ -8,12 +8,21 @@
 class Employee {
 
     // Setting up variables
+    private String employeeType;
     private String fullName;
     private String address;
     private String employeeNumber;
     private boolean[][] hoursAvailable = new boolean[7][24];
     private boolean[][] hoursWorking = new boolean[7][24];
     private int totalHours = 0;
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
 
     public String getFullName() {
         return fullName;
