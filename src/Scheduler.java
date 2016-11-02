@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Scheduler {
+
+    // Creating static variables
+    private static Schedule s;
+
     public static void main(String[] args) throws FileNotFoundException {
 
         // Setting up variables
@@ -21,7 +25,7 @@ public class Scheduler {
         System.out.println("Welcome to the McDonlads Scheduling System\n");
 
         // Initializing program
-        Schedule s = new Schedule();
+        s = new Schedule();
         test(s.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
 
 
@@ -30,7 +34,7 @@ public class Scheduler {
 
             displayMenu();
             response = input.next();
-            userChoice(response, s.getAllEmployees());
+            userChoice(response);
 
         }
     }
@@ -47,21 +51,21 @@ public class Scheduler {
         System.out.println("Enter 6 to quit");
     }
 
-    private static void userChoice(String response, ArrayList<Employee> e) throws FileNotFoundException {
+    private static void userChoice(String response) throws FileNotFoundException {
         switch (response) {
             case "1":
                 // Add/edit/remove worker
-                manageWorker(e);
+                manageWorker();
 
                 break;
             case "2":
                 // Add/edit/remove manager
-                manageManager(e);
+                manageManager();
 
                 break;
             case "3":
                 // List all employees
-                listEmployees(e);
+                listEmployees();
 
                 break;
             case "4":
@@ -78,32 +82,31 @@ public class Scheduler {
     }
 
     /**
-     * @param e
      * @param employeeType is 0 if it is manager, 1 if it is worker
      */
-    private static void addEditOrRemoveEmployee(ArrayList<Employee> e, int employeeType) throws FileNotFoundException {
+    private static void addEditOrRemoveEmployee(int employeeType) throws FileNotFoundException {
 
         System.out.println("Enter 1 to add employee");
         System.out.println("Enter 2 to edit employee");
         System.out.println("Enter 3 to remove employee");
 
         Scanner input = new Scanner(System.in);
-       int response = input.nextInt();
+        int response = input.nextInt();
 
         if (response == 1) {
             if (employeeType == 0) {
-                addManager(e);
+                addManager();
             } else {
-                addWorker(e);
+                addWorker();
             }
         } else if (response == 2) {
-            editEmployee(e);
+            editEmployee();
         } else if (response == 3) {
-            removeEmployee(e);
+            removeEmployee();
         }
     }
 
-    private static void addWorker(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void addWorker() throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
         String response;
@@ -147,13 +150,13 @@ public class Scheduler {
         }
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
-        e.add(w);
+        getE().add(w);
 
         System.out.println("Updating employee file");
-        updateEmployeeFile(e);
+        updateEmployeeFile();
     }
 
-    private static void addManager(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void addManager() throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
         String response;
@@ -197,13 +200,13 @@ public class Scheduler {
         }
         // Add manager to all employees
         System.out.println("Adding manager to employees");
-        e.add(m);
+        getE().add(m);
 
         System.out.println("Updating employee file");
-        updateEmployeeFile(e);
+        updateEmployeeFile();
     }
 
-    private static void editEmployee(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void editEmployee() throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
         String response;
@@ -213,7 +216,7 @@ public class Scheduler {
         while (repeat) {
 
             // Displaying all the employees and letting the user choose which one to change
-            displayEmployees(e);
+            displayEmployees();
             System.out.println("Enter the employee # to select employee");
             employeeNumber = Integer.parseInt(input.next());
 
@@ -224,17 +227,17 @@ public class Scheduler {
             response = input.next();
 
             if (response.equals("1")) {
-                editName(e, employeeNumber);
+                editName(employeeNumber);
             } else if (response.equals("2")) {
-                editAddress(e, employeeNumber);
+                editAddress(employeeNumber);
             } else if (response.equals("3")) {
-                if (e.get(employeeNumber) instanceof Manager) {
-                    editSalary(e, employeeNumber);
+                if (getE().get(employeeNumber) instanceof Manager) {
+                    editSalary(employeeNumber);
                 } else {
-                    editWage(e, employeeNumber);
+                    editWage(employeeNumber);
                 }
             } else if (response.equals("4")) {
-                editAvailability(e, employeeNumber);
+                editAvailability(employeeNumber);
             }
 
             System.out.println("Enter -1 to edit something else");
@@ -245,42 +248,42 @@ public class Scheduler {
         }
 
         System.out.println("Updating employee file");
-        updateEmployeeFile(e);
+        updateEmployeeFile();
     }
 
-    private static void editName(ArrayList<Employee> e, int employeeNumber) {
+    private static void editName(int employeeNumber) {
         Scanner input = new Scanner(System.in);
         String response;
-        System.out.println("Enter the new name of " + e.get(employeeNumber).getFullName());
+        System.out.println("Enter the new name of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        e.get(employeeNumber).setFullName(response);
+        getE().get(employeeNumber).setFullName(response);
     }
 
-    private static void editAddress(ArrayList<Employee> e, int employeeNumber) {
+    private static void editAddress(int employeeNumber) {
         Scanner input = new Scanner(System.in);
         String response;
-        System.out.println("Enter the new address of " + e.get(employeeNumber).getFullName());
+        System.out.println("Enter the new address of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        e.get(employeeNumber).setAddress(response);
+        getE().get(employeeNumber).setAddress(response);
     }
 
-    private static void editSalary(ArrayList<Employee> e, int employeeNumber) {
+    private static void editSalary(int employeeNumber) {
         Scanner input = new Scanner(System.in);
         String response;
-        System.out.println("Enter the new salary of " + e.get(employeeNumber).getFullName());
+        System.out.println("Enter the new salary of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Manager) e.get(employeeNumber)).setSalary(Integer.parseInt(response));
+        ((Manager) getE().get(employeeNumber)).setSalary(Integer.parseInt(response));
     }
 
-    private static void editWage(ArrayList<Employee> e, int employeeNumber) {
+    private static void editWage(int employeeNumber) {
         Scanner input = new Scanner(System.in);
         String response;
-        System.out.println("Enter the new wage of " + e.get(employeeNumber).getFullName());
+        System.out.println("Enter the new wage of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Worker) e.get(employeeNumber)).setWage(Integer.parseInt(response));
+        ((Worker) getE().get(employeeNumber)).setWage(Integer.parseInt(response));
     }
 
-    private static void editAvailability(ArrayList<Employee> e, int employeeNumber) {
+    private static void editAvailability(int employeeNumber) {
 
         // Creating variables
         Scanner input = new Scanner(System.in);
@@ -291,7 +294,7 @@ public class Scheduler {
         boolean newAvailability;
 
         // Displaying the availability to user
-        displayAvailability(e.get(employeeNumber));
+        displayAvailability(getE().get(employeeNumber));
 
         // Selecting day and hours to change
         System.out.println("Enter the day to change");
@@ -307,15 +310,15 @@ public class Scheduler {
         response = input.next();
         newAvailability = response.equals("1");
         for (int i = inHour; i < outHour; i++) {
-            e.get(employeeNumber).setHoursAvailable(day, i, newAvailability);
+            getE().get(employeeNumber).setHoursAvailable(day, i, newAvailability);
         }
 
-        System.out.println("Enter the new salary of " + e.get(employeeNumber).getFullName());
+        System.out.println("Enter the new salary of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Manager) e.get(employeeNumber)).setSalary(Integer.parseInt(response));
+        ((Manager) getE().get(employeeNumber)).setSalary(Integer.parseInt(response));
     }
 
-    private static void removeEmployee(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void removeEmployee() throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
         String response;
@@ -323,11 +326,11 @@ public class Scheduler {
 
         while (repeat) {
 
-            displayEmployees(e);
+            displayEmployees();
             System.out.println("Enter employee # to remove employee");
             System.out.println("Enter any other number to not remove any employees");
             response = input.next();
-            e.remove(Integer.parseInt(response));
+            getE().remove(Integer.parseInt(response));
 
             System.out.println("Enter -1 to remove another employee");
             response = input.next();
@@ -337,12 +340,12 @@ public class Scheduler {
         }
 
         System.out.println("Updating employee file");
-        updateEmployeeFile(e);
+        updateEmployeeFile();
     }
 
-    private static void displayEmployees(ArrayList<Employee> e) {
-        for (int i = 0; i < e.size(); i++) {
-            System.out.println("Employee #" + i + ": " + e.get(i).getFullName());
+    private static void displayEmployees() {
+        for (int i = 0; i < getE().size(); i++) {
+            System.out.println("Employee #" + i + ": " + getE().get(i).getFullName());
         }
     }
 
@@ -381,19 +384,19 @@ public class Scheduler {
         }
     }
 
-    private static void sortEmployees(ArrayList<Employee> e) {
+    private static void sortEmployees() {
 
     }
 
-    private static void updateEmployeeFile(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void updateEmployeeFile() throws FileNotFoundException {
 
         // Making sure all employees are sorted before the output starts
-        sortEmployees(e);
+        sortEmployees();
 
 
         PrintWriter output = new PrintWriter("src/employeeInfo.txt");
 
-        for (Employee employee : e) {
+        for (Employee employee : getE()) {
             output.println(employee.getEmployeeType());
             output.println(employee.getFullName());
             output.println(employee.getAddress());
@@ -433,22 +436,22 @@ public class Scheduler {
         }
     }
 
-    private static void manageWorker(ArrayList<Employee> e) throws FileNotFoundException {
+    private static void manageWorker() throws FileNotFoundException {
 
-        addEditOrRemoveEmployee(e, 1);
-
-    }
-
-    private static void manageManager(ArrayList<Employee> e) throws FileNotFoundException {
-
-        addEditOrRemoveEmployee(e, 0);
+        addEditOrRemoveEmployee(1);
 
     }
 
-    private static void listEmployees(ArrayList<Employee> e) {
+    private static void manageManager() throws FileNotFoundException {
 
-        sortEmployees(e);
-        displayEmployees(e);
+        addEditOrRemoveEmployee(0);
+
+    }
+
+    private static void listEmployees() {
+
+        sortEmployees();
+        displayEmployees();
 
     }
 
@@ -458,5 +461,17 @@ public class Scheduler {
 
     private static void displaySchedule() {
 
+    }
+
+    public static Schedule getS() {
+        return s;
+    }
+
+    public static void setS(Schedule s) {
+        Scheduler.s = s;
+    }
+
+    public static ArrayList<Employee> getE() {
+        return s.allEmployees;
     }
 }
