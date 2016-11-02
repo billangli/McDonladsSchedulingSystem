@@ -5,7 +5,7 @@
  Created by Bill Li on 2016-10-30.
  */
 
-class Employee {
+public class Employee {
 
     // Setting up variables
     private String employeeType;
