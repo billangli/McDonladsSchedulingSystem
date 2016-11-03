@@ -15,7 +15,9 @@ public class Schedule {
     int[][] requiredEmployees = new int[7][24];
 
     // Employees
-    ArrayList<Employee> allEmployees = new ArrayList<Employee>();
+    ArrayList<Employee> allEmployees = new ArrayList<>();
+    ArrayList<Employee> onlyManagers = new ArrayList<>();
+    ArrayList<Employee> onlyWorkers = new ArrayList<>();
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
@@ -69,6 +71,18 @@ public class Schedule {
 
     public void dumpEmployees() {
         for (Employee e : allEmployees) {
+            if (e instanceof Worker) {
+                onlyWorkers.add(e);
+            } else if (e instanceof Manager) {
+                onlyManagers.add(e);
+            }
+        }
+
+        // Spot to add in manager
+        // Only if at least one employee is required at that time
+        // Make it so that managers have on average 40h of work
+
+        for (Employee e : onlyWorkers) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
                     if (e.getHoursAvailable()[i][j]) {
@@ -78,33 +92,9 @@ public class Schedule {
                 }
             }
         }
-        /*
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.print(table[i][j].getSlot().size());
-            }
-            System.out.println();
-        }
-        */
     }
 
     public void optimizeEmployees() {
-        /*
-        System.out.println("Have: ");
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.print(table[i][j].getSlot().size());
-            }
-            System.out.println();
-        }
-        System.out.println("Required: ");
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.print(table[i][j].getRequiredEmployees());
-            }
-            System.out.println();
-        }
-        */
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 int hadToRemove;
@@ -130,22 +120,6 @@ public class Schedule {
                 } while (hadToRemove > 0);
             }
         }
-        /*
-        System.out.println("Have: ");
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.print(table[i][j].getSlot().size());
-            }
-            System.out.println();
-        }
-        System.out.println("Required: ");
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.print(table[i][j].getRequiredEmployees());
-            }
-            System.out.println();
-        }
-        */
     }
 
     private void readHours() throws FileNotFoundException {
