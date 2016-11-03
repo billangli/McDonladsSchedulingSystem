@@ -5,7 +5,9 @@
  Created by Bill Li on 2016-10-30.
  */
 
-public class Employee {
+import java.util.Comparator;
+
+public class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     // Setting up variables
     private String employeeType;
@@ -74,5 +76,17 @@ public class Employee {
 
     public void addHourOfWork() {
         this.totalHours++;
+    }
+
+    public void subtractHourOfWork() {
+        this.totalHours--;
+    }
+
+    public int compareTo(Employee e) {
+        return e.getTotalHours() - this.getTotalHours();
+    }
+
+    public int compare(Employee a, Employee b) {
+        return b.totalHours - a.totalHours;
     }
 }

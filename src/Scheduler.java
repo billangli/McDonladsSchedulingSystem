@@ -394,7 +394,7 @@ public class Scheduler {
         sortEmployees();
 
 
-        PrintWriter output = new PrintWriter("src/employeeInfo.txt");
+        PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
 
         for (Employee employee : getE()) {
             output.println(employee.getEmployeeType());
@@ -456,7 +456,8 @@ public class Scheduler {
     }
 
     private static void runScheduler() {
-
+        s.dumpEmployees();
+        s.optimizeEmployees();
     }
 
     private static void displaySchedule() {

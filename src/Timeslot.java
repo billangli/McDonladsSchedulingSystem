@@ -31,7 +31,7 @@ public class Timeslot {
         this.requiredEmployees = requiredEmployees;
     }
 
-    public ArrayList<Employee> getEmployeesAtSlot() {
+    public ArrayList<Employee> getSlot() {
         return slot;
     }
 

@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 /**
@@ -77,24 +78,74 @@ public class Schedule {
                 }
             }
         }
+        /*
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                System.out.print(table[i][j].getSlot().size());
+            }
+            System.out.println();
+        }
+        */
     }
 
     public void optimizeEmployees() {
+        /*
+        System.out.println("Have: ");
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j].currentNumberOfEmployees() > table[i][j].getRequiredEmployees()) {
-                    int max = 0;
-                    Employee x = new Employee();
-                    for (Employee e : table[i][j].getEmployeesAtSlot()) {
-                        // If e is not a manager
-                        if (!(e instanceof Manager) && e.getTotalHours() > max) {
-                            x = e;
+                System.out.print(table[i][j].getSlot().size());
+            }
+            System.out.println();
+        }
+        System.out.println("Required: ");
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                System.out.print(table[i][j].getRequiredEmployees());
+            }
+            System.out.println();
+        }
+        */
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                int hadToRemove;
+                do {
+                    hadToRemove = 0;
+                    if (table[i][j].currentNumberOfEmployees() > table[i][j].getRequiredEmployees()) {
+                        hadToRemove++;
+                        int max = 0;
+                        Employee x = null;
+                        Collections.sort(table[i][j].getSlot());
+
+                        for (Employee e : table[i][j].getSlot()) {
+                            // If e is not a manager
+                            if (e instanceof Worker && e.getTotalHours() > max) {
+                                max = e.getTotalHours();
+                                x = e;
+                            }
                         }
+                        //System.out.println("Max hours: " + max);
+                        x.subtractHourOfWork();
+                        table[i][j].getSlot().remove(x);
                     }
-                    table[i][j].getEmployeesAtSlot().remove(x);
-                }
+                } while (hadToRemove > 0);
             }
         }
+        /*
+        System.out.println("Have: ");
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                System.out.print(table[i][j].getSlot().size());
+            }
+            System.out.println();
+        }
+        System.out.println("Required: ");
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                System.out.print(table[i][j].getRequiredEmployees());
+            }
+            System.out.println();
+        }
+        */
     }
 
     private void readHours() throws FileNotFoundException {
