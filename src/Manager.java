@@ -16,11 +16,11 @@ public class Manager extends Employee{
         this.setEmployeeType("Manager");
     }
 
-    public double getSalary() {
+    public double getPay() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setPay(double salary) {
         this.salary = salary;
     }
 }

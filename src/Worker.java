@@ -16,11 +16,11 @@ public class Worker extends Employee{
         this.setEmployeeType("Worker");
     }
 
-    public double getWage() {
+    public double getPay() {
         return wage;
     }
 
-    public void setWage(double wage) {
+    public void setPay(double wage) {
         this.wage = wage;
     }
 }

@@ -194,7 +194,7 @@ public class Schedule {
         // Reading some general information
         m.setFullName(br.readLine());
         m.setAddress(br.readLine());
-        m.setSalary(Double.parseDouble(br.readLine()));
+        m.setPay(Double.parseDouble(br.readLine()));
 
         // Reading the availability information
         for (int i = 0; i < 7; i++) {
@@ -214,7 +214,7 @@ public class Schedule {
         // Reading some general information
         w.setFullName(br.readLine());
         w.setAddress(br.readLine());
-        w.setWage(Double.parseDouble(br.readLine()));
+        w.setPay(Double.parseDouble(br.readLine()));
 
         // Reading the availability information
         for (int i = 0; i < 7; i++) {

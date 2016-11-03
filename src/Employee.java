@@ -7,7 +7,7 @@
 
 import java.util.Comparator;
 
-public class Employee implements Comparator<Employee>, Comparable<Employee> {
+abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     // Setting up variables
     private String employeeType;
@@ -49,6 +49,10 @@ public class Employee implements Comparator<Employee>, Comparable<Employee> {
     public void setEmployeeNumber(String employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
+
+    abstract public double getPay();
+
+    abstract public void setPay(double pay);
 
     public boolean[][] getHoursAvailable() {
         return hoursAvailable;

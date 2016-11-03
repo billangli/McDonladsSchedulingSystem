@@ -121,7 +121,7 @@ public class Scheduler {
         w.setAddress(response);
         System.out.println("What is the worker's wage?");
         response = input.next();
-        w.setWage(Integer.parseInt(response));
+        w.setPay(Integer.parseInt(response));
 
         while (repeat) {
 
@@ -171,7 +171,7 @@ public class Scheduler {
         m.setAddress(response);
         System.out.println("What is the manager's salary?");
         response = input.next();
-        m.setSalary(Integer.parseInt(response));
+        m.setPay(Integer.parseInt(response));
 
         while (repeat) {
 
@@ -272,7 +272,7 @@ public class Scheduler {
         String response;
         System.out.println("Enter the new salary of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Manager) getE().get(employeeNumber)).setSalary(Integer.parseInt(response));
+        getE().get(employeeNumber).setPay(Integer.parseInt(response));
     }
 
     private static void editWage(int employeeNumber) {
@@ -280,7 +280,7 @@ public class Scheduler {
         String response;
         System.out.println("Enter the new wage of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Worker) getE().get(employeeNumber)).setWage(Integer.parseInt(response));
+        getE().get(employeeNumber).setPay(Integer.parseInt(response));
     }
 
     private static void editAvailability(int employeeNumber) {
@@ -315,7 +315,7 @@ public class Scheduler {
 
         System.out.println("Enter the new salary of " + getE().get(employeeNumber).getFullName());
         response = input.nextLine();
-        ((Manager) getE().get(employeeNumber)).setSalary(Integer.parseInt(response));
+        getE().get(employeeNumber).setPay(Integer.parseInt(response));
     }
 
     private static void removeEmployee() throws FileNotFoundException {
@@ -384,14 +384,10 @@ public class Scheduler {
         }
     }
 
-    private static void sortEmployees() {
-
-    }
-
     private static void updateEmployeeFile() throws FileNotFoundException {
 
         // Making sure all employees are sorted before the output starts
-        sortEmployees();
+        organizeEmployees();
 
 
         PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
@@ -401,9 +397,9 @@ public class Scheduler {
             output.println(employee.getFullName());
             output.println(employee.getAddress());
             if (employee.getEmployeeType().equals("Manager")) {
-                output.println(((Manager) employee).getSalary());
+                output.println(employee.getPay());
             } else {
-                output.println(((Worker) employee).getWage());
+                output.println(employee.getPay());
             }
             for (int j = 0; j < 7; j++) {
                 for (int k = 0; k < 24; k++) {
@@ -450,8 +446,8 @@ public class Scheduler {
 
     private static void listEmployees() {
 
-        sortEmployees();
-        displayEmployees();
+        organizeEmployees();
+//        displayEmployees();
 
     }
 
@@ -462,6 +458,52 @@ public class Scheduler {
 
     private static void displaySchedule() {
 
+    }
+
+    private static void organizeEmployees() {
+
+        System.out.println("Organizing Employees");
+
+        // Creating variables to swap employee objects
+        Employee swapToBack;
+        boolean repeat = true;
+
+        while (repeat) {
+            // Bubbles sorting the managers by pay
+            repeat = false;
+            for (int i = 0; i < s.onlyManagers.size() - 1; i++) {
+                if (s.onlyManagers.get(i).getPay() < s.onlyManagers.get(i + 1).getPay()) {
+                    // Swapping the manager objects
+                    swapToBack = s.onlyManagers.get(i);
+                    s.onlyManagers.set(i, s.onlyManagers.get(i + 1));
+                    s.onlyManagers.set(i + 1, swapToBack);
+                    repeat = true;
+                }
+            }
+        }
+
+        repeat = true;
+        while (repeat) {
+            // Bubbles sorting the workers by pay
+            repeat = false;
+            for (int i = 0; i < s.onlyWorkers.size() - 1; i++) {
+                if (s.onlyWorkers.get(i).getPay() < s.onlyWorkers.get(i + 1).getPay()) {
+                    // Swapping the worker objects
+                    swapToBack = s.onlyWorkers.get(i);
+                    s.onlyWorkers.set(i, s.onlyWorkers.get(i + 1));
+                    s.onlyWorkers.set(i + 1, swapToBack);
+                    repeat = true;
+                }
+            }
+        }
+
+        // Displaying the employees
+        for (int i = 0; i < s.onlyManagers.size(); i++) {
+            System.out.println("Manager: " + s.onlyManagers.get(i).getFullName() + "\tSalary: " + s.onlyManagers.get(i).getPay());
+        }
+        for (int i = 0; i < s.onlyWorkers.size(); i++) {
+            System.out.println("Employee: " + s.onlyWorkers.get(i).getFullName() + "\tWage: " + s.onlyWorkers.get(i).getPay());
+        }
     }
 
     public static Schedule getS() {
