@@ -6,14 +6,14 @@
  Created by Bill Li on 2016-10-30.
  */
 
-public class Manager extends Employee{
+public class Manager extends Employee {
 
     // Setting up variables
     private double salary;
 
     // Default constructor for manager
     Manager() {
-        this.setEmployeeType("Manager");
+
     }
 
     public double getPay() {

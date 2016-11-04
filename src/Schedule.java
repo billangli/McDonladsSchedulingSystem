@@ -173,11 +173,11 @@ public class Schedule {
 
                 // Read the file to find out what type of employee this person is
                 employeeType = str;
-                if (employeeType.equalsIgnoreCase("Manager")) {
+                if (employeeType.contains("Manager")) {
                     e = new Manager();
                     readManager((Manager) e, br);
                     allEmployees.add(e);
-                } else if (employeeType.equalsIgnoreCase("Worker")) {
+                } else if (employeeType.contains("Worker")) {
                     e = new Worker();
                     readWorker((Worker) e, br);
                     allEmployees.add(e);

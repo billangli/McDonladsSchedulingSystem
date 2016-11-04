@@ -10,7 +10,6 @@ import java.util.Comparator;
 abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     // Setting up variables
-    private String employeeType;
     private String fullName;
     private String address;
     private String employeeNumber;
@@ -18,27 +17,19 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     private boolean[][] hoursWorking = new boolean[7][24];
     private int totalHours = 0;
 
-    public String getEmployeeType() {
-        return employeeType;
-    }
-
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public String getFullName() {
+    String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    void setAddress(String address) {
         this.address = address;
     }
 
@@ -54,11 +45,11 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     abstract public void setPay(double pay);
 
-    public boolean[][] getHoursAvailable() {
+    boolean[][] getHoursAvailable() {
         return hoursAvailable;
     }
 
-    public void setHoursAvailable(int day, int hour, boolean availability) {
+    void setHoursAvailable(int day, int hour, boolean availability) {
         this.hoursAvailable[day][hour] = availability;
     }
 
@@ -70,7 +61,7 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         this.hoursWorking = hoursWorking;
     }
 
-    public int getTotalHours() {
+    int getTotalHours() {
         return totalHours;
     }
 
@@ -78,11 +69,11 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         this.totalHours = totalHours;
     }
 
-    public void addHourOfWork() {
+    void addHourOfWork() {
         this.totalHours++;
     }
 
-    public void subtractHourOfWork() {
+    void subtractHourOfWork() {
         this.totalHours--;
     }
 

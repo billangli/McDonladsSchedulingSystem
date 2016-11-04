@@ -28,7 +28,6 @@ public class Scheduler {
         s = new Schedule();
         test(s.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
 
-
         // Main program
         while (!response.equals("6")) {
 
@@ -125,19 +124,11 @@ public class Scheduler {
 
         while (repeat) {
 
-            int day;
-            int inHour;
-            int outHour;
+            int day = getDay(response, input);
+            int inHour = getInHour(response, input);
+            int outHour = getOutHour(response, input);
 
-            System.out.println("Enter day when available:");
-            response = input.next();
-            day = dayToNum(response);
-            System.out.println("Enter hour in when available:");
-            response = input.next();
-            inHour = Integer.parseInt(response);
-            System.out.println("Enter hour out when available:");
-            response = input.next();
-            outHour = Integer.parseInt(response);
+
             for (int i = inHour; i < outHour; i++) {
                 w.setHoursAvailable(day, i, true);
             }
@@ -175,19 +166,10 @@ public class Scheduler {
 
         while (repeat) {
 
-            int day;
-            int inHour;
-            int outHour;
+            int day = getInHour(response, input);
+            int inHour = getInHour(response, input);
+            int outHour = getOutHour(response, input);
 
-            System.out.println("Enter day when available:");
-            response = input.next();
-            day = dayToNum(response);
-            System.out.println("Enter hour in when available:");
-            response = input.next();
-            inHour = Integer.parseInt(response);
-            System.out.println("Enter hour out when available:");
-            response = input.next();
-            outHour = Integer.parseInt(response);
             for (int i = inHour; i < outHour; i++) {
                 m.setHoursAvailable(day, i, true);
             }
@@ -204,6 +186,24 @@ public class Scheduler {
 
         System.out.println("Updating employee file");
         updateEmployeeFile();
+    }
+
+    private static int getDay(String response, Scanner input) {
+        System.out.println("Enter day when available:");
+        response = input.next();
+        return dayToNum(response);
+    }
+
+    private static int getInHour(String response, Scanner input) {
+        System.out.println("Enter hour in when available:");
+        response = input.next();
+        return Integer.parseInt(response);
+    }
+
+    private static int getOutHour(String response, Scanner input) {
+        System.out.println("Enter hour out when available:");
+        response = input.next();
+        return Integer.parseInt(response);
     }
 
     private static void editEmployee() throws FileNotFoundException {
@@ -317,10 +317,6 @@ public class Scheduler {
         for (int i = inHour; i < outHour; i++) {
             getE().get(employeeNumber).setHoursAvailable(day, i, newAvailability);
         }
-
-        System.out.println("Enter the new salary of " + getE().get(employeeNumber).getFullName());
-        response = input.nextLine();
-        getE().get(employeeNumber).setPay(Integer.parseInt(response));
     }
 
     private static void removeEmployee() throws FileNotFoundException {
@@ -419,10 +415,10 @@ public class Scheduler {
         PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
 
         for (Employee employee : getE()) {
-            output.println(employee.getEmployeeType());
+            output.println(employee.getClass());
             output.println(employee.getFullName());
             output.println(employee.getAddress());
-            if (employee.getEmployeeType().equals("Manager")) {
+            if (employee instanceof Manager) {
                 output.println(employee.getPay());
             } else {
                 output.println(employee.getPay());
@@ -542,7 +538,6 @@ public class Scheduler {
         }
 
     }
-
 
     public static Schedule getS() {
         return s;

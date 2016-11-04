@@ -6,14 +6,14 @@
  Created by Bill Li on 2016-10-30.
  */
 
-public class Worker extends Employee{
+public class Worker extends Employee {
 
     // Setting up variables
     private double wage;
 
     // Default constructor for worker
     Worker() {
-        this.setEmployeeType("Worker");
+
     }
 
     public double getPay() {
