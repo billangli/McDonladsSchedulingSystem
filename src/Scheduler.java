@@ -226,18 +226,23 @@ public class Scheduler {
             System.out.println("Enter 4 to change employee availability.");
             response = input.next();
 
-            if (response.equals("1")) {
-                editName(employeeNumber);
-            } else if (response.equals("2")) {
-                editAddress(employeeNumber);
-            } else if (response.equals("3")) {
-                if (getE().get(employeeNumber) instanceof Manager) {
-                    editSalary(employeeNumber);
-                } else {
-                    editWage(employeeNumber);
-                }
-            } else if (response.equals("4")) {
-                editAvailability(employeeNumber);
+            switch (response) {
+                case "1":
+                    editName(employeeNumber);
+                    break;
+                case "2":
+                    editAddress(employeeNumber);
+                    break;
+                case "3":
+                    if (getE().get(employeeNumber) instanceof Manager) {
+                        editSalary(employeeNumber);
+                    } else {
+                        editWage(employeeNumber);
+                    }
+                    break;
+                case "4":
+                    editAvailability(employeeNumber);
+                    break;
             }
 
             System.out.println("Enter -1 to edit something else");
@@ -370,7 +375,7 @@ public class Scheduler {
             return 1;
         } else if (day.equalsIgnoreCase("W")) {
             return 2;
-        } else if (day.equalsIgnoreCase("U")) {
+        } else if (day.equalsIgnoreCase("R")) {
             return 3;
         } else if (day.equalsIgnoreCase("F")) {
             return 4;
@@ -381,6 +386,27 @@ public class Scheduler {
         } else {
             System.out.println("*** Day is wrong");
             return -1;
+        }
+    }
+
+    private static String numToDay(int day) {
+        if (day == 0) {
+            return "M";
+        } else if (day == 1) {
+            return "T";
+        } else if (day == 2) {
+            return "W";
+        } else if (day == 3) {
+            return "R";
+        } else if (day == 4) {
+            return "F";
+        } else if (day == 5) {
+            return "S";
+        } else if (day == 6) {
+            return "U";
+        } else {
+            System.out.println("*** Day is wrong");
+            return "Error";
         }
     }
 
@@ -416,16 +442,16 @@ public class Scheduler {
     }
 
     private static void test(Timeslot[][] table, ArrayList<Employee> allEmployees) {
-        for (int i = 0; i < allEmployees.size(); i++) {
-            System.out.println("Employee: " + allEmployees.get(i).getFullName());
+        for (Employee allEmployee : allEmployees) {
+            System.out.println("Employee: " + allEmployee.getFullName());
         }
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
                 System.out.println("Day " + i + " Hour " + j + " Demand " + table[i][j].getRequiredEmployees());
 
-                for (int k = 0; k < allEmployees.size(); k++) {
-                    if (allEmployees.get(k).getHoursAvailable()[i][j]) {
-                        System.out.println(allEmployees.get(k).getFullName() + " is available.");
+                for (Employee allEmployee : allEmployees) {
+                    if (allEmployee.getHoursAvailable()[i][j]) {
+                        System.out.println(allEmployee.getFullName() + " is available.");
                     }
                 }
             }
@@ -448,15 +474,6 @@ public class Scheduler {
 
         organizeEmployees();
 //        displayEmployees();
-
-    }
-
-    private static void runScheduler() {
-        s.dumpEmployees();
-        s.optimizeEmployees();
-    }
-
-    private static void displaySchedule() {
 
     }
 
@@ -506,6 +523,27 @@ public class Scheduler {
         }
     }
 
+    private static void runScheduler() {
+        s.dumpEmployees();
+        s.optimizeEmployees();
+    }
+
+    private static void displaySchedule() {
+
+        for (int i = 0; i < 7; i++) {
+            System.out.println("\nDay: " + numToDay(i));
+            for (int j = 0; j < 24; j++) {
+                System.out.println("Hour: " + j);
+
+                for (int k = 0; k < s.table[i][j].getSlot().size(); k++) {
+                    System.out.println(s.table[i][j].getSlot().get(k).getFullName());
+                }
+            }
+        }
+
+    }
+
+
     public static Schedule getS() {
         return s;
     }
@@ -514,7 +552,7 @@ public class Scheduler {
         Scheduler.s = s;
     }
 
-    public static ArrayList<Employee> getE() {
+    private static ArrayList<Employee> getE() {
         return s.allEmployees;
     }
 }
