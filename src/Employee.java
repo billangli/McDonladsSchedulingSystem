@@ -16,6 +16,7 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     private boolean[][] hoursAvailable = new boolean[7][24];
     private boolean[][] hoursWorking = new boolean[7][24];
     private int totalHours = 0;
+    private int totalHoursAvaliable = 0;
 
     String getFullName() {
         return fullName;
@@ -51,13 +52,14 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     void setHoursAvailable(int day, int hour, boolean availability) {
         this.hoursAvailable[day][hour] = availability;
+        totalHoursAvaliable++;
     }
 
     public boolean[][] getHoursWorking() {
         return hoursWorking;
     }
 
-    public void setHoursWorking(int i, int j, boolean working) {
+    public void setHourWorking(int i, int j, boolean working) {
         hoursWorking[i][j] = working;
     }
 
@@ -69,6 +71,10 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         this.totalHours = totalHours;
     }
 
+    int getTotalHoursAvaliable() {
+        return totalHoursAvaliable;
+    }
+
     void addHourOfWork() {
         this.totalHours++;
     }
@@ -78,10 +84,10 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     }
 
     public int compareTo(Employee e) {
-        return e.getTotalHours() - this.getTotalHours();
+        return this.totalHoursAvaliable - e.getTotalHoursAvaliable();
     }
 
     public int compare(Employee a, Employee b) {
-        return b.totalHours - a.totalHours;
+        return a.getTotalHoursAvaliable() - b.getTotalHoursAvaliable();
     }
 }

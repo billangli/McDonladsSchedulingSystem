@@ -7,6 +7,15 @@ import java.util.StringTokenizer;
  */
 public class Schedule {
 
+    //
+    //
+    //
+    // FOR TESTING PURPOSES ONLY
+    int[][] s = new int[7][24];
+    //
+    //
+    //
+
     // Our take on building a 2d array of ARRAYLISTS, Timeslot is the individual ArrayList that holds Employee objects
     Timeslot[][] table;
     Timeslot[][] managerTable;
@@ -14,6 +23,7 @@ public class Schedule {
 
     // Numnber of employees required at each 1h block
     int[][] requiredEmployees = new int[7][24];
+    int[][] totalRequiredEmployees = new int[7][24];
 
     // Employees
     ArrayList<Employee> allEmployees = new ArrayList<>();
@@ -35,6 +45,14 @@ public class Schedule {
         }
         readHours();
         readEmployeeInfo();
+
+        for (Employee x : allEmployees) {
+            if (x instanceof Manager) {
+                onlyManagers.add(x);
+            } else if (x instanceof Worker) {
+                onlyWorkers.add(x);
+            }
+        }
     }
 
     private static int determineHour(String str) {
@@ -74,178 +92,166 @@ public class Schedule {
         return -1;
     }
 
+    public static void print2DArray(int[][] a) {
+        System.out.println("_________________________");
+        for (int[] b : a) {
+            for (int c : b) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public void scheduleEmployees() {
 
     }
 
     // Add all the managers in and make sure they work at least 40 hours
     public void scheduleManagers() {
-
-        // Put all the managers in
+        // Put all the managers in (have some work more than total required just for the hours)
         for (Employee x : onlyManagers) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
-                    if (x.getHoursAvailable()[i][j]) {
+                    if (x.getHoursAvailable()[i][j] && !x.getHoursWorking()[i][j] && totalRequiredEmployees[i][j] > 0) {
                         managerTable[i][j].addEmployee(x);
-                        x.setHoursWorking(i, j, true);
+                        x.setHourWorking(i, j, true);
                         x.addHourOfWork();
+                        if (requiredEmployees[i][j] > 0) {
+                            requiredEmployees[i][j]--;
+                        }
                     }
                 }
             }
         }
-
         // Optimize managers
         for (Employee x : onlyManagers) {
             int hoursOvertime = x.getTotalHours() - ((Manager) x).getMinWorkHours();
-            boolean skip = false;
-
-            while (hoursOvertime > 0 && !skip) {
-                int shouldSkip = 0;
-                for (int i = 0; i < 7; i++) {
-                    for (int j = 0; j < 24; j++) {
-                        // If manager is actually working at that time
-                        if (x.getHoursWorking()[i][j] && hoursOvertime > 0) {
-                            // If there are multiple managers working at the same time
-                            if (managerTable[i][j].getSlot().size() > 1) {
-                                managerTable[i][j].getSlot().remove(x);
-                                x.setHoursWorking(i, j, false);
-                                x.subtractHourOfWork();
-                                hoursOvertime--;
-                            } else {
-                                shouldSkip++;
-                            }
-                        }
-                    }
-                }
-                for (int i = 0; i < 7; i++) {
-                    for (int j = 0; j < 24; j++) {
-                        if (x.getHoursWorking()[i][j] && hoursOvertime > 0) {
+//          If manager is not removed at any of the times, then we should skip checking this manager
+//          int shouldSkip = 0;
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 24; j++) {
+                    // If manager is actually working at that time
+                    if (x.getHoursWorking()[i][j] && hoursOvertime > 0) {
+                        // If there are multiple managers working at the same time
+                        if (managerTable[i][j].getSlot().size() > 1) {
                             managerTable[i][j].getSlot().remove(x);
-                            x.setHoursWorking(i, j, false);
+                            x.setHourWorking(i, j, false);
                             x.subtractHourOfWork();
                             hoursOvertime--;
                         }
                     }
                 }
-                if (shouldSkip == x.getTotalHours()) {
-                    skip = true;
-                }
-                System.out.println(hoursOvertime);
             }
-        }
-    }
-
-    public void scheduleWorkers() {
-
-    }
-
-    /*
-    public void dumpEmployees() {
-        for (Employee e : allEmployees) {
-            if (e instanceof Worker) {
-                onlyWorkers.add(e);
-            } else if (e instanceof Manager) {
-                onlyManagers.add(e);
-            }
-        }
-        // Spot to add in manager
-        // Only if at least one employee is required at that time
-        // Make it so that managers have on average 40h of work
-        //dump(onlyManagers);
-        //dump(onlyWorkers);
-        dump(allEmployees);
-    }
-
-    public void dump(ArrayList <Employee> e){
-        for (Employee x : e) {
+            // If the manager is still working hours overtime, just remove their first hours which they work at
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
-                    if (x.getHoursAvailable()[i][j]) {
-                        table[i][j].addEmployee(x);
-                        x.addHourOfWork();
+                    if (x.getHoursWorking()[i][j] && hoursOvertime > 0) {
+                        managerTable[i][j].getSlot().remove(x);
+                        if (managerTable[i][j].getSlot().size() < totalRequiredEmployees[i][j]) {
+                            requiredEmployees[i][j] = totalRequiredEmployees[i][j] - managerTable[i][j].getSlot().size();
+                        }
+                        x.setHourWorking(i, j, false);
+                        x.subtractHourOfWork();
+                        hoursOvertime--;
                     }
                 }
             }
         }
+
+        // refresh the requiredEmployees array
+//        for (int i = 0; i < 7; i++){
+//            for (int j = 0; j < 24; j++){
+//                if (managerTable[i][j].getSlot().size() < requiredEmployees[i][j]){
+//                    requiredEmployees[i][j] -= managerTable[i][j].getSlot().size();
+//                }
+//                else{
+//                    requiredEmployees[i][j] = 0;
+//                }
+//            }
+//        }
+//        print2DArray(requiredEmployees);
     }
 
-    public void optimizeEmployees() {
-
-        for (int [] a: requiredEmployees){
-            for (int b: a){
-                System.out.print(b + " ");
+    // Figure out what number gives workers a roughly even amount of time to work and then puts them in.
+    public void scheduleWorkers() {
+        int hoursLeftToFill = 0;
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                hoursLeftToFill += requiredEmployees[i][j];
             }
-            System.out.println();
-        }
-        System.out.println("Other");
-        for (Timeslot [] a: table){
-            for (Timeslot b: a){
-                System.out.print(b.getSlot().size() + " ");
-            }
-            System.out.println();
         }
 
+        int averageHoursOfWorkLeft = hoursLeftToFill / onlyWorkers.size() * 2;
+        for (Employee x : onlyWorkers) {
+            int cnt = averageHoursOfWorkLeft;
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 24; j++) {
+                    if (requiredEmployees[i][j] > 0 && !x.getHoursWorking()[i][j] && x.getHoursAvailable()[i][j] && cnt > 0) {
+                        workerTable[i][j].addEmployee(x);
+                        x.addHourOfWork();
+                        x.setHourWorking(i, j, true);
+                        requiredEmployees[i][j]--;
+                        cnt--;
+                    }
+                }
+            }
+        }
+
+        for (Employee x : onlyWorkers) {
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 24; j++) {
+                    if (requiredEmployees[i][j] > 0 && !x.getHoursWorking()[i][j] && x.getHoursAvailable()[i][j]) {
+                        workerTable[i][j].addEmployee(x);
+                        x.addHourOfWork();
+                        x.setHourWorking(i, j, true);
+                        requiredEmployees[i][j]--;
+                    }
+                }
+            }
+        }
+
+    }
+
+    // Add in managers if required
+    public void fillUpTheRest() {
+        // Add everyone to the final table
         for (int i = 0; i < table.length; i++) {
-
             for (int j = 0; j < table[i].length; j++) {
+                for (Employee x : managerTable[i][j].getSlot()) {
+                    table[i][j].addEmployee(x);
+                }
+                for (Employee x : workerTable[i][j].getSlot()) {
+                    table[i][j].addEmployee(x);
+                }
 
-                int hadToRemove;
-
-                do {
-                    hadToRemove = 0;
-                    if (table[i][j].currentNumberOfEmployees() > table[i][j].getRequiredEmployees()) {
-                        // Check out the managers first
-                        int numberOfManagers = 0;
-                        Employee x = null;
-                        for (Employee e: table[i][j].getSlot()){
-                            if (e instanceof Manager){
-                                numberOfManagers++;
-                                if (e.getTotalHours() > ((Manager) e).getMinWorkHours()){
-                                    x = e;
-                                    numberOfManagers++;
-                                }
-                            }
-                        }
-                        if (numberOfManagers > 1 && x != null) { // Remove a manager if there are more than one and one works more than 40h
-                            table[i][j].getSlot().remove(x);
-                            x.subtractHourOfWork();
-                            hadToRemove++;
-                        }
-                        else { // Go onto removing a worker if no managers are removed
-                            int max = 0;
-                            Collections.sort(table[i][j].getSlot());
-                            for (Employee e : table[i][j].getSlot()) {
-                                // If e is not a manager
-                                if (e instanceof Worker && e.getTotalHours() > max) {
-                                    max = e.getTotalHours();
-                                    x = e;
-                                }
-                            }
-                            x.subtractHourOfWork();
-                            table[i][j].getSlot().remove(x);
-                            hadToRemove++;
+            }
+        }
+        // Fill in the empty spots
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                if (requiredEmployees[i][j] > 0) {
+                    for (Employee x : onlyManagers) {
+                        if (requiredEmployees[i][j] > 0 && !x.getHoursWorking()[i][j] && x.getHoursAvailable()[i][j]) {
+                            table[i][j].addEmployee(x);
+                            x.addHourOfWork();
+                            x.setHourWorking(i, j, true);
+                            requiredEmployees[i][j]--;
                         }
                     }
-                } while (hadToRemove > 0);
-
+                }
             }
         }
 
-        for (int [] a: requiredEmployees){
-            for (int b: a){
-                System.out.print(b + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("Other");
-        for (Timeslot [] a: table){
-            for (Timeslot b: a){
-                System.out.print(b.getSlot().size() + " ");
+        print2DArray(totalRequiredEmployees);
+        System.out.println("The good stuff");
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                System.out.print(table[i][j].getSlot().size() + " ");
             }
             System.out.println();
         }
     }
-    */
+
     private void readHours() throws FileNotFoundException {
 
         System.out.println("Reading hours from text file");
@@ -273,12 +279,18 @@ public class Schedule {
                 // Adding hours and requiredEmployees to program
                 for (int i = inHour; i < outHour; i++) {
                     // Add requiredEmployees to each time slot
-                    table[day][i].setRequiredEmployees(requiredEmployees);
+                    this.requiredEmployees[day][i] = requiredEmployees;
+                    //table[day][i].setRequiredEmployees(requiredEmployees);
                 }
 
             }
         } catch (Exception e) {
             System.out.println("*** Something wrong with the buffered reader in readHours");
+        }
+        for (int i = 0; i < this.requiredEmployees.length; i++) {
+            for (int j = 0; j < this.requiredEmployees[i].length; j++) {
+                totalRequiredEmployees[i][j] = this.requiredEmployees[i][j];
+            }
         }
 
     }

@@ -522,6 +522,9 @@ public class Scheduler {
     private static void runScheduler() {
         //s.dumpEmployees();
         //s.optimizeEmployees();
+        s.scheduleManagers();
+        s.scheduleWorkers();
+        s.fillUpTheRest();
     }
 
     private static void displaySchedule() {
