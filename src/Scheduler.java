@@ -17,6 +17,8 @@ public class Scheduler {
 
     public static void main(String[] args) throws FileNotFoundException {
 
+        GUI g = new GUI();
+
         // Setting up variables
         Scanner input = new Scanner(System.in);
         String response = "0";
