@@ -8,6 +8,7 @@
 
 public class Manager extends Employee {
 
+    private static int minWorkHours = 40;
     // Setting up variables
     private double salary;
 
@@ -22,5 +23,9 @@ public class Manager extends Employee {
 
     public void setPay(double salary) {
         this.salary = salary;
+    }
+
+    public int getMinWorkHours() {
+        return minWorkHours;
     }
 }

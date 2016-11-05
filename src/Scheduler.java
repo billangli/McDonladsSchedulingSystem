@@ -520,8 +520,8 @@ public class Scheduler {
     }
 
     private static void runScheduler() {
-        s.dumpEmployees();
-        s.optimizeEmployees();
+        //s.dumpEmployees();
+        //s.optimizeEmployees();
     }
 
     private static void displaySchedule() {

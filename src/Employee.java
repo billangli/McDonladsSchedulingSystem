@@ -57,8 +57,8 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         return hoursWorking;
     }
 
-    public void setHoursWorking(boolean[][] hoursWorking) {
-        this.hoursWorking = hoursWorking;
+    public void setHoursWorking(int i, int j, boolean working) {
+        hoursWorking[i][j] = working;
     }
 
     int getTotalHours() {

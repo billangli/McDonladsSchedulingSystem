@@ -11,6 +11,10 @@ public class Timeslot {
         this.requiredEmployees = requiredEmployees;
     }
 
+    public Timeslot() {
+        this.requiredEmployees = 0;
+    }
+
     public void addEmployee(Employee e) {
         slot.add(e);
     }
