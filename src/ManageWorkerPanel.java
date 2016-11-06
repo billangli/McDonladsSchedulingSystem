@@ -24,7 +24,7 @@ public class ManageWorkerPanel extends JPanel {
     private String inHour;
     private String outHour;
 
-    ManageWorkerPanel(Schedule s) {
+    ManageWorkerPanel() {
         this.setLayout(new FlowLayout());
         titleLabel = new JLabel("Manage Worker");
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
@@ -36,7 +36,7 @@ public class ManageWorkerPanel extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the add worker panel
-                switchPanel(new addWorkerPanel(s));
+                switchPanel(new addWorkerPanel());
             }
         });
 
@@ -45,7 +45,7 @@ public class ManageWorkerPanel extends JPanel {
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the remove worker panel
-                switchPanel(new editWorkerPanel(s));
+                switchPanel(new editWorkerPanel());
             }
         });
 
@@ -54,7 +54,7 @@ public class ManageWorkerPanel extends JPanel {
         removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the remove worker panel
-                switchPanel(new removeWorkerPanel(s));
+                switchPanel(new removeWorkerPanel());
             }
         });
 
@@ -64,7 +64,7 @@ public class ManageWorkerPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new MainPanel(s));
+                switchPanel(new MainPanel());
             }
         });
 
@@ -80,19 +80,104 @@ public class ManageWorkerPanel extends JPanel {
 
     class addWorkerPanel extends JPanel {
         private JLabel titleLabel;
+        private JLabel employeeTypeLabel = new JLabel("Employee Type");
+        private JLabel employeeNameLabel = new JLabel("Employee Name");
+        private JLabel employeeAddressLabel = new JLabel("Employee Address");
+        private JLabel employeePayLabel = new JLabel("Employee Pay");
+        private JLabel employeeDayLabel = new JLabel("Day Working");
+        private JLabel employeeInHoursLabel = new JLabel("Hour In");
+        private JLabel employeeOutHoursLabel = new JLabel("Hour Out");
+        private JComboBox employeeTypeComboBox = new JComboBox();
+        private JTextField employeeNameTextField = new JTextField(20);
+        private JTextField employeeAddressTextField = new JTextField(20);
+        private JTextField employeePayTextField = new JTextField(20);
+        private JTextField employeeDayTextField = new JTextField(20);
+        private JTextField employeeInHoursTextField = new JTextField(20);
+        private JTextField employeeOutHoursTextField = new JTextField(20);
+        private JPanel employeeTypePanel = new JPanel(new BorderLayout());
+        private JPanel employeeNamePanel = new JPanel(new BorderLayout());
+        private JPanel employeeAddressPanel = new JPanel(new BorderLayout());
+        private JPanel employeePayPanel = new JPanel(new BorderLayout());
+        private JPanel employeeDayPanel = new JPanel(new BorderLayout());
+        private JPanel employeeInHoursPanel = new JPanel(new BorderLayout());
+        private JPanel employeeOutHoursPanel = new JPanel(new BorderLayout());
+        private JPanel buttonsPanel = new JPanel(new BorderLayout());
 
-        addWorkerPanel(Schedule s) {
+        addWorkerPanel() {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             titleLabel = new JLabel("Add Worker");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
             this.add(titleLabel);
+
+            employeeTypeComboBox.addItem("Manager");
+            employeeTypeComboBox.addItem("Worker");
+            employeeTypePanel.add(BorderLayout.WEST, employeeTypeLabel);
+            employeeTypePanel.add(BorderLayout.EAST, employeeTypeComboBox);
+
+            employeeNamePanel.add(BorderLayout.WEST, employeeNameLabel);
+            employeeNamePanel.add(BorderLayout.EAST, employeeNameTextField);
+
+            employeeAddressPanel.add(BorderLayout.WEST, employeeAddressLabel);
+            employeeAddressPanel.add(BorderLayout.EAST, employeeAddressTextField);
+
+            employeePayPanel.add(BorderLayout.WEST, employeePayLabel);
+            employeePayPanel.add(BorderLayout.EAST, employeePayTextField);
+
+            employeeDayPanel.add(BorderLayout.WEST, employeeDayLabel);
+            employeeDayPanel.add(BorderLayout.EAST, employeeDayTextField);
+
+            employeeInHoursPanel.add(BorderLayout.WEST, employeeInHoursLabel);
+            employeeInHoursPanel.add(BorderLayout.EAST, employeeInHoursTextField);
+
+            employeeOutHoursPanel.add(BorderLayout.WEST, employeeOutHoursLabel);
+            employeeOutHoursPanel.add(BorderLayout.EAST, employeeOutHoursTextField);
+
+            // Button to go back to menu
+            menuButton = new JButton("Menu");
+            menuButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Open up the worker editing panel
+                    switchPanel(new MainPanel());
+                }
+            });
+
+            addButton = new JButton("Add");
+            addButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Open up the worker editing panel
+                    Scheduler.s.addWorker(employeeNameTextField.getText(),
+                            employeeAddressTextField.getText(),
+                            employeePayTextField.getText(),
+                            employeeDayTextField.getText(),
+                            employeeInHoursTextField.getText(),
+                            employeeOutHoursTextField.getText());
+                    switchPanel(new MainPanel());
+                }
+            });
+
+            buttonsPanel.add(BorderLayout.WEST, menuButton);
+            buttonsPanel.add(BorderLayout.EAST, addButton);
+
+            // Adding all panels together
+            this.add(employeeTypePanel);
+            this.add(employeeNamePanel);
+            this.add(employeeAddressPanel);
+            this.add(employeePayPanel);
+            this.add(employeeDayPanel);
+            this.add(employeeInHoursPanel);
+            this.add(employeeOutHoursPanel);
+            this.add(buttonsPanel);
+        }
+
+        void switchPanel(JPanel p) {
+            Scheduler.g.switchPanel(this, p);
         }
     }
 
     class editWorkerPanel extends JPanel {
         private JLabel titleLabel;
 
-        editWorkerPanel(Schedule s) {
+        editWorkerPanel() {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             titleLabel = new JLabel("Edit Worker");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
@@ -108,7 +193,7 @@ public class ManageWorkerPanel extends JPanel {
         private JComboBox employeeNameComboBox;
         private JButton nextButton;
 
-        removeWorkerPanel(Schedule s) {
+        removeWorkerPanel() {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
             bottomPanel.setLayout(new BorderLayout());
@@ -120,8 +205,8 @@ public class ManageWorkerPanel extends JPanel {
             employeeNameLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
 
             employeeNameComboBox = new JComboBox();
-            for (int i = 0; i < s.getOnlyWorkers().size(); i++) {
-                employeeNameComboBox.addItem(s.getOnlyWorkers().get(i).getFullName());
+            for (int i = 0; i < Scheduler.s.getOnlyWorkers().size(); i++) {
+                employeeNameComboBox.addItem(Scheduler.s.getOnlyWorkers().get(i).getFullName());
             }
 
             // Button to go back to menu
@@ -129,7 +214,7 @@ public class ManageWorkerPanel extends JPanel {
             menuButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    switchPanel(new MainPanel(s));
+                    switchPanel(new MainPanel());
                 }
             });
 
@@ -137,7 +222,8 @@ public class ManageWorkerPanel extends JPanel {
             nextButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    s.removeEmployee(employeeNameComboBox.getSelectedIndex());
+                    Scheduler.s.removeEmployee(employeeNameComboBox.getSelectedIndex());
+                    switchPanel(new MainPanel());
                 }
             });
 

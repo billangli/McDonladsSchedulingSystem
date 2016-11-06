@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
     private JButton quit;
     private JLabel title;
 
-    public MainPanel(Schedule s) {
+    public MainPanel() {
         this.setLayout(new FlowLayout());
         title = new JLabel("McDonlads Scheduling System 69.420");
         title.setFont(title.getFont().deriveFont(52.0f));
@@ -26,7 +26,7 @@ public class MainPanel extends JPanel {
         editWorker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new ManageWorkerPanel(s));
+                switchPanel(new ManageWorkerPanel());
             }
         });
 

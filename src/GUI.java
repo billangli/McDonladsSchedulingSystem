@@ -9,7 +9,7 @@ class GUI extends JFrame {
     GUI(Schedule s) {
         this.setName("McDonlads Scheduling System");
         this.setTitle("McDonlads Scheduling System");
-        this.add(new MainPanel(s));
+        this.add(new MainPanel());
         this.setSize(new Dimension(1000, 400));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

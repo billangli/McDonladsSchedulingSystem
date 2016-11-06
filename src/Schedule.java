@@ -387,68 +387,31 @@ public class Schedule {
         return allEmployees;
     }
 
-    private void addEditOrRemoveEmployee(int employeeType) throws FileNotFoundException {
+    boolean addWorker(String name, String address, String pay, String day, String inHour, String outHour) {
 
-        System.out.println("Enter 1 to add employee");
-        System.out.println("Enter 2 to edit employee");
-        System.out.println("Enter 3 to remove employee");
-
-        Scanner input = new Scanner(System.in);
-        int response = input.nextInt();
-
-        if (response == 1) {
-            if (employeeType == 0) {
-                addManager();
-            } else {
-                addWorker();
-            }
-        } else if (response == 2) {
-            editEmployee();
-        } else if (response == 3) {
-//            removeEmployee();
-        }
-    }
-
-    private void addWorker() throws FileNotFoundException {
-
-        Scanner input = new Scanner(System.in);
-        String response;
-        boolean repeat = true;
         Worker w = new Worker();
 
-        System.out.println("What is the worker'this name?");
-        response = input.nextLine();
-        w.setFullName(response);
-        System.out.println("What is the worker'this address?");
-        response = input.nextLine();
-        w.setAddress(response);
-        System.out.println("What is the worker'this wage?");
-        response = input.next();
-        w.setPay(Integer.parseInt(response));
-
-        while (repeat) {
-
-            int day = getDay(response, input);
-            int inHour = getInHour(response, input);
-            int outHour = getOutHour(response, input);
-
-
-            for (int i = inHour; i < outHour; i++) {
-                w.setHoursAvailable(day, i, true);
+        try {
+            w.setFullName(name);
+            w.setAddress(address);
+            w.setPay(Double.parseDouble(pay));
+            for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
+                w.setHoursAvailable(Integer.parseInt(day), i, true);
+                System.out.println(i);
             }
-
-            System.out.println("Enter -1 to add another available time");
-            response = input.next();
-            if (!response.equals("-1")) {
-                repeat = false;
-            }
+        } catch (Exception exception) {
+            System.out.println("*** Something wrong with addWorker");
+            return false;
         }
+
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
         this.allEmployees.add(w);
 
         System.out.println("Updating employee file");
         updateEmployeeFile();
+
+        return true;
     }
 
     private void addManager() throws FileNotFoundException {
@@ -685,48 +648,38 @@ public class Schedule {
         }
     }
 
-    private void updateEmployeeFile() throws FileNotFoundException {
+    private void updateEmployeeFile() {
 
         // Making sure all employees are sorted before the output starts
         organizeEmployees();
 
-
-        PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
-
-        for (Employee employee : this.allEmployees) {
-            output.println(employee.getClass());
-            output.println(employee.getFullName());
-            output.println(employee.getAddress());
-            if (employee instanceof Manager) {
-                output.println(employee.getPay());
-            } else {
-                output.println(employee.getPay());
-            }
-            for (int j = 0; j < 7; j++) {
-                for (int k = 0; k < 24; k++) {
-                    if (employee.getHoursAvailable()[j][k]) {
-                        output.print("1 ");
-                    } else {
-                        output.print("0 ");
-                    }
+        try {
+            PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
+            for (Employee employee : this.allEmployees) {
+                output.println(employee.getClass());
+                output.println(employee.getFullName());
+                output.println(employee.getAddress());
+                if (employee instanceof Manager) {
+                    output.println(employee.getPay());
+                } else {
+                    output.println(employee.getPay());
                 }
-                output.println("");
+                for (int j = 0; j < 7; j++) {
+                    for (int k = 0; k < 24; k++) {
+                        if (employee.getHoursAvailable()[j][k]) {
+                            output.print("1 ");
+                        } else {
+                            output.print("0 ");
+                        }
+                    }
+                    output.println("");
+                }
             }
+            output.close();
+        } catch (Exception exception) {
+            System.out.println("*** Something wrong with updateEmployeeFile");
+            exception.printStackTrace();
         }
-        output.close();
-    }
-
-    void manageWorker() throws FileNotFoundException {
-
-        // Changing panels
-        addEditOrRemoveEmployee(1);
-
-    }
-
-    void manageManager() throws FileNotFoundException {
-
-        addEditOrRemoveEmployee(0);
-
     }
 
     void listEmployees() {
