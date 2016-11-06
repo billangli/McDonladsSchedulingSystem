@@ -18,8 +18,6 @@ public class Scheduler {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        g = new GUI();
-
         // Setting up variables
         Scanner input = new Scanner(System.in);
         String response = "0";
@@ -32,13 +30,7 @@ public class Scheduler {
         test(Schedule.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
 
         // Main program
-        while (!response.equals("6")) {
-
-            displayMenu();
-            response = input.next();
-            userChoice(response);
-
-        }
+        g = new GUI(s);
     }
 
     public static GUI getGUI() {
