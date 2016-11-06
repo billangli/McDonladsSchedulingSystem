@@ -9,13 +9,11 @@ public class Schedule {
 
     // Our take on building a 2d array of ARRAYLISTS, Timeslot is the individual ArrayList that holds Employee objects
     private static Timeslot[][] table;
+    private static int[][] totalRequiredEmployees = new int[7][24];
     private Timeslot[][] managerTable;
     private Timeslot[][] workerTable;
-
     // Numnber of employees required at each 1h block
     private int[][] requiredEmployees = new int[7][24];
-    private int[][] totalRequiredEmployees = new int[7][24];
-
     // Employees
     private ArrayList<Employee> allEmployees = new ArrayList<>();
     private ArrayList<Employee> getOnlyManagers = new ArrayList<>();
@@ -95,6 +93,10 @@ public class Schedule {
 
     public static Timeslot[][] getTable() {
         return table;
+    }
+
+    public static int[][] getTotalRequiredEmployees() {
+        return totalRequiredEmployees;
     }
 
     public ArrayList<Employee> getOnlyManagers() {

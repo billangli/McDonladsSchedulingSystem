@@ -41,6 +41,9 @@ public class Scheduler {
         }
     }
 
+    public static GUI getGUI() {
+        return g;
+    }
     /**
      * This is the menu that the user sees
      */
