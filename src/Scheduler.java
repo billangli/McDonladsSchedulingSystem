@@ -12,12 +12,13 @@ import java.util.Scanner;
 
 public class Scheduler {
 
+    static GUI g;
     // Creating static variables
     private static Schedule s;
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        GUI g = new GUI();
+        g = new GUI();
 
         // Setting up variables
         Scanner input = new Scanner(System.in);
@@ -28,7 +29,7 @@ public class Scheduler {
 
         // Initializing program
         s = new Schedule();
-        test(s.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
+        test(Schedule.getTable(), s.getAllEmployees()); //////////////////////////////// for debugging
 
         // Main program
         while (!response.equals("6")) {
@@ -486,12 +487,12 @@ public class Scheduler {
         while (repeat) {
             // Bubbles sorting the managers by pay
             repeat = false;
-            for (int i = 0; i < s.onlyManagers.size() - 1; i++) {
-                if (s.onlyManagers.get(i).getPay() < s.onlyManagers.get(i + 1).getPay()) {
+            for (int i = 0; i < s.getOnlyManagers().size() - 1; i++) {
+                if (s.getOnlyManagers().get(i).getPay() < s.getOnlyManagers().get(i + 1).getPay()) {
                     // Swapping the manager objects
-                    swapToBack = s.onlyManagers.get(i);
-                    s.onlyManagers.set(i, s.onlyManagers.get(i + 1));
-                    s.onlyManagers.set(i + 1, swapToBack);
+                    swapToBack = s.getOnlyManagers().get(i);
+                    s.getOnlyManagers().set(i, s.getOnlyManagers().get(i + 1));
+                    s.getOnlyManagers().set(i + 1, swapToBack);
                     repeat = true;
                 }
             }
@@ -501,23 +502,23 @@ public class Scheduler {
         while (repeat) {
             // Bubbles sorting the workers by pay
             repeat = false;
-            for (int i = 0; i < s.onlyWorkers.size() - 1; i++) {
-                if (s.onlyWorkers.get(i).getPay() < s.onlyWorkers.get(i + 1).getPay()) {
+            for (int i = 0; i < s.getOnlyWorkers().size() - 1; i++) {
+                if (s.getOnlyWorkers().get(i).getPay() < s.getOnlyWorkers().get(i + 1).getPay()) {
                     // Swapping the worker objects
-                    swapToBack = s.onlyWorkers.get(i);
-                    s.onlyWorkers.set(i, s.onlyWorkers.get(i + 1));
-                    s.onlyWorkers.set(i + 1, swapToBack);
+                    swapToBack = s.getOnlyWorkers().get(i);
+                    s.getOnlyWorkers().set(i, s.getOnlyWorkers().get(i + 1));
+                    s.getOnlyWorkers().set(i + 1, swapToBack);
                     repeat = true;
                 }
             }
         }
 
         // Displaying the employees
-        for (int i = 0; i < s.onlyManagers.size(); i++) {
-            System.out.println("Manager: " + s.onlyManagers.get(i).getFullName() + "\tSalary: " + s.onlyManagers.get(i).getPay());
+        for (int i = 0; i < s.getOnlyManagers().size(); i++) {
+            System.out.println("Manager: " + s.getOnlyManagers().get(i).getFullName() + "\tSalary: " + s.getOnlyManagers().get(i).getPay());
         }
-        for (int i = 0; i < s.onlyWorkers.size(); i++) {
-            System.out.println("Employee: " + s.onlyWorkers.get(i).getFullName() + "\tWage: " + s.onlyWorkers.get(i).getPay());
+        for (int i = 0; i < s.getOnlyWorkers().size(); i++) {
+            System.out.println("Employee: " + s.getOnlyWorkers().get(i).getFullName() + "\tWage: " + s.getOnlyWorkers().get(i).getPay());
         }
     }
 
@@ -536,8 +537,8 @@ public class Scheduler {
             for (int j = 0; j < 24; j++) {
                 System.out.println("Hour: " + j);
 
-                for (int k = 0; k < s.table[i][j].getSlot().size(); k++) {
-                    System.out.println(s.table[i][j].getSlot().get(k).getFullName());
+                for (int k = 0; k < Schedule.getTable()[i][j].getSlot().size(); k++) {
+                    System.out.println(Schedule.getTable()[i][j].getSlot().get(k).getFullName());
                 }
             }
         }
@@ -553,6 +554,6 @@ public class Scheduler {
     }
 
     private static ArrayList<Employee> getE() {
-        return s.allEmployees;
+        return s.getAllEmployees();
     }
 }

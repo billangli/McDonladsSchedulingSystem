@@ -54,6 +54,7 @@ class MainPanel extends JPanel {
         displaySchedule.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the schedule panel
+                switchPanel(new ScheduleDisplayPanel());
             }
         });
 
@@ -63,5 +64,9 @@ class MainPanel extends JPanel {
         this.add(listEmployees);
         this.add(runScheduler);
         this.add(displaySchedule);
+    }
+
+    void switchPanel(JPanel p) {
+        Scheduler.g.switchPanel(this, p);
     }
 }

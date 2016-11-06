@@ -14,4 +14,10 @@ class GUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
+
+    public void switchPanel(JPanel old, JPanel next) {
+        this.remove(old);
+        this.add(next);
+        this.repaint();
+    }
 }
