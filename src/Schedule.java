@@ -10,14 +10,11 @@ public class Schedule {
 
     // Our take on building a 2d array of ARRAYLISTS, Timeslot is the individual ArrayList that holds Employee objects
     private static Timeslot[][] table;
+    // Numnber of employees required at each 1h block
+    private static int[][] requiredEmployees = new int[7][24];
     private static int[][] totalRequiredEmployees = new int[7][24];
     private Timeslot[][] managerTable;
     private Timeslot[][] workerTable;
-
-    // Numnber of employees required at each 1h block
-    private int[][] requiredEmployees = new int[7][24];
-    private int[][] totalRequiredEmployees = new int[7][24];
-
     // Employees
     private ArrayList<Employee> allEmployees = new ArrayList<>();
     private ArrayList<Employee> getOnlyManagers = new ArrayList<>();
@@ -300,7 +297,7 @@ public class Schedule {
                 // Adding hours and requiredEmployees to program
                 for (int i = inHour; i < outHour; i++) {
                     // Add requiredEmployees to each time slot
-                    this.requiredEmployees[day][i] = requiredEmployees;
+                    Schedule.requiredEmployees[day][i] = requiredEmployees;
                     //table[day][i].setRequiredEmployees(requiredEmployees);
                 }
 
@@ -308,9 +305,9 @@ public class Schedule {
         } catch (Exception e) {
             System.out.println("*** Something wrong with the buffered reader in readHours");
         }
-        for (int i = 0; i < this.requiredEmployees.length; i++) {
-            for (int j = 0; j < this.requiredEmployees[i].length; j++) {
-                totalRequiredEmployees[i][j] = this.requiredEmployees[i][j];
+        for (int i = 0; i < Schedule.requiredEmployees.length; i++) {
+            for (int j = 0; j < Schedule.requiredEmployees[i].length; j++) {
+                totalRequiredEmployees[i][j] = Schedule.requiredEmployees[i][j];
             }
         }
 

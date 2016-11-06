@@ -47,7 +47,7 @@ public class ScheduleDisplayPanel extends JPanel {
         mainMenu = new JButton("Go back to main menu");
         mainMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Open up the schedule panel
+                // Open up the main panel
                 switchPanel(new MainPanel());
             }
         });

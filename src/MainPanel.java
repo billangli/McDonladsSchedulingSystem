@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by RobbieZhuang on 2016-11-05.
  */
-class MainPanel extends JPanel {
+public class MainPanel extends JPanel {
     private JButton editWorker;
     private JButton editManager;
     private JButton listEmployees;
@@ -15,7 +15,7 @@ class MainPanel extends JPanel {
     private JButton quit;
     private JLabel title;
 
-    MainPanel(Schedule s) {
+    public MainPanel(Schedule s) {
         this.setLayout(new FlowLayout());
         title = new JLabel("McDonlads Scheduling System 69.420");
         title.setFont(title.getFont().deriveFont(52.0f));
