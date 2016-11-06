@@ -7,28 +7,19 @@ import java.util.StringTokenizer;
  */
 public class Schedule {
 
-    //
-    //
-    //
-    // FOR TESTING PURPOSES ONLY
-    int[][] s = new int[7][24];
-    //
-    //
-    //
-
     // Our take on building a 2d array of ARRAYLISTS, Timeslot is the individual ArrayList that holds Employee objects
-    Timeslot[][] table;
-    Timeslot[][] managerTable;
-    Timeslot[][] workerTable;
+    private static Timeslot[][] table;
+    private Timeslot[][] managerTable;
+    private Timeslot[][] workerTable;
 
     // Numnber of employees required at each 1h block
-    int[][] requiredEmployees = new int[7][24];
-    int[][] totalRequiredEmployees = new int[7][24];
+    private int[][] requiredEmployees = new int[7][24];
+    private int[][] totalRequiredEmployees = new int[7][24];
 
     // Employees
-    ArrayList<Employee> allEmployees = new ArrayList<>();
-    ArrayList<Employee> onlyManagers = new ArrayList<>();
-    ArrayList<Employee> onlyWorkers = new ArrayList<>();
+    private ArrayList<Employee> allEmployees = new ArrayList<>();
+    private ArrayList<Employee> getOnlyManagers = new ArrayList<>();
+    private ArrayList<Employee> getOnlyWorkers = new ArrayList<>();
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
@@ -48,9 +39,9 @@ public class Schedule {
 
         for (Employee x : allEmployees) {
             if (x instanceof Manager) {
-                onlyManagers.add(x);
+                getOnlyManagers.add(x);
             } else if (x instanceof Worker) {
-                onlyWorkers.add(x);
+                getOnlyWorkers.add(x);
             }
         }
     }
@@ -102,6 +93,18 @@ public class Schedule {
         }
     }
 
+    public static Timeslot[][] getTable() {
+        return table;
+    }
+
+    public ArrayList<Employee> getOnlyManagers() {
+        return getOnlyManagers;
+    }
+
+    public ArrayList<Employee> getOnlyWorkers() {
+        return getOnlyWorkers;
+    }
+
     public void scheduleEmployees() {
 
     }
@@ -109,7 +112,7 @@ public class Schedule {
     // Add all the managers in and make sure they work at least 40 hours
     public void scheduleManagers() {
         // Put all the managers in (have some work more than total required just for the hours)
-        for (Employee x : onlyManagers) {
+        for (Employee x : getOnlyManagers) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
                     if (x.getHoursAvailable()[i][j] && !x.getHoursWorking()[i][j] && totalRequiredEmployees[i][j] > 0) {
@@ -124,7 +127,7 @@ public class Schedule {
             }
         }
         // Optimize managers
-        for (Employee x : onlyManagers) {
+        for (Employee x : getOnlyManagers) {
             int hoursOvertime = x.getTotalHours() - ((Manager) x).getMinWorkHours();
 //          If manager is not removed at any of the times, then we should skip checking this manager
 //          int shouldSkip = 0;
@@ -181,8 +184,8 @@ public class Schedule {
             }
         }
 
-        int averageHoursOfWorkLeft = hoursLeftToFill / onlyWorkers.size() * 2;
-        for (Employee x : onlyWorkers) {
+        int averageHoursOfWorkLeft = hoursLeftToFill / getOnlyWorkers.size() * 2;
+        for (Employee x : getOnlyWorkers) {
             int cnt = averageHoursOfWorkLeft;
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
@@ -197,7 +200,7 @@ public class Schedule {
             }
         }
 
-        for (Employee x : onlyWorkers) {
+        for (Employee x : getOnlyWorkers) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 24; j++) {
                     if (requiredEmployees[i][j] > 0 && !x.getHoursWorking()[i][j] && x.getHoursAvailable()[i][j]) {
@@ -230,7 +233,7 @@ public class Schedule {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
                 if (requiredEmployees[i][j] > 0) {
-                    for (Employee x : onlyManagers) {
+                    for (Employee x : getOnlyManagers) {
                         if (requiredEmployees[i][j] > 0 && !x.getHoursWorking()[i][j] && x.getHoursAvailable()[i][j]) {
                             table[i][j].addEmployee(x);
                             x.addHourOfWork();
@@ -363,10 +366,6 @@ public class Schedule {
         }
 
         return w;
-    }
-
-    public Timeslot[][] getTable() {
-        return table;
     }
 
     public ArrayList<Employee> getAllEmployees() {
