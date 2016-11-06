@@ -12,9 +12,10 @@ class MainPanel extends JPanel {
     private JButton listEmployees;
     private JButton runScheduler;
     private JButton displaySchedule;
+    private JButton quit;
     private JLabel title;
 
-    MainPanel() {
+    MainPanel(Schedule s) {
         this.setLayout(new FlowLayout());
         title = new JLabel("McDonlads Scheduling System 69.420");
         title.setFont(title.getFont().deriveFont(52.0f));
@@ -25,6 +26,7 @@ class MainPanel extends JPanel {
         editWorker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
+                switchPanel(new ManageWorkerPanel(s));
             }
         });
 
@@ -58,12 +60,21 @@ class MainPanel extends JPanel {
             }
         });
 
+        quit = new JButton("Quit");
+        quit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Quit program
+                Scheduler.g.quit();
+            }
+        });
 
-        this.add(editManager);
+
         this.add(editWorker);
+        this.add(editManager);
         this.add(listEmployees);
         this.add(runScheduler);
         this.add(displaySchedule);
+        this.add(quit);
     }
 
     void switchPanel(JPanel p) {

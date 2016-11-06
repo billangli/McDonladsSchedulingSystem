@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -95,6 +96,18 @@ public class Schedule {
 
     public static Timeslot[][] getTable() {
         return table;
+    }
+
+    private static int getInHour(String response, Scanner input) {
+        System.out.println("Enter hour in when available:");
+        response = input.next();
+        return Integer.parseInt(response);
+    }
+
+    private static int getOutHour(String response, Scanner input) {
+        System.out.println("Enter hour out when available:");
+        response = input.next();
+        return Integer.parseInt(response);
     }
 
     public ArrayList<Employee> getOnlyManagers() {
@@ -370,5 +383,423 @@ public class Schedule {
 
     public ArrayList<Employee> getAllEmployees() {
         return allEmployees;
+    }
+
+    private void addEditOrRemoveEmployee(int employeeType) throws FileNotFoundException {
+
+        System.out.println("Enter 1 to add employee");
+        System.out.println("Enter 2 to edit employee");
+        System.out.println("Enter 3 to remove employee");
+
+        Scanner input = new Scanner(System.in);
+        int response = input.nextInt();
+
+        if (response == 1) {
+            if (employeeType == 0) {
+                addManager();
+            } else {
+                addWorker();
+            }
+        } else if (response == 2) {
+            editEmployee();
+        } else if (response == 3) {
+//            removeEmployee();
+        }
+    }
+
+    private void addWorker() throws FileNotFoundException {
+
+        Scanner input = new Scanner(System.in);
+        String response;
+        boolean repeat = true;
+        Worker w = new Worker();
+
+        System.out.println("What is the worker'this name?");
+        response = input.nextLine();
+        w.setFullName(response);
+        System.out.println("What is the worker'this address?");
+        response = input.nextLine();
+        w.setAddress(response);
+        System.out.println("What is the worker'this wage?");
+        response = input.next();
+        w.setPay(Integer.parseInt(response));
+
+        while (repeat) {
+
+            int day = getDay(response, input);
+            int inHour = getInHour(response, input);
+            int outHour = getOutHour(response, input);
+
+
+            for (int i = inHour; i < outHour; i++) {
+                w.setHoursAvailable(day, i, true);
+            }
+
+            System.out.println("Enter -1 to add another available time");
+            response = input.next();
+            if (!response.equals("-1")) {
+                repeat = false;
+            }
+        }
+        // Add worker to all employees
+        System.out.println("Adding worker to all employees");
+        this.allEmployees.add(w);
+
+        System.out.println("Updating employee file");
+        updateEmployeeFile();
+    }
+
+    private void addManager() throws FileNotFoundException {
+
+        Scanner input = new Scanner(System.in);
+        String response;
+        boolean repeat = true;
+        Manager m = new Manager();
+
+        System.out.println("What is the manager'this name?");
+        response = input.nextLine();
+        m.setFullName(response);
+        System.out.println("What is the manager'this address?");
+        response = input.nextLine();
+        m.setAddress(response);
+        System.out.println("What is the manager'this salary?");
+        response = input.next();
+        m.setPay(Integer.parseInt(response));
+
+        while (repeat) {
+
+            int day = getInHour(response, input);
+            int inHour = getInHour(response, input);
+            int outHour = getOutHour(response, input);
+
+            for (int i = inHour; i < outHour; i++) {
+                m.setHoursAvailable(day, i, true);
+            }
+
+            System.out.println("Enter -1 to add another available time");
+            response = input.next();
+            if (!response.equals("-1")) {
+                repeat = false;
+            }
+        }
+        // Add manager to all employees
+        System.out.println("Adding manager to employees");
+        this.allEmployees.add(m);
+
+        System.out.println("Updating employee file");
+        updateEmployeeFile();
+    }
+
+    private int getDay(String response, Scanner input) {
+        System.out.println("Enter day when available:");
+        response = input.next();
+        return dayToNum(response);
+    }
+
+    private void editEmployee() throws FileNotFoundException {
+
+        Scanner input = new Scanner(System.in);
+        String response;
+        boolean repeat = true;
+        int employeeNumber;
+
+        while (repeat) {
+
+            // Displaying all the employees and letting the user choose which one to change
+            displayEmployees();
+            System.out.println("Enter the employee # to select employee");
+            employeeNumber = Integer.parseInt(input.next());
+
+            System.out.println("Enter 1 to change employee name.");
+            System.out.println("Enter 2 to change employee address.");
+            System.out.println("Enter 3 to change employee wage.");
+            System.out.println("Enter 4 to change employee availability.");
+            response = input.next();
+
+            switch (response) {
+                case "1":
+                    editName(employeeNumber);
+                    break;
+                case "2":
+                    editAddress(employeeNumber);
+                    break;
+                case "3":
+                    if (this.allEmployees.get(employeeNumber) instanceof Manager) {
+                        editSalary(employeeNumber);
+                    } else {
+                        editWage(employeeNumber);
+                    }
+                    break;
+                case "4":
+                    editAvailability(employeeNumber);
+                    break;
+            }
+
+            System.out.println("Enter -1 to edit something else");
+            response = input.next();
+            if (!response.equals("-1")) {
+                repeat = false;
+            }
+        }
+
+        System.out.println("Updating employee file");
+        updateEmployeeFile();
+    }
+
+    private void editName(int employeeNumber) {
+        Scanner input = new Scanner(System.in);
+        String response;
+        System.out.println("Enter the new name of " + this.allEmployees.get(employeeNumber).getFullName());
+        response = input.nextLine();
+        this.allEmployees.get(employeeNumber).setFullName(response);
+    }
+
+    private void editAddress(int employeeNumber) {
+        Scanner input = new Scanner(System.in);
+        String response;
+        System.out.println("Enter the new address of " + this.allEmployees.get(employeeNumber).getFullName());
+        response = input.nextLine();
+        this.allEmployees.get(employeeNumber).setAddress(response);
+    }
+
+    private void editSalary(int employeeNumber) {
+        Scanner input = new Scanner(System.in);
+        String response;
+        System.out.println("Enter the new salary of " + this.allEmployees.get(employeeNumber).getFullName());
+        response = input.nextLine();
+        this.allEmployees.get(employeeNumber).setPay(Integer.parseInt(response));
+    }
+
+    private void editWage(int employeeNumber) {
+        Scanner input = new Scanner(System.in);
+        String response;
+        System.out.println("Enter the new wage of " + this.allEmployees.get(employeeNumber).getFullName());
+        response = input.nextLine();
+        this.allEmployees.get(employeeNumber).setPay(Integer.parseInt(response));
+    }
+
+    private void editAvailability(int employeeNumber) {
+
+        // Creating variables
+        Scanner input = new Scanner(System.in);
+        String response;
+        int day;
+        int inHour;
+        int outHour;
+        boolean newAvailability;
+
+        // Displaying the availability to user
+        displayAvailability(this.allEmployees.get(employeeNumber));
+
+        // Selecting day and hours to change
+        System.out.println("Enter the day to change");
+        response = input.next();
+        day = dayToNum(response);
+        System.out.println("Enter the in hour to change");
+        response = input.next();
+        inHour = Integer.parseInt(response);
+        System.out.println("Enter the out hour to change");
+        response = input.next();
+        outHour = Integer.parseInt(response);
+        System.out.println("Enter new availability for those hours (1 for available");
+        response = input.next();
+        newAvailability = response.equals("1");
+        for (int i = inHour; i < outHour; i++) {
+            this.allEmployees.get(employeeNumber).setHoursAvailable(day, i, newAvailability);
+        }
+    }
+
+    void removeEmployee(int response) {
+        this.allEmployees.remove(response);
+
+        System.out.println("Updating employee file");
+        try {
+            updateEmployeeFile();
+        } catch (Exception exception) {
+            System.out.println("*** Something wrong with remove employee");
+            exception.printStackTrace();
+        }
+    }
+
+    private void displayEmployees() {
+        for (int i = 0; i < this.allEmployees.size(); i++) {
+            System.out.println("Employee #" + i + ": " + this.allEmployees.get(i).getFullName());
+        }
+    }
+
+    private void displayAvailability(Employee employee) {
+        boolean[][] availabilty = employee.getHoursAvailable();
+        System.out.println("Availability: (1 is available)");
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                if (availabilty[i][j]) {
+                    System.out.println("1");
+                } else {
+                    System.out.println("0");
+                }
+            }
+        }
+    }
+
+    private int dayToNum(String day) {
+        if (day.equalsIgnoreCase("M")) {
+            return 0;
+        } else if (day.equalsIgnoreCase("T")) {
+            return 1;
+        } else if (day.equalsIgnoreCase("W")) {
+            return 2;
+        } else if (day.equalsIgnoreCase("R")) {
+            return 3;
+        } else if (day.equalsIgnoreCase("F")) {
+            return 4;
+        } else if (day.equalsIgnoreCase("this")) {
+            return 5;
+        } else if (day.equalsIgnoreCase("U")) {
+            return 6;
+        } else {
+            System.out.println("*** Day is wrong");
+            return -1;
+        }
+    }
+
+    private String numToDay(int day) {
+        if (day == 0) {
+            return "M";
+        } else if (day == 1) {
+            return "T";
+        } else if (day == 2) {
+            return "W";
+        } else if (day == 3) {
+            return "R";
+        } else if (day == 4) {
+            return "F";
+        } else if (day == 5) {
+            return "this";
+        } else if (day == 6) {
+            return "U";
+        } else {
+            System.out.println("*** Day is wrong");
+            return "Error";
+        }
+    }
+
+    private void updateEmployeeFile() throws FileNotFoundException {
+
+        // Making sure all employees are sorted before the output starts
+        organizeEmployees();
+
+
+        PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
+
+        for (Employee employee : this.allEmployees) {
+            output.println(employee.getClass());
+            output.println(employee.getFullName());
+            output.println(employee.getAddress());
+            if (employee instanceof Manager) {
+                output.println(employee.getPay());
+            } else {
+                output.println(employee.getPay());
+            }
+            for (int j = 0; j < 7; j++) {
+                for (int k = 0; k < 24; k++) {
+                    if (employee.getHoursAvailable()[j][k]) {
+                        output.print("1 ");
+                    } else {
+                        output.print("0 ");
+                    }
+                }
+                output.println("");
+            }
+        }
+        output.close();
+    }
+
+    void manageWorker() throws FileNotFoundException {
+
+        // Changing panels
+        addEditOrRemoveEmployee(1);
+
+    }
+
+    void manageManager() throws FileNotFoundException {
+
+        addEditOrRemoveEmployee(0);
+
+    }
+
+    void listEmployees() {
+
+        organizeEmployees();
+//        displayEmployees();
+
+    }
+
+    private void organizeEmployees() {
+
+        System.out.println("Organizing Employees");
+
+        // Creating variables to swap employee objects
+        Employee swapToBack;
+        boolean repeat = true;
+
+        while (repeat) {
+            // Bubbles sorting the managers by pay
+            repeat = false;
+            for (int i = 0; i < this.getOnlyManagers.size() - 1; i++) {
+                if (this.getOnlyManagers.get(i).getPay() < this.getOnlyManagers.get(i + 1).getPay()) {
+                    // Swapping the manager objects
+                    swapToBack = this.getOnlyManagers.get(i);
+                    this.getOnlyManagers.set(i, this.getOnlyManagers.get(i + 1));
+                    this.getOnlyManagers.set(i + 1, swapToBack);
+                    repeat = true;
+                }
+            }
+        }
+
+        repeat = true;
+        while (repeat) {
+            // Bubbles sorting the workers by pay
+            repeat = false;
+            for (int i = 0; i < this.getOnlyWorkers.size() - 1; i++) {
+                if (this.getOnlyWorkers.get(i).getPay() < this.getOnlyWorkers.get(i + 1).getPay()) {
+                    // Swapping the worker objects
+                    swapToBack = this.getOnlyWorkers.get(i);
+                    this.getOnlyWorkers.set(i, this.getOnlyWorkers.get(i + 1));
+                    this.getOnlyWorkers.set(i + 1, swapToBack);
+                    repeat = true;
+                }
+            }
+        }
+
+        // Displaying the employees
+        for (int i = 0; i < this.getOnlyManagers.size(); i++) {
+            System.out.println("Manager: " + this.getOnlyManagers.get(i).getFullName() + "\tSalary: " + this.getOnlyManagers.get(i).getPay());
+        }
+        for (int i = 0; i < this.getOnlyWorkers.size(); i++) {
+            System.out.println("Employee: " + this.getOnlyWorkers.get(i).getFullName() + "\tWage: " + this.getOnlyWorkers.get(i).getPay());
+        }
+    }
+
+    void runScheduler() {
+        //this.dumpEmployees();
+        //this.optimizeEmployees();
+        this.scheduleManagers();
+        this.scheduleWorkers();
+        this.fillUpTheRest();
+    }
+
+    void displaySchedule() {
+
+        for (int i = 0; i < 7; i++) {
+            System.out.println("\nDay: " + numToDay(i));
+            for (int j = 0; j < 24; j++) {
+                System.out.println("Hour: " + j);
+
+                for (int k = 0; k < table[i][j].getSlot().size(); k++) {
+                    System.out.println(table[i][j].getSlot().get(k).getFullName());
+                }
+            }
+        }
+
     }
 }
