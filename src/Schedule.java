@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -13,7 +12,7 @@ public class Schedule {
     // Each element of the schedule 2D array contains Timeslot objects
     // which is essentially an arraylist containing employees
     private static Timeslot[][] schedule;
-    // Numnber of employees required at each 1h block
+    // Number of employees required at each 1h block
     // requiredEmployees is the modifiable one
     private static int[][] totalRequiredEmployees = new int[7][24];
     private static int[][] requiredEmployees = new int[7][24];
@@ -49,7 +48,7 @@ public class Schedule {
         readEmployeeInfo();
 
         // Previous methods added all employees into the allEmployees array,
-        // seperate managers and workers into seperate arrays
+        // separate managers and workers into seperate arrays
         for (Employee x : allEmployees) {
             if (x instanceof Manager) {
                 onlyManagers.add(x);
@@ -471,7 +470,16 @@ public class Schedule {
 
     }
 
-    //TODO Bill add comments here
+    /**
+     * readManager
+     * This method reads info from the EmployeeInfo.txt to create a worker
+     *
+     * @param m  is the manager object to be added
+     * @param br is the BufferedReader
+     * @return the updated manager object
+     * @throws IOException in case something goes on with IO
+     * @author Bill Li
+     */
     private Manager readManager(Manager m, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -492,7 +500,16 @@ public class Schedule {
         return m;
     }
 
-    //TODO Bill add comments here
+    /**
+     * readWorker
+     * This method reads info from the EmployeeInfo.txt to create a worker
+     *
+     * @author Bill Li
+     * @param w is the worker object to be added
+     * @param br is the BufferedReader
+     * @return the updated worker object
+     * @throws IOException in case something goes on with IO
+     */
     private Worker readWorker(Worker w, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -513,18 +530,22 @@ public class Schedule {
         return w;
     }
 
+    /**
+     * addWorker
+     * This method adds a worker to the employee arrayList
+     *
+     * @author Bill Li
+     * @param name is the name of the new worker
+     * @param address is the address of the new worker
+     * @param pay is the wage of the new worker
+     */
     void addWorker(String name, String address, String pay) {
 
         Worker w = new Worker();
 
-//        try {
         w.setFullName(name);
         w.setAddress(address);
         w.setPay(Double.parseDouble(pay));
-//        } catch (Exception exception) {
-//            System.out.println("*** Something wrong with addWorker");
-//            return false;
-//        }
 
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
@@ -534,6 +555,15 @@ public class Schedule {
         updateEmployeeFile();
     }
 
+    /**
+     * addManager
+     * This method adds a manager to employee arrayList
+     *
+     * @author Bill Li
+     * @param name is the name of the new manager
+     * @param address is the address of the new manager
+     * @param pay is the salary of the new manager
+     */
     void addManager(String name, String address, String pay) {
 
         Manager m = new Manager();
@@ -550,105 +580,48 @@ public class Schedule {
         updateEmployeeFile();
     }
 
-    private int getDay(String response, Scanner input) {
-        System.out.println("Enter day when available:");
-        response = input.next();
-        return dayToNum(response);
-    }
-
-//    private void editEmployee() throws FileNotFoundException {
-//
-//        Scanner input = new Scanner(System.in);
-//        String response;
-//        boolean repeat = true;
-//        int employeeNumber;
-//
-//        while (repeat) {
-//
-//            // Displaying all the employees and letting the user choose which one to change
-//            displayEmployees();
-//            System.out.println("Enter the employee # to select employee");
-//            employeeNumber = Integer.parseInt(input.next());
-//
-//            System.out.println("Enter 1 to change employee name.");
-//            System.out.println("Enter 2 to change employee address.");
-//            System.out.println("Enter 3 to change employee wage.");
-//            System.out.println("Enter 4 to change employee availability.");
-//            response = input.next();
-//
-//            switch (response) {
-//                case "1":
-//                    editName(employeeNumber);
-//                    break;
-//                case "2":
-//                    editAddress(employeeNumber);
-//                    break;
-//                case "3":
-//                    if (this.allEmployees.get(employeeNumber) instanceof Manager) {
-//                        editSalary(employeeNumber);
-//                    } else {
-//                        editWage(employeeNumber);
-//                    }
-//                    break;
-//                case "4":
-//                    editAvailability(employeeNumber);
-//                    break;
-//            }
-//
-//            System.out.println("Enter -1 to edit something else");
-//            response = input.next();
-//            if (!response.equals("-1")) {
-//                repeat = false;
-//            }
-//        }
-//
-//        System.out.println("Updating employee file");
-/////////////////////////////////////////////////        updateEmployeeFile();
-//    }
-
+    /**
+     * editName
+     * This method changes the name of an employee
+     *
+     * @author Bill Li
+     * @param employeeNumber is the employee number to have something changed
+     * @param name is the new address
+     */
     void editName(int employeeNumber, String name) {
         this.allEmployees.get(employeeNumber).setFullName(name);
     }
 
+    /**
+     * editAddress
+     * This method changes the address of an employee
+     *
+     * @author Bill Li
+     * @param employeeNumber is the employee number to have something chnaged
+     * @param address is the new address
+     */
     void editAddress(int employeeNumber, String address) {
         this.allEmployees.get(employeeNumber).setAddress(address);
     }
 
+    /**
+     * editPay
+     * This method changes the salary/wage of an employee
+     *
+     * @author Bill Li
+     * @param employeeNumber is the employee number
+     * @param pay is the employee's salary/wage
+     */
     void editPay(int employeeNumber, double pay) {
         this.allEmployees.get(employeeNumber).setPay(pay);
     }
 
-//    private void editAvailability(int employeeNumber) {
-//
-//        // Creating variables
-//        Scanner input = new Scanner(System.in);
-//        String response;
-//        int day;
-//        int inHour;
-//        int outHour;
-//        boolean newAvailability;
-//
-//        // Displaying the availability to user
-//        displayAvailability(this.allEmployees.get(employeeNumber));
-//
-//        // Selecting day and hours to change
-//        System.out.println("Enter the day to change");
-//        response = input.next();
-//        day = dayToNum(response);
-//        System.out.println("Enter the in hour to change");
-//        response = input.next();
-//        inHour = Integer.parseInt(response);
-//        System.out.println("Enter the out hour to change");
-//        response = input.next();
-//        outHour = Integer.parseInt(response);
-//        System.out.println("Enter new availability for those hours (1 for available");
-//        response = input.next();
-//        newAvailability = response.equals("1");
-//        for (int i = inHour; i < outHour; i++) {
-//            this.allEmployees.get(employeeNumber).setHoursAvailable(day, i, newAvailability);
-//        }
-//    }
-
+    /**
+     * removeEmployee
+     * This method removes a selected employee
+     *
+     * @param response is the employee #
+     */
     void removeEmployee(int response) {
         this.allEmployees.remove(response);
 
@@ -661,26 +634,13 @@ public class Schedule {
         }
     }
 
-//    private void displayEmployees() {
-//        for (int i = 0; i < this.allEmployees.size(); i++) {
-//            System.out.println("Employee #" + i + ": " + this.allEmployees.get(i).getFullName());
-//        }
-//    }
-
-//    private void displayAvailability(Employee employee) {
-//        boolean[][] availabilty = employee.getHoursAvailable();
-//        System.out.println("Availability: (1 is available)");
-//        for (int i = 0; i < 7; i++) {
-//            for (int j = 0; j < 24; j++) {
-//                if (availabilty[i][j]) {
-//                    System.out.println("1");
-//                } else {
-//                    System.out.println("0");
-//                }
-//            }
-//        }
-//    }
-
+    /**
+     * dayToNum method
+     * This method converts day from from String to int
+     *
+     * @param day is the day in String
+     * @return day in int
+     */
     private int dayToNum(String day) {
         if (day.equalsIgnoreCase("M")) {
             return 0;
