@@ -60,7 +60,7 @@ public class ListEmployeesPanel extends JPanel {
         });
 
         table = new JTable(data, columnNames);
-        table.setRowHeight(table.getRowHeight() * maxRowHeight);
+        table.setRowHeight(20);
         for (int i = 0; i < 6; i++) {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnWidth[i]);
         }

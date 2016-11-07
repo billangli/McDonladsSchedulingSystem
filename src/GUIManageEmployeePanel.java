@@ -294,6 +294,7 @@ class GUIManageEmployeePanel extends JPanel {
         // Creating variables
         private JLabel employeeNameLabel = new JLabel("Employee Name");
         private JLabel changeLabel = new JLabel("Change");
+        private JPanel titlePanel = new JPanel();
         private JPanel topPanel = new JPanel();
         private JPanel bottomPanel = new JPanel();
         private JComboBox employeeNameComboBox;
@@ -303,7 +304,7 @@ class GUIManageEmployeePanel extends JPanel {
         // This is the default constructor
         EditEmployeePanel() {
             this.setLayout(new BorderLayout());
-            titleLabel = new JLabel("Edit Employee");
+            titleLabel = new JLabel("Edit Employee", SwingConstants.CENTER);
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
             employeeNameComboBox = new JComboBox();
@@ -339,7 +340,8 @@ class GUIManageEmployeePanel extends JPanel {
 
 
             // Putting everything together in the panel
-            this.add(titleLabel, BorderLayout.NORTH);
+            titlePanel.add(titleLabel);
+
             topPanel.add(employeeNameLabel);
             topPanel.add(employeeNameComboBox);
             topPanel.add(changeLabel);
@@ -349,6 +351,7 @@ class GUIManageEmployeePanel extends JPanel {
             bottomPanel.add(BorderLayout.WEST, menuButton);
             bottomPanel.add(BorderLayout.EAST, editButton);
 
+            this.add(titleLabel, BorderLayout.NORTH);
             this.add(topPanel, BorderLayout.CENTER);
             this.add(bottomPanel, BorderLayout.SOUTH);
         }
