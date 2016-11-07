@@ -3,9 +3,9 @@ import java.util.ArrayList;
 /**
  * Created by RobbieZhuang on 2016-10-31.
  */
-public class Timeslot {
+public class Timeslot extends ArrayList<Employee> {
+
     private int requiredEmployees;
-    private ArrayList<Employee> slot = new ArrayList<Employee>();
 
     public Timeslot(int requiredEmployees) {
         this.requiredEmployees = requiredEmployees;
@@ -16,13 +16,13 @@ public class Timeslot {
     }
 
     public void addEmployee(Employee e) {
-        slot.add(e);
+        this.add(e);
     }
 
     public void removeEmployee(Employee e) {
-        for (Employee x : slot) {
+        for (Employee x : this) {
             if (x.equals(e)) {
-                slot.remove(x);
+                this.remove(x);
             }
         }
     }
@@ -36,10 +36,10 @@ public class Timeslot {
     }
 
     public ArrayList<Employee> getSlot() {
-        return slot;
+        return this;
     }
 
     public int currentNumberOfEmployees() {
-        return slot.size();
+        return this.size();
     }
 }

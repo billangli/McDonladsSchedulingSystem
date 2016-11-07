@@ -145,7 +145,7 @@ public class ManageWorkerPanel extends JPanel {
             addButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    Scheduler.s.addWorker(employeeNameTextField.getText(),
+                    Scheduler.getS().addWorker(employeeNameTextField.getText(),
                             employeeAddressTextField.getText(),
                             employeePayTextField.getText(),
                             employeeDayTextField.getText(),
@@ -205,8 +205,8 @@ public class ManageWorkerPanel extends JPanel {
             employeeNameLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
 
             employeeNameComboBox = new JComboBox();
-            for (int i = 0; i < Scheduler.s.getOnlyWorkers().size(); i++) {
-                employeeNameComboBox.addItem(Scheduler.s.getOnlyWorkers().get(i).getFullName());
+            for (int i = 0; i < Scheduler.getS().getOnlyWorkers().size(); i++) {
+                employeeNameComboBox.addItem(Scheduler.getS().getOnlyWorkers().get(i).getFullName());
             }
 
             // Button to go back to menu
@@ -222,7 +222,7 @@ public class ManageWorkerPanel extends JPanel {
             nextButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    Scheduler.s.removeEmployee(employeeNameComboBox.getSelectedIndex());
+                    Scheduler.getS().removeEmployee(employeeNameComboBox.getSelectedIndex());
                     switchPanel(new MainPanel());
                 }
             });

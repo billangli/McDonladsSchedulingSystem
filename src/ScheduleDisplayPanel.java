@@ -23,7 +23,7 @@ public class ScheduleDisplayPanel extends JPanel {
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 24; j++) {
-                for (Employee x : Schedule.getTable()[i][j].getSlot()) {
+                for (Employee x : Schedule.getSchedule()[i][j].getSlot()) {
                     if (data[j + 1][i + 1] == null) {
                         data[j + 1][i + 1] = x.getFullName() + "\n";
                     } else {
