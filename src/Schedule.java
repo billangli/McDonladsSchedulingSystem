@@ -15,6 +15,9 @@ public class Schedule {
     // requiredEmployees is the modifiable one
     private static int[][] totalRequiredEmployees = new int[7][24];
     private static int[][] requiredEmployees = new int[7][24];
+    // Recommendation arraylist :D
+    private static ArrayList<Recommendation> recs = new ArrayList<>();
+    private static String recommendationMessage = "";
     // Individual managers schedule and workers schedule
     private Timeslot[][] managerSchedule;
     private Timeslot[][] workerSchedule;
@@ -22,9 +25,6 @@ public class Schedule {
     private ArrayList<Employee> allEmployees = new ArrayList<>();
     private ArrayList<Employee> onlyManagers = new ArrayList<>();
     private ArrayList<Employee> onlyWorkers = new ArrayList<>();
-
-    // Recommendation arraylist :D
-    private ArrayList<Recommendation> recs = new ArrayList<>();
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
@@ -141,6 +141,14 @@ public class Schedule {
         }
     }
 
+    public static ArrayList<Recommendation> getRecs() {
+        return recs;
+    }
+
+    public static String getRecommendationMessage() {
+        return recommendationMessage;
+    }
+
     public ArrayList<Employee> getOnlyManagers() {
         return onlyManagers;
     }
@@ -148,7 +156,6 @@ public class Schedule {
     public ArrayList<Employee> getOnlyWorkers() {
         return onlyWorkers;
     }
-
     // Add all the managers in and make sure they work at least 40 hours
 
     public void scheduleEmployees() {
@@ -380,7 +387,9 @@ public class Schedule {
             for (int j = 0; j < totalRequiredEmployees[i].length; j++) {
                 if (totalRequiredEmployees[i][j] - schedule[i][j].size() > 0) {
                     filled = false;
-                    recs.add(new Recommendation(totalRequiredEmployees[i][j] - schedule[i][j].size(), i, j));
+                    Recommendation r = new Recommendation(totalRequiredEmployees[i][j] - schedule[i][j].size(), i, j);
+                    recommendationMessage += r.getRecommendation() + "\n";
+                    recs.add(r);
                 }
             }
         }
