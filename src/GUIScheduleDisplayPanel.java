@@ -42,11 +42,11 @@ public class GUIScheduleDisplayPanel extends JPanel {
         }
 
 
-        int maxRowHeight = 0;
+        int maxRowHeight = 1;
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
-                if (Schedule.getTotalRequiredEmployees()[i][j] > maxRowHeight) {
-                    maxRowHeight = Schedule.getTotalRequiredEmployees()[i][j];
+                if (Schedule.getSchedule()[i][j].size() > maxRowHeight) {
+                    maxRowHeight = Schedule.getSchedule()[i][j].size();
                 }
             }
         }
@@ -75,7 +75,7 @@ public class GUIScheduleDisplayPanel extends JPanel {
         TableColumn column = null;
         for (int i = 0; i < 5; i++) {
             column = schedule.getColumnModel().getColumn(i);
-            column.setPreferredWidth(100);
+            column.setPreferredWidth(50);
         }
 
         schedule.setFont(new Font("Serif", Font.BOLD, 10));
@@ -98,6 +98,8 @@ public class GUIScheduleDisplayPanel extends JPanel {
     }
 }
 
+/*From TutorialsPoint or something
+ */
 class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 
     public MultiLineCellRenderer() {
