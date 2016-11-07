@@ -1,8 +1,8 @@
-/*
- Scheduler.java
- This is the main program
-
- Created by Bill Li on 2016-10-30.
+/**
+ * McDonalds Scheduling System
+ * This is the main program, it creates a new schedule object and initialites the GUI
+ * @author Bill Li, Robbie Zhuang
+ * @version 1.0
  */
 
 import java.io.FileNotFoundException;
@@ -31,8 +31,6 @@ public class Scheduler {
 
         // Main program
         g = new GUI();
-        displayMenu();
-        userChoice("4");
     }
 
     public static GUI getGUI() {
@@ -520,10 +518,10 @@ public class Scheduler {
         }
     }
 
-    private static void runScheduler() {
+    public static void runScheduler() {
         s.scheduleEmployees();
         if (!s.isScheduleFilled()) {
-            System.out.println("You FAILED!!!");
+            System.out.println("Scheduling Failed!");
         }
     }
 

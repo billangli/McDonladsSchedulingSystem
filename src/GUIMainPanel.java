@@ -17,11 +17,11 @@ public class GUIMainPanel extends JPanel {
     public GUIMainPanel() {
         this.setLayout(new BorderLayout());
 
-        title = new JLabel("McDonlads Scheduling System 69.420", SwingConstants.CENTER);
+        title = new JLabel("McDonlads Scheduling System", SwingConstants.CENTER);
         title.setFont(title.getFont().deriveFont(52.0f));
         this.add(title, BorderLayout.NORTH);
 
-        JPanel buttons = new JPanel(new FlowLayout());
+        JPanel buttons = new JPanel(new GridLayout(2, 2));
 
         editWorker = new JButton("Add/Edit/Remove Employee");
         editWorker.addActionListener(new ActionListener() {
@@ -43,7 +43,7 @@ public class GUIMainPanel extends JPanel {
         runScheduler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Runs scheduler
-                System.out.println("SOMETHING");
+                Scheduler.runScheduler();
                 if (Scheduler.getS().isScheduleFilled()) {
                     JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "Servants successfully scheduled.");
@@ -62,6 +62,7 @@ public class GUIMainPanel extends JPanel {
             }
         });
 
+        /*
         quit = new JButton("Quit");
         quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -69,13 +70,13 @@ public class GUIMainPanel extends JPanel {
                 Scheduler.getGUI().quit();
             }
         });
-
+        */
 
         buttons.add(editWorker);
         buttons.add(listEmployees);
         buttons.add(runScheduler);
         buttons.add(displaySchedule);
-        buttons.add(quit);
+        //buttons.add(quit);
 
         this.add(buttons, BorderLayout.CENTER);
         /*

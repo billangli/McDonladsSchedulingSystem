@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- * Created by RobbieZhuang on 2016-10-31.
+ * @Author Robbie Zhuang, Bill Li
+ * The schedule objects holds and generates the schedule
  */
 public class Schedule {
 
@@ -132,16 +134,6 @@ public class Schedule {
         return Integer.parseInt(response);
     }
 
-    public static void print2DArray(int[][] a) {
-        System.out.println("_________________________");
-        for (int[] b : a) {
-            for (int c : b) {
-                System.out.print(c + " ");
-            }
-            System.out.println();
-        }
-    }
-
     public static ArrayList<Recommendation> getRecs() {
         return recs;
     }
@@ -157,8 +149,16 @@ public class Schedule {
     public ArrayList<Employee> getOnlyWorkers() {
         return onlyWorkers;
     }
-    // Add all the managers in and make sure they work at least 40 hours
 
+    public ArrayList<Employee> getAllEmployees() {
+        return allEmployees;
+    }
+
+    /**
+     * Schedule Employees method that calls the three steps to scheduling employees
+     *
+     * @author Robbie Zhuang
+     */
     public void scheduleEmployees() {
         scheduleManagers();
         scheduleWorkers();
@@ -169,7 +169,6 @@ public class Schedule {
      * Step one of the algorithm which schedules the managers first
      * ADD A DESCRIPTION HERE OF HOW IT WORKS!!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *
-     * @return nothing
      * @author Robbie Zhuang
      */
     public void scheduleManagers() {
@@ -231,23 +230,6 @@ public class Schedule {
                 }
             }
         }
-
-        /*
-        /// TESTINGGGGGG
-        System.out.println("Number of managers that we currently have");
-        for (int i = 0; i < 7; i++){
-            for (int j = 0; j < 24; j++){
-                System.out.print(managerSchedule[i][j].getSlot().size() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("Required Employees");
-        print2DArray(requiredEmployees);
-        System.out.println("Total Required Employees");
-        print2DArray(totalRequiredEmployees);
-        /////////////////
-        */
-
     }
 
     /**
@@ -279,21 +261,6 @@ public class Schedule {
                 }
             }
         }
-        /*
-        /// TESTINGGGGGG
-        System.out.println("Number of workers that we currently have");
-        for (int i = 0; i < 7; i++){
-            for (int j = 0; j < 24; j++){
-                System.out.print(workerSchedule[i][j].getSlot().size() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("Required Employees");
-        print2DArray(requiredEmployees);
-        System.out.println("Total Required Employees");
-        print2DArray(totalRequiredEmployees);
-        /////////////////
-        */
     }
 
     /**
@@ -349,23 +316,16 @@ public class Schedule {
                 }
             }
         }
-
-        /// TESTINGGGGGG
-        System.out.println("Number of everything");
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 24; j++) {
-                System.out.print(schedule[i][j].getSlot().size() + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("Required Employees");
-        print2DArray(requiredEmployees);
-        System.out.println("Total Required Employees");
-        print2DArray(totalRequiredEmployees);
-        /////////////////
-
     }
 
+    /**
+     * Used to add employees to a schedule and update data for employees
+     * @author Robbie Zhuang
+     * @param i day
+     * @param j hour
+     * @param x employee object
+     * @param t the timeslot 2D array
+     */
     public void addEmployeeToSchedule(int i, int j, Employee x, Timeslot[][] t) {
         t[i][j].addEmployee(x);
         x.setHourWorking(i, j, true);
@@ -373,6 +333,14 @@ public class Schedule {
         requiredEmployees[i][j]--;
     }
 
+    /**
+     * Remove employees from a schedule
+     * @author Robbie Zhuang
+     * @param i day
+     * @param j hour
+     * @param x employee object
+     * @param t the timeslot 2D array
+     */
     public void removeEmployeeFromSchedule(int i, int j, Employee x, Timeslot[][] t) {
         // Set manager to not be working at that time and decrease the number of hours they will be
         // working for, finally decrease their hours overtime
@@ -385,6 +353,10 @@ public class Schedule {
         }
     }
 
+    /**
+     * Checks if all spots in the schedule are able to be filled
+     * @return boolean whether or not schedule is filled
+     */
     public boolean isScheduleFilled() {
         boolean filled = true;
         for (int i = 0; i < totalRequiredEmployees.length; i++) {
@@ -400,6 +372,7 @@ public class Schedule {
         return filled;
     }
 
+    //TODO Bill add comments here
     private void readHours() throws FileNotFoundException {
 
         System.out.println("Reading hours from text file");
@@ -414,7 +387,7 @@ public class Schedule {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("assets/Schedule.txt")));
             while ((str = br.readLine()) != null) {
-
+                requiredEmployees = 0;
                 // Reading the file
                 if (str.length() == 1) {
                     day = determineDay(str);
@@ -427,7 +400,7 @@ public class Schedule {
                 // Adding hours and requiredEmployees to program
                 for (int i = inHour; i < outHour; i++) {
                     // Add requiredEmployees to each time slot
-                    Schedule.requiredEmployees[day][i] = requiredEmployees;
+                    Schedule.totalRequiredEmployees[day][i] = requiredEmployees;
                     //schedule[day][i].setRequiredEmployees(requiredEmployees);
                 }
 
@@ -435,14 +408,22 @@ public class Schedule {
         } catch (Exception e) {
             System.out.println("*** Something wrong with the buffered reader in readHours");
         }
-        for (int i = 0; i < Schedule.requiredEmployees.length; i++) {
-            for (int j = 0; j < Schedule.requiredEmployees[i].length; j++) {
-                totalRequiredEmployees[i][j] = Schedule.requiredEmployees[i][j];
+        for (int i = 0; i < Schedule.totalRequiredEmployees.length; i++) {
+            for (int j = 0; j < Schedule.totalRequiredEmployees[i].length; j++) {
+                Schedule.requiredEmployees[i][j] = Schedule.totalRequiredEmployees[i][j];
             }
         }
 
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                System.out.print(totalRequiredEmployees[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
+    //TODO Bill add comments here
     private void readEmployeeInfo() {
 
         // Creating variables
@@ -473,6 +454,7 @@ public class Schedule {
 
     }
 
+    //TODO Bill add comments here
     private Manager readManager(Manager m, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -493,6 +475,7 @@ public class Schedule {
         return m;
     }
 
+    //TODO Bill add comments here
     private Worker readWorker(Worker w, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -511,10 +494,6 @@ public class Schedule {
         }
 
         return w;
-    }
-
-    public ArrayList<Employee> getAllEmployees() {
-        return allEmployees;
     }
 
     void addWorker(String name, String address, String pay) {
@@ -765,6 +744,9 @@ public class Schedule {
 
         System.out.println("Organizing Employees");
 
+        Collections.sort(onlyManagers);
+        Collections.sort(onlyWorkers);
+        /*
         // Creating variables to swap employee objects
         Employee swapToBack;
         boolean repeat = true;
@@ -797,7 +779,7 @@ public class Schedule {
                 }
             }
         }
-
+        */
         // Displaying the employees
         for (int i = 0; i < this.onlyManagers.size(); i++) {
             System.out.println("Manager: " + this.onlyManagers.get(i).getFullName() + "\tSalary: " + this.onlyManagers.get(i).getPay());
@@ -805,28 +787,5 @@ public class Schedule {
         for (int i = 0; i < this.onlyWorkers.size(); i++) {
             System.out.println("Employee: " + this.onlyWorkers.get(i).getFullName() + "\tWage: " + this.onlyWorkers.get(i).getPay());
         }
-    }
-
-    void runScheduler() {
-        //this.dumpEmployees();
-        //this.optimizeEmployees();
-        this.scheduleManagers();
-        this.scheduleWorkers();
-        this.fillUpTheRest();
-    }
-
-    void displaySchedule() {
-
-        for (int i = 0; i < 7; i++) {
-            System.out.println("\nDay: " + numToDay(i));
-            for (int j = 0; j < 24; j++) {
-                System.out.println("Hour: " + j);
-
-                for (int k = 0; k < schedule[i][j].getSlot().size(); k++) {
-                    System.out.println(schedule[i][j].getSlot().get(k).getFullName());
-                }
-            }
-        }
-
     }
 }

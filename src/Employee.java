@@ -18,6 +18,7 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     private int totalHours = 0;
     private int totalHoursAvaliable = 0;
 
+    // Getters and Setters
     String getFullName() {
         return fullName;
     }
@@ -75,6 +76,7 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         return totalHoursAvaliable;
     }
 
+    // Functions
     void addHourOfWork() {
         this.totalHours++;
     }
@@ -84,10 +86,10 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     }
 
     public int compareTo(Employee e) {
-        return this.totalHoursAvaliable - e.getTotalHoursAvaliable();
+        return (int) (this.getPay() - e.getPay());
     }
 
     public int compare(Employee a, Employee b) {
-        return a.getTotalHoursAvaliable() - b.getTotalHoursAvaliable();
+        return (int) (a.getPay() - b.getPay());
     }
 }
