@@ -15,11 +15,13 @@ public class GUIMainPanel extends JPanel {
     private JLabel title;
 
     public GUIMainPanel() {
-        this.setLayout(new FlowLayout());
-        title = new JLabel("McDonlads Scheduling System 69.420");
-        title.setFont(title.getFont().deriveFont(52.0f));
-        this.add(title);
+        this.setLayout(new BorderLayout());
 
+        title = new JLabel("McDonlads Scheduling System 69.420", SwingConstants.CENTER);
+        title.setFont(title.getFont().deriveFont(52.0f));
+        this.add(title, BorderLayout.NORTH);
+
+        JPanel buttons = new JPanel(new FlowLayout());
 
         editWorker = new JButton("Add/Edit/Remove Employee");
         editWorker.addActionListener(new ActionListener() {
@@ -69,12 +71,21 @@ public class GUIMainPanel extends JPanel {
         });
 
 
-        this.add(editWorker);
-        this.add(listEmployees);
-        this.add(runScheduler);
-        this.add(displaySchedule);
-        this.add(quit);
+        buttons.add(editWorker);
+        buttons.add(listEmployees);
+        buttons.add(runScheduler);
+        buttons.add(displaySchedule);
+        buttons.add(quit);
+
+        this.add(buttons, BorderLayout.CENTER);
+        /*
+        ImageIcon icon = new ImageIcon("assets/McDonalds.PNG");
+        JLabel logo = new JLabel();
+        logo.setIcon(icon);
+        this.add(logo, BorderLayout.SOUTH);
+        */
     }
+
 
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);

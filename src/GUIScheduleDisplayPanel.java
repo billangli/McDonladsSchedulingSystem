@@ -20,6 +20,7 @@ public class GUIScheduleDisplayPanel extends JPanel {
 
     GUIScheduleDisplayPanel() {
 
+        this.setLayout(new BorderLayout());
 //        columnNames[0] = "X";
 //        for (int i = 1; i < columnNames.length; i++) {
 //            columnNames[i] = i - 1 + "";
@@ -42,11 +43,11 @@ public class GUIScheduleDisplayPanel extends JPanel {
         }
 
 
-        int maxRowHeight = 0;
+        int maxRowHeight = 1;
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 24; j++) {
-                if (Schedule.getTotalRequiredEmployees()[i][j] > maxRowHeight) {
-                    maxRowHeight = Schedule.getTotalRequiredEmployees()[i][j];
+                if (Schedule.getSchedule()[i][j].size() > maxRowHeight) {
+                    maxRowHeight = Schedule.getSchedule()[i][j].size();
                 }
             }
         }
@@ -63,33 +64,30 @@ public class GUIScheduleDisplayPanel extends JPanel {
         };
         dm.setDataVector(data, daysOfTheWeek);
 
-        schedule = new JTable(dm) {
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                //all cells false
-//                return false;
-//            }
-        };
+        schedule = new JTable(dm);
         schedule.setDefaultRenderer(String.class, new MultiLineCellRenderer());
         schedule.setRowHeight(schedule.getRowHeight() * maxRowHeight);
         TableColumn column = null;
         for (int i = 0; i < 5; i++) {
             column = schedule.getColumnModel().getColumn(i);
-            column.setPreferredWidth(100);
+            column.setPreferredWidth(50);
         }
 
         schedule.setFont(new Font("Serif", Font.BOLD, 10));
         JScrollPane scroll = new JScrollPane(schedule);
         scroll.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width - 200, Toolkit.getDefaultToolkit().getScreenSize().height - 200));
-        mainMenu = new JButton("Go back to main menu");
+        mainMenu = new JButton("Menu");
         mainMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the main panel
                 switchPanel(new GUIMainPanel());
             }
         });
-        this.add(scroll);
-        this.add(mainMenu);
+        title = new JLabel("McDonlads Scheduling System", SwingConstants.CENTER);
+        title.setFont(title.getFont().deriveFont(52.0f));
+        this.add(title, BorderLayout.NORTH);
+        this.add(scroll, BorderLayout.CENTER);
+        this.add(mainMenu, BorderLayout.SOUTH);
         this.repaint();
     }
 
@@ -98,6 +96,8 @@ public class GUIScheduleDisplayPanel extends JPanel {
     }
 }
 
+/*From TutorialsPoint or something
+ */
 class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 
     public MultiLineCellRenderer() {
