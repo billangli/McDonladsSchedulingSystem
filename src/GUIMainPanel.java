@@ -48,7 +48,14 @@ public class GUIMainPanel extends JPanel {
         runScheduler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Runs scheduler
-                // Add loading bar or smth i guess
+                System.out.println("SOMETHING");
+                if (Scheduler.getS().isScheduleFilled()) {
+                    JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, "Servants successfully scheduled.");
+                } else {
+                    JFrame frame = new JFrame();
+                    JOptionPane.showMessageDialog(frame, Schedule.getRecommendationMessage());
+                }
             }
         });
 
@@ -64,7 +71,7 @@ public class GUIMainPanel extends JPanel {
         quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Quit program
-                Scheduler.g.quit();
+                Scheduler.getGUI().quit();
             }
         });
 

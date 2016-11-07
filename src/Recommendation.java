@@ -13,7 +13,7 @@ public class Recommendation {
         this.time = t;
     }
 
-    public void printRecommendation() {
-        System.out.println("We recommend finding " + numberOfEmployeesRequired + " employee(s) who can work on " + daysOfTheWeek[day] + " at " + time + " :00.");
+    public String getRecommendation() {
+        return "We recommend finding " + numberOfEmployeesRequired + " employee(s) who can work on " + daysOfTheWeek[day] + " at " + time + ":00.";
     }
 }
