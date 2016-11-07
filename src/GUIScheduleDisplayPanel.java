@@ -1,3 +1,13 @@
+/*
+ GUIScheduleDisplayPanel.java
+ @version 1.0
+ @author Robbie Zhuang
+ @date 7/11/2016
+ This is the schedule display panel
+ */
+
+// Imports
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -5,9 +15,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by RobbieZhuang on 2016-11-06.
- */
 public class GUIScheduleDisplayPanel extends JPanel {
     //    String[] columnNames = new String[8];
     String[] daysOfTheWeek = {"Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -75,9 +82,9 @@ public class GUIScheduleDisplayPanel extends JPanel {
             column.setPreferredWidth(50);
         }
 
-
         schedule.setFont(new Font("Serif", Font.BOLD, 10));
         JScrollPane scroll = new JScrollPane(schedule);
+
         scroll.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width - 200, Toolkit.getDefaultToolkit().getScreenSize().height - 200));
         mainMenu = new JButton("Menu");
         mainMenu.addActionListener(new ActionListener() {
@@ -94,6 +101,12 @@ public class GUIScheduleDisplayPanel extends JPanel {
         this.repaint();
     }
 
+    /**
+     * switchPanel
+     * Calls the method from GUI to switch panels
+     *
+     * @param p JPanel that is to be swtiched to
+     */
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);
     }

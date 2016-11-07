@@ -1,12 +1,20 @@
+/*
+ GUIMainPanel.java
+ @version 1.0
+ @author Robbie Zhuang
+ @date 7/11/2016
+ This is the main menu panel
+ */
+
+// Imports
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by RobbieZhuang on 2016-11-05.
- */
 public class GUIMainPanel extends JPanel {
+
     private JButton editWorker;
     private JButton listEmployees;
     private JButton runScheduler;
@@ -35,7 +43,7 @@ public class GUIMainPanel extends JPanel {
         listEmployees.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up panel displaying all employees
-                switchPanel(new ListEmployeesPanel());
+                switchPanel(new GUIListEmployeesPanel());
             }
         });
 
@@ -62,32 +70,20 @@ public class GUIMainPanel extends JPanel {
             }
         });
 
-        /*
-        quit = new JButton("Quit");
-        quit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Quit program
-                Scheduler.getGUI().quit();
-            }
-        });
-        */
-
         buttons.add(editWorker);
         buttons.add(listEmployees);
         buttons.add(runScheduler);
         buttons.add(displaySchedule);
-        //buttons.add(quit);
 
         this.add(buttons, BorderLayout.CENTER);
-        /*
-        ImageIcon icon = new ImageIcon("assets/McDonalds.PNG");
-        JLabel logo = new JLabel();
-        logo.setIcon(icon);
-        this.add(logo, BorderLayout.SOUTH);
-        */
     }
 
-
+    /**
+     * switchPanel
+     * Calls the method from GUI to switch panels
+     *
+     * @param p JPanel that is to be switched to
+     */
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);
     }

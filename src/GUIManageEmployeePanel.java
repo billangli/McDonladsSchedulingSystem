@@ -1,8 +1,10 @@
 /*
  GUIManageEmployeePanel.java
- This is the panel for the user to manage and edit the employees
-
- Created by Bill Li on 2016-11-06.
+ @version 1.0
+ @author Bill Li
+ @date 7/11/2016
+ This is the employee managing panel
+ TODO Bill, Comment This Stuff
  */
 
 import javax.swing.*;

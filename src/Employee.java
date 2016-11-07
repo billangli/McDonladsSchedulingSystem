@@ -1,10 +1,12 @@
 /*
  Employee.java
- This creates a general employee object
-
- Created by Bill Li on 2016-10-30.
+ @version 1.0
+ @author Bill Li
+ @date 7/11/2016
+ This creates an abstract class employee which is the superclass of the worker and manager objects
  */
 
+// Imports
 import java.util.Comparator;
 
 abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
