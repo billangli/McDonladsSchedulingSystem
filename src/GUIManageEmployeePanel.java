@@ -2,9 +2,11 @@
  GUIManageEmployeePo.java
  @version 1.0
  @author Bill Li
- @date 7/11/2016
+ @date 2016-11-06
  This is the employee managing panel
  */
+
+// Imports
 
 import javax.swing.*;
 import java.awt.*;

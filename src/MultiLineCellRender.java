@@ -2,17 +2,16 @@
  MultiLineCellReader.java
  @version 1.0;
  @author http://www.java2s.com/Code/Java/Swing-Components/MultiLineCellExample.htm
- @date 7/11/2016
+ @date 2016-11-06
  This method allows cells to be multi-lined
  */
 
 // Imports
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import java.awt.Component;
+import java.awt.*;
 
 
 class MultiLineCellRender extends JTextArea implements TableCellRenderer {

@@ -2,7 +2,7 @@
  Recommendation.java
  @version 1.0
  @author Robbie Zhuang
- @date 7/11/2016
+ @date 2016-11-06
  This recommendation object tells the user where to add employees, if required
  */
 

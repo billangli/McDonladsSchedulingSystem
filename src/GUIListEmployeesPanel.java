@@ -1,19 +1,15 @@
 /*
- ListEmployeesPanel.java
+ GUIListEmployeesPanel.java
  @version 1.0
  @author Bill Li
- @date 7/11/2016
+ @date 2016-11-06
  This panel lists the existing employees on a panel\
  */
 
 // Imports
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import java.awt.BorderLayout;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

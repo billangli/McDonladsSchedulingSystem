@@ -1,18 +1,14 @@
 /*
- Recommendation.java
+ Schedule.java
  @version 1.0
- @author Robbie Zhuang
- @date 7/11/2016
+ @author Robbie Zhuang, Bill Li
+ @date 2016-11-06
  This recommendation object tells the user where to add employees, if required
  */
 
 // Imports
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -70,7 +66,7 @@ class Schedule {
     }
 
     /**
-     * determineHour method
+     * determineHour
      * It converts an hour string to an integer value
      *
      * @param str is the string that the hour is converted from
@@ -93,7 +89,7 @@ class Schedule {
     }
 
     /**
-     * determineDay method
+     * determineDay
      * This method takes in a string value of the day and returns the integer value of it
      *
      * @param str is the string value of the day
@@ -125,6 +121,7 @@ class Schedule {
     // Getters (and Setters?)
 
     /**
+     * getSchedule
      * This method returns the schedule 2D array
      *
      * @return Timeslot[][] schedule
@@ -135,6 +132,7 @@ class Schedule {
     }
 
     /**
+     * getTotalRequiredEmployees
      * Returns the 2D integer array containing the mumber of required employees
      *
      * @return int[][] totalRequiredEmployees
@@ -180,7 +178,10 @@ class Schedule {
     /**
      * scheduleManagers
      * Step one of the algorithm which schedules the managers first
-     * ADD A DESCRIPTION HERE OF HOW IT WORKS!!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * First puts managers in all the possible hours they can work in
+     * Afterwards takes out if there are more than enough employees in one time slot
+     * and there is more than one manager
+     * Takes out the rest if there are more employees than required
      *
      * @author Robbie Zhuang
      */
@@ -248,6 +249,7 @@ class Schedule {
     /**
      * scheduleWorkers
      * Step two of the algorithm which schedules the workers next
+     * Step two fo the algorithm
      * Figure out what number gives workers a roughly even amount of time to work and then puts them in.
      *
      * @return nothing
@@ -340,7 +342,7 @@ class Schedule {
 
     /**
      * addEmployeeToSchedule
-     * Used to add employees to a schedule and update data for employees
+     * Used to add employees to a schedule and update data for employees as well as the requiredEmployees array
      * @author Robbie Zhuang
      * @param i day
      * @param j hour
@@ -588,7 +590,7 @@ class Schedule {
 
         m.setFullName(name);
         m.setAddress(address);
-        m.setPay(Integer.parseInt(pay));
+        m.setPay((int) (Double.parseDouble(pay)));
 
         // Add manager to all employees
         System.out.println("Adding manager to employees");
