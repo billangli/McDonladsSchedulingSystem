@@ -6,11 +6,11 @@ import java.awt.*;
  */
 class GUI extends JFrame {
 
-    GUI(Schedule s) {
+    GUI() {
         this.setName("McDonlads Scheduling System");
         this.setTitle("McDonlads Scheduling System");
-        this.add(new MainPanel());
-        this.setSize(new Dimension(1000, 400));
+        this.add(new GUIMainPanel());
+        this.setSize(new Dimension(1000, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }

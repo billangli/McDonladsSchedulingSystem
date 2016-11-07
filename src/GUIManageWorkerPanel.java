@@ -15,6 +15,14 @@ public class ManageWorkerPanel extends JPanel {
     private JButton editButton;
     private JButton removeButton;
     private JLabel titleLabel;
+    private JComboBox selectEmployee;
+    private String employeeType;
+    private String employeeName;
+    private String employeeAddress;
+    private String employeePay;
+    private String day;
+    private String inHour;
+    private String outHour;
 
     ManageWorkerPanel() {
         titleLabel = new JLabel("                    Manage Worker                    ");
@@ -55,7 +63,7 @@ public class ManageWorkerPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new MainPanel());
+                switchPanel(new GUIMainPanel());
             }
         });
 
@@ -128,7 +136,7 @@ public class ManageWorkerPanel extends JPanel {
             menuButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
@@ -215,7 +223,7 @@ public class ManageWorkerPanel extends JPanel {
             menuButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
@@ -223,8 +231,8 @@ public class ManageWorkerPanel extends JPanel {
             nextButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    Scheduler.s.removeEmployee(employeeNameComboBox.getSelectedIndex());
-                    switchPanel(new MainPanel());
+                    Scheduler.getS().removeEmployee(employeeNameComboBox.getSelectedIndex());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
