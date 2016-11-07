@@ -25,16 +25,18 @@ public class ListEmployeesPanel extends JPanel {
         for (int i = 0; i < 5; i++) {
             data[0][i] = columnNames[i];
         }
+
+        int counter = 1;
         for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
-            data[i + 1][0] = i;
-            data[i + 1][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
-            data[i + 1][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
             if (Scheduler.s.getAllEmployees().get(i) instanceof Manager) {
-                data[i + 1][1] = "Manager";
-                data[i + 1][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/yr";
-            } else {
-                data[i + 1][1] = "Worker";
-                data[i + 1][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/hr";
+                addManager(counter, i);
+                counter++;
+            }
+        }
+        for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
+            if (Scheduler.s.getAllEmployees().get(i) instanceof Worker) {
+                addWorker(counter, i);
+                counter++;
             }
         }
 
@@ -52,7 +54,7 @@ public class ListEmployeesPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new MainPanel());
+                switchPanel(new GUIMainPanel());
             }
         });
 
@@ -66,6 +68,23 @@ public class ListEmployeesPanel extends JPanel {
         this.add(table);
         this.add(menuButton);
     }
+
+    private void addManager(int counter, int i) {
+        data[counter][0] = i;
+        data[counter][1] = "Manager";
+        data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
+        data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
+        data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/yr";
+    }
+
+    private void addWorker(int counter, int i) {
+        data[counter][0] = i;
+        data[counter][1] = "Worker";
+        data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
+        data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
+        data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/hr";
+    }
+
 
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);

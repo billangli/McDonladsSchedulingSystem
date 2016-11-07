@@ -42,7 +42,7 @@ public class Schedule {
             }
         }
 
-        //TODO Bill please add comments here
+        // Reading how many employees are requested each hour and info on each employee
         readHours();
         readEmployeeInfo();
 

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ManageWorkerPanel extends JPanel {
+class GUIManageWorkerPanel extends JPanel {
     private JButton menuButton;
     private JButton addButton;
     private JButton editButton;
@@ -24,7 +24,7 @@ public class ManageWorkerPanel extends JPanel {
     private String inHour;
     private String outHour;
 
-    ManageWorkerPanel() {
+    GUIManageWorkerPanel() {
         titleLabel = new JLabel("                    Manage Worker                    ");
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
         this.add(titleLabel);
@@ -151,7 +151,7 @@ public class ManageWorkerPanel extends JPanel {
                                 employeeDayTextField.getText(),
                                 employeeInHoursTextField.getText(),
                                 employeeOutHoursTextField.getText());
-                        switchPanel(new MainPanel());
+                        switchPanel(new GUIMainPanel());
                     } else {
                         Scheduler.s.addWorker(employeeNameTextField.getText(),
                                 employeeAddressTextField.getText(),
@@ -159,7 +159,7 @@ public class ManageWorkerPanel extends JPanel {
                                 employeeDayTextField.getText(),
                                 employeeInHoursTextField.getText(),
                                 employeeOutHoursTextField.getText());
-                        switchPanel(new MainPanel());
+                        switchPanel(new GUIMainPanel());
                     }
                 }
             });
