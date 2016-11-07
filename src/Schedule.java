@@ -248,7 +248,12 @@ public class Schedule {
                 hoursLeftToFill += requiredEmployees[i][j];
             }
         }
-        int averageHoursOfWorkLeft = hoursLeftToFill / onlyWorkers.size();
+        int averageHoursOfWorkLeft = 0;
+        if (onlyWorkers.size() == 0) {
+            averageHoursOfWorkLeft = hoursLeftToFill;
+        } else {
+            averageHoursOfWorkLeft = hoursLeftToFill / onlyWorkers.size();
+        }
 
         // Add workers
         for (Employee x : onlyWorkers) {
