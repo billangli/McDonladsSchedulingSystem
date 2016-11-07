@@ -14,7 +14,7 @@ public class Scheduler {
 
     static GUI g;
     // Creating static variables
-    private static Schedule s;
+    static Schedule s;
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -470,7 +470,7 @@ public class Scheduler {
     private static void listEmployees() {
 
         organizeEmployees();
-//        displayEmployees();
+        displayEmployees();
 
     }
 

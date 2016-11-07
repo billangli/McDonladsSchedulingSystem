@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
  */
 public class GUIMainPanel extends JPanel {
     private JButton editWorker;
-    private JButton editManager;
     private JButton listEmployees;
     private JButton runScheduler;
     private JButton displaySchedule;
@@ -22,7 +21,7 @@ public class GUIMainPanel extends JPanel {
         this.add(title);
 
 
-        editWorker = new JButton("Add/Edit/Remove Worker");
+        editWorker = new JButton("Add/Edit/Remove Employee");
         editWorker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
@@ -30,17 +29,11 @@ public class GUIMainPanel extends JPanel {
             }
         });
 
-        editManager = new JButton("Add/Edit/Remove Manager");
-        editManager.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Open up the manager editing panel
-            }
-        });
-
         listEmployees = new JButton("List out all the employees");
         listEmployees.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up panel displaying all employees
+                switchPanel(new ListEmployeesPanel());
             }
         });
 
@@ -77,7 +70,6 @@ public class GUIMainPanel extends JPanel {
 
 
         this.add(editWorker);
-        this.add(editManager);
         this.add(listEmployees);
         this.add(runScheduler);
         this.add(displaySchedule);
