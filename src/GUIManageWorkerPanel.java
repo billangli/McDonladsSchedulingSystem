@@ -321,7 +321,7 @@ class GUIManageWorkerPanel extends JPanel {
                         Scheduler.s.editAddress(employeeNumber, addressTextField.getText());
                         Scheduler.s.editPay(employeeNumber, Double.parseDouble(payTextField.getText()));
                         switchPanel(new EditHoursPanel(employeeNumber));
-                        // TODO fix the bug where the bottom panel disappears
+                        // TODO fix the bug where the bottom panel disappear
                     }
                 });
 
