@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ManageWorkerPanel extends JPanel {
+public class GUIManageWorkerPanel extends JPanel {
     private JButton menuButton;
     private JButton addButton;
     private JButton editButton;
@@ -24,7 +24,7 @@ public class ManageWorkerPanel extends JPanel {
     private String inHour;
     private String outHour;
 
-    ManageWorkerPanel() {
+    GUIManageWorkerPanel() {
         this.setLayout(new FlowLayout());
         titleLabel = new JLabel("Manage Worker");
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
@@ -64,7 +64,7 @@ public class ManageWorkerPanel extends JPanel {
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new MainPanel());
+                switchPanel(new GUIMainPanel());
             }
         });
 
@@ -137,7 +137,7 @@ public class ManageWorkerPanel extends JPanel {
             menuButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
@@ -151,7 +151,7 @@ public class ManageWorkerPanel extends JPanel {
                             employeeDayTextField.getText(),
                             employeeInHoursTextField.getText(),
                             employeeOutHoursTextField.getText());
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
@@ -214,7 +214,7 @@ public class ManageWorkerPanel extends JPanel {
             menuButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 
@@ -223,7 +223,7 @@ public class ManageWorkerPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
                     Scheduler.getS().removeEmployee(employeeNameComboBox.getSelectedIndex());
-                    switchPanel(new MainPanel());
+                    switchPanel(new GUIMainPanel());
                 }
             });
 

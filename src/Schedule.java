@@ -383,7 +383,7 @@ public class Schedule {
         int requiredEmployees = 0;
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/Schedule.txt")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("assets/Schedule.txt")));
             while ((str = br.readLine()) != null) {
 
                 // Reading the file
@@ -421,7 +421,7 @@ public class Schedule {
         String employeeType;
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/EmployeeInfo.txt")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("assets/EmployeeInfo.txt")));
             while ((str = br.readLine()) != null) {
 
                 Employee e;
@@ -755,7 +755,7 @@ public class Schedule {
         organizeEmployees();
 
         try {
-            PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
+            PrintWriter output = new PrintWriter("assets/EmployeeInfo.txt");
             for (Employee employee : this.allEmployees) {
                 output.println(employee.getClass());
                 output.println(employee.getFullName());

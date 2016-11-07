@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by RobbieZhuang on 2016-11-05.
  */
-public class MainPanel extends JPanel {
+public class GUIMainPanel extends JPanel {
     private JButton editWorker;
     private JButton editManager;
     private JButton listEmployees;
@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
     private JButton quit;
     private JLabel title;
 
-    public MainPanel() {
+    public GUIMainPanel() {
         this.setLayout(new FlowLayout());
         title = new JLabel("McDonlads Scheduling System 69.420");
         title.setFont(title.getFont().deriveFont(52.0f));
@@ -26,7 +26,7 @@ public class MainPanel extends JPanel {
         editWorker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new ManageWorkerPanel());
+                switchPanel(new GUIManageWorkerPanel());
             }
         });
 
@@ -56,7 +56,7 @@ public class MainPanel extends JPanel {
         displaySchedule.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the schedule panel
-                switchPanel(new ScheduleDisplayPanel());
+                switchPanel(new GUIScheduleDisplayPanel());
             }
         });
 

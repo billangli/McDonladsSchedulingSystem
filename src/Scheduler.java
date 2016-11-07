@@ -30,7 +30,7 @@ public class Scheduler {
         test(Schedule.getSchedule(), s.getAllEmployees()); //////////////////////////////// for debugging
 
         // Main program
-        //g = new GUI(s);
+        g = new GUI();
         displayMenu();
         userChoice("4");
     }
@@ -413,7 +413,7 @@ public class Scheduler {
         organizeEmployees();
 
 
-        PrintWriter output = new PrintWriter("src/EmployeeInfo.txt");
+        PrintWriter output = new PrintWriter("assets/EmployeeInfo.txt");
 
         for (Employee employee : getE()) {
             output.println(employee.getClass());
