@@ -35,13 +35,7 @@ public class GUIIndividualScheduleDisplayPanel extends GUIScheduleDisplayPanel {
         };
         dm.setDataVector(data, daysOfTheWeek);
 
-        schedule = new JTable(dm) {
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                //all cells false
-//                return false;
-//            }
-        };
+        schedule = new JTable(dm);
         schedule.setDefaultRenderer(String.class, new MultiLineCellRenderer());
         TableColumn column = null;
         for (int i = 0; i < 5; i++) {

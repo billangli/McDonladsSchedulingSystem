@@ -6,27 +6,29 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListEmployeesPanel extends JPanel {
-    Object[][] data = new Object[Scheduler.s.getAllEmployees().size() + 1][5];
-    private JLabel titleLabel = new JLabel("Employee List at McDonlads");
+    Object[][] data = new Object[Scheduler.s.getAllEmployees().size()][5];
+    private JLabel titleLabel = new JLabel("Employee List", SwingConstants.CENTER);
     private String[] columnNames = {"Employee #", "Type", "Name", "Address", "Salary/Wage"};
     private int[] columnWidth = {100, 80, 150, 150, 100};
     private JTable table;
     private JButton menuButton;
 
     ListEmployeesPanel() {
+        this.setLayout(new BorderLayout());
+
         Scheduler.s.organizeEmployees();
-
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
-
+        /*
         for (int i = 0; i < 5; i++) {
             data[0][i] = columnNames[i];
         }
-
-        int counter = 1;
+        */
+        int counter = 0;
         for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
             if (Scheduler.s.getAllEmployees().get(i) instanceof Manager) {
                 addManager(counter, i);
@@ -64,9 +66,10 @@ public class ListEmployeesPanel extends JPanel {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnWidth[i]);
         }
 
-        this.add(titleLabel);
-        this.add(table);
-        this.add(menuButton);
+        this.add(titleLabel, BorderLayout.NORTH);
+        JScrollPane scroll = new JScrollPane(table);
+        this.add(scroll, BorderLayout.CENTER);
+        this.add(menuButton, BorderLayout.SOUTH);
     }
 
     private void addManager(int counter, int i) {
