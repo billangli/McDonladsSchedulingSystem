@@ -1,7 +1,7 @@
 /*
  Scheduler.java
- McDonalds Scheduling System
- This is the main program, it creates a new schedule object and initialites the GUI
+ McDonads Scheduling System
+ This is the main program, it creates a new schedule object and initializes the GUI
  @author Bill Li, Robbie Zhuang
  @date 2016-11-06
  @version 1.0
