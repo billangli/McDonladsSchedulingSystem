@@ -24,7 +24,8 @@ class GUIManageEmployeePanel extends JPanel {
      */
     GUIManageEmployeePanel() {
         // This is the title label
-        titleLabel = new JLabel("Manage Employee");
+        this.setLayout(new BorderLayout());
+        titleLabel = new JLabel("Manage Employee", SwingConstants.CENTER);
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
         // This button adds an employee
@@ -69,9 +70,9 @@ class GUIManageEmployeePanel extends JPanel {
         optionsPanel.add(editButton);
         optionsPanel.add(removeButton);
         optionsPanel.add(menuButton);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(titleLabel);
-        this.add(optionsPanel);
+
+        this.add(titleLabel, BorderLayout.NORTH);
+        this.add(optionsPanel, BorderLayout.CENTER);
     }
 
     /**

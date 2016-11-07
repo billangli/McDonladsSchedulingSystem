@@ -28,17 +28,17 @@ public class ListEmployeesPanel extends JPanel {
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
         int counter = 0;
-        for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
-            if (Scheduler.s.getAllEmployees().get(i) instanceof Manager) {
+        for (int i = 0; i < Scheduler.s.getOnlyManagers().size(); i++) {
+            //if (Scheduler.s.getOnlyManagers().get(i) instanceof Manager) {
                 addManager(counter, i);
                 counter++;
-            }
+            //}
         }
-        for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
-            if (Scheduler.s.getAllEmployees().get(i) instanceof Worker) {
+        for (int i = 0; i < Scheduler.s.getOnlyWorkers().size(); i++) {
+            //if (Scheduler.s.getOnlyWorkers().get(i) instanceof Worker) {
                 addWorker(counter, i);
                 counter++;
-            }
+            //}
         }
 
         int maxRowHeight = 0;
@@ -82,10 +82,10 @@ public class ListEmployeesPanel extends JPanel {
     private void addManager(int counter, int i) {
         data[counter][0] = i;
         data[counter][1] = "Manager";
-        data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
-        data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
-        data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/yr";
-        data[counter][5] = Scheduler.getS().getAllEmployees().get(i).getTotalHours();
+        data[counter][2] = Scheduler.s.getOnlyManagers().get(i).getFullName();
+        data[counter][3] = Scheduler.s.getOnlyManagers().get(i).getAddress();
+        data[counter][4] = "$" + Scheduler.s.getOnlyManagers().get(i).getPay() + "/yr";
+        data[counter][5] = Scheduler.getS().getOnlyManagers().get(i).getTotalHours();
     }
 
     /**
@@ -99,10 +99,10 @@ public class ListEmployeesPanel extends JPanel {
     private void addWorker(int counter, int i) {
         data[counter][0] = i;
         data[counter][1] = "Worker";
-        data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
-        data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
-        data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/hr";
-        data[counter][5] = Scheduler.getS().getAllEmployees().get(i).getTotalHours();
+        data[counter][2] = Scheduler.s.getOnlyWorkers().get(i).getFullName();
+        data[counter][3] = Scheduler.s.getOnlyWorkers().get(i).getAddress();
+        data[counter][4] = "$" + Scheduler.s.getOnlyWorkers().get(i).getPay() + "/hr";
+        data[counter][5] = Scheduler.getS().getOnlyWorkers().get(i).getTotalHours();
     }
 
     /**

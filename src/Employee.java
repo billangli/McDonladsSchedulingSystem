@@ -86,10 +86,10 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
     }
 
     public int compareTo(Employee e) {
-        return (int) (this.getPay() - e.getPay());
+        return (int) (e.getPay() - this.getPay());
     }
 
     public int compare(Employee a, Employee b) {
-        return (int) (a.getPay() - b.getPay());
+        return (int) (b.getPay() - a.getPay());
     }
 }

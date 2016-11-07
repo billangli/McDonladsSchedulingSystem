@@ -75,6 +75,7 @@ public class GUIScheduleDisplayPanel extends JPanel {
             column.setPreferredWidth(50);
         }
 
+
         schedule.setFont(new Font("Serif", Font.BOLD, 10));
         JScrollPane scroll = new JScrollPane(schedule);
         scroll.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width - 200, Toolkit.getDefaultToolkit().getScreenSize().height - 200));
