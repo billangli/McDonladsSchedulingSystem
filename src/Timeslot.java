@@ -1,8 +1,13 @@
+/*
+ Timeslot.java
+ @version 1.0
+ @author Robbie Zhuang
+ @date 7/11/2016
+ This object extends an arraylist that is used to store employees in a schedule
+ */
+
 import java.util.ArrayList;
 
-/**
- * Created by RobbieZhuang on 2016-10-31.
- */
 public class Timeslot extends ArrayList<Employee> {
 
     private int requiredEmployees;
@@ -26,20 +31,13 @@ public class Timeslot extends ArrayList<Employee> {
             }
         }
     }
-
-    public int getRequiredEmployees() {
-        return requiredEmployees;
-    }
-
-    public void setRequiredEmployees(int requiredEmployees) {
-        this.requiredEmployees = requiredEmployees;
-    }
-
+    
+    /**
+     * getSlot
+     * @returns this arraylist
+     */
     public ArrayList<Employee> getSlot() {
         return this;
     }
 
-    public int currentNumberOfEmployees() {
-        return this.size();
-    }
 }

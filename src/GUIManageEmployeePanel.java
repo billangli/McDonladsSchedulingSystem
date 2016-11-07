@@ -1,5 +1,5 @@
 /*
- GUIManageEmployeePanel.java
+ GUIManageEmployeePo.java
  @version 1.0
  @author Bill Li
  @date 7/11/2016

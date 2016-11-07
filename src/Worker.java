@@ -1,9 +1,9 @@
 /*
  Worker.java
- This creates an object for a worker
- Worker is an extension of employee
-
- Created by Bill Li on 2016-10-30.
+ @version 1.0
+ @author Bill Li
+ @date 2016-10-30
+ This creates an object for a worker, worker is a subclass of Employee
  */
 
 public class Worker extends Employee {
@@ -20,10 +20,18 @@ public class Worker extends Employee {
         }
     }
 
+    /**
+     *
+     * @return the wage
+     */
     public double getPay() {
         return wage;
     }
 
+    /**
+     * sets the wage
+     * @param wage
+     */
     public void setPay(double wage) {
         this.wage = wage;
     }

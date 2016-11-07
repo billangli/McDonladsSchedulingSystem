@@ -1,6 +1,11 @@
-/**
- * Created by Robbie on 2016-11-07.
+/*
+ Recommendation.java
+ @version 1.0
+ @author Robbie Zhuang
+ @date 7/11/2016
+ This recommendation object tells the user where to add employees, if required
  */
+
 public class Recommendation {
     private int numberOfEmployeesRequired;
     private int day;
@@ -13,6 +18,11 @@ public class Recommendation {
         this.time = t;
     }
 
+    /**
+     * getRecommendation
+     * This method usues the data and returns a string that displays the situation
+     * @return A string for display
+     */
     public String getRecommendation() {
         return "We recommend finding " + numberOfEmployeesRequired + " employee(s) who can work on " + daysOfTheWeek[day] + " at " + time + ":00.";
     }

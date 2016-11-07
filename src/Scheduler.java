@@ -1,8 +1,8 @@
-/**
- * McDonalds Scheduling System
- * This is the main program, it creates a new schedule object and initialites the GUI
- * @author Bill Li, Robbie Zhuang
- * @version 1.0
+/*
+ McDonalds Scheduling System
+ This is the main program, it creates a new schedule object and initialites the GUI
+ @author Bill Li, Robbie Zhuang
+ @version 1.0
  */
 
 import java.io.FileNotFoundException;

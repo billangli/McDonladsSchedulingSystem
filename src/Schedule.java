@@ -1,12 +1,23 @@
-import java.io.*;
+/*
+ Recommendation.java
+ @version 1.0
+ @author Robbie Zhuang
+ @date 7/11/2016
+ This recommendation object tells the user where to add employees, if required
+ */
+
+// Imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-/**
- * @Author Robbie Zhuang, Bill Li
- * The schedule objects holds and generates the schedule
- */
 public class Schedule {
 
     // Each element of the schedule 2D array contains Timeslot objects
@@ -155,8 +166,8 @@ public class Schedule {
     }
 
     /**
+     * scheduleEmployees
      * Schedule Employees method that calls the three steps to scheduling employees
-     *
      * @author Robbie Zhuang
      */
     public void scheduleEmployees() {
@@ -166,9 +177,8 @@ public class Schedule {
     }
 
     /**
+     * scheduleManagers
      * Step one of the algorithm which schedules the managers first
-     * ADD A DESCRIPTION HERE OF HOW IT WORKS!!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *
      * @author Robbie Zhuang
      */
     public void scheduleManagers() {
@@ -233,9 +243,9 @@ public class Schedule {
     }
 
     /**
+     * scheduleWorkers
      * Step two of the algorithm which schedules the workers next
      * Figure out what number gives workers a roughly even amount of time to work and then puts them in.
-     *
      * @return nothing
      * @author Robbie Zhuang
      */
@@ -269,9 +279,9 @@ public class Schedule {
     }
 
     /**
+     * fillUpTheRest
      * Step three of the algorithm which fills up empty spots with workers, then fill empty with managers
      * If managers haven't worked their 40h, add them in wherever (they can sweep the floor or something)
-     *
      * @return nothing
      * @author Robbie Zhuang
      */
@@ -324,6 +334,7 @@ public class Schedule {
     }
 
     /**
+     * addEmployeeToSchedule
      * Used to add employees to a schedule and update data for employees
      * @author Robbie Zhuang
      * @param i day
@@ -339,6 +350,7 @@ public class Schedule {
     }
 
     /**
+     * removeEmployeeFromSchedule
      * Remove employees from a schedule
      * @author Robbie Zhuang
      * @param i day
@@ -359,6 +371,7 @@ public class Schedule {
     }
 
     /**
+     * isScheduleFilled
      * Checks if all spots in the schedule are able to be filled
      * @return boolean whether or not schedule is filled
      */
@@ -378,9 +391,8 @@ public class Schedule {
     }
 
     /**
-     * readHours method
+     * readHours
      * It reads the number of required employees for each time slot from the text file
-     *
      * @author Bill Li
      */
     private void readHours() {
@@ -395,6 +407,7 @@ public class Schedule {
         int requiredEmployees = 0;
 
         try {
+
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("assets/Schedule.txt")));
             while ((str = br.readLine()) != null) {
                 requiredEmployees = 0;
@@ -470,16 +483,7 @@ public class Schedule {
 
     }
 
-    /**
-     * readManager
-     * This method reads info from the EmployeeInfo.txt to create a worker
-     *
-     * @param m  is the manager object to be added
-     * @param br is the BufferedReader
-     * @return the updated manager object
-     * @throws IOException in case something goes on with IO
-     * @author Bill Li
-     */
+    //TODO Bill add comments here
     private Manager readManager(Manager m, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -500,16 +504,7 @@ public class Schedule {
         return m;
     }
 
-    /**
-     * readWorker
-     * This method reads info from the EmployeeInfo.txt to create a worker
-     *
-     * @author Bill Li
-     * @param w is the worker object to be added
-     * @param br is the BufferedReader
-     * @return the updated worker object
-     * @throws IOException in case something goes on with IO
-     */
+    //TODO Bill add comments here
     private Worker readWorker(Worker w, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -530,22 +525,18 @@ public class Schedule {
         return w;
     }
 
-    /**
-     * addWorker
-     * This method adds a worker to the employee arrayList
-     *
-     * @author Bill Li
-     * @param name is the name of the new worker
-     * @param address is the address of the new worker
-     * @param pay is the wage of the new worker
-     */
     void addWorker(String name, String address, String pay) {
 
         Worker w = new Worker();
 
+//        try {
         w.setFullName(name);
         w.setAddress(address);
         w.setPay(Double.parseDouble(pay));
+//        } catch (Exception exception) {
+//            System.out.println("*** Something wrong with addWorker");
+//            return false;
+//        }
 
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
@@ -555,15 +546,6 @@ public class Schedule {
         updateEmployeeFile();
     }
 
-    /**
-     * addManager
-     * This method adds a manager to employee arrayList
-     *
-     * @author Bill Li
-     * @param name is the name of the new manager
-     * @param address is the address of the new manager
-     * @param pay is the salary of the new manager
-     */
     void addManager(String name, String address, String pay) {
 
         Manager m = new Manager();
@@ -578,6 +560,12 @@ public class Schedule {
 
         System.out.println("Updating employee file");
         updateEmployeeFile();
+    }
+
+    private int getDay(String response, Scanner input) {
+        System.out.println("Enter day when available:");
+        response = input.next();
+        return dayToNum(response);
     }
 
     /**

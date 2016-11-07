@@ -37,14 +37,6 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
         this.address = address;
     }
 
-    public String getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(String employeeNumber) {
-        this.employeeNumber = employeeNumber;
-    }
-
     abstract public double getPay();
 
     abstract public void setPay(double pay);
@@ -68,14 +60,6 @@ abstract class Employee implements Comparator<Employee>, Comparable<Employee> {
 
     int getTotalHours() {
         return totalHours;
-    }
-
-    public void setTotalHours(int totalHours) {
-        this.totalHours = totalHours;
-    }
-
-    int getTotalHoursAvaliable() {
-        return totalHoursAvaliable;
     }
 
     // Functions
