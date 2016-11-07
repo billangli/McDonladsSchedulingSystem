@@ -11,10 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListEmployeesPanel extends JPanel {
-    Object[][] data = new Object[Scheduler.s.getAllEmployees().size()][5];
+    Object[][] data = new Object[Scheduler.s.getAllEmployees().size()][6];
     private JLabel titleLabel = new JLabel("Employee List", SwingConstants.CENTER);
-    private String[] columnNames = {"Employee #", "Type", "Name", "Address", "Salary/Wage"};
-    private int[] columnWidth = {100, 80, 150, 150, 100};
+    private String[] columnNames = {"Employee #", "Type", "Name", "Address", "Salary/Wage", "Hours Worked"};
+    private int[] columnWidth = {100, 80, 150, 150, 100, 100};
     private JTable table;
     private JButton menuButton;
 
@@ -61,7 +61,7 @@ public class ListEmployeesPanel extends JPanel {
 
         table = new JTable(data, columnNames);
         table.setRowHeight(table.getRowHeight() * maxRowHeight);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnWidth[i]);
         }
 
@@ -85,6 +85,7 @@ public class ListEmployeesPanel extends JPanel {
         data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
         data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
         data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/yr";
+        data[counter][5] = Scheduler.getS().getAllEmployees().get(i).getTotalHours();
     }
 
     /**
@@ -101,6 +102,7 @@ public class ListEmployeesPanel extends JPanel {
         data[counter][2] = Scheduler.s.getAllEmployees().get(i).getFullName();
         data[counter][3] = Scheduler.s.getAllEmployees().get(i).getAddress();
         data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/hr";
+        data[counter][5] = Scheduler.getS().getAllEmployees().get(i).getTotalHours();
     }
 
     /**
