@@ -391,18 +391,17 @@ public class Schedule {
 
         Worker w = new Worker();
 
-        try {
-            w.setFullName(name);
-            w.setAddress(address);
-            w.setPay(Double.parseDouble(pay));
-            for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
-                w.setHoursAvailable(Integer.parseInt(day), i, true);
-                System.out.println(i);
-            }
-        } catch (Exception exception) {
-            System.out.println("*** Something wrong with addWorker");
-            return false;
+//        try {
+        w.setFullName(name);
+        w.setAddress(address);
+        w.setPay(Double.parseDouble(pay));
+        for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
+            w.setHoursAvailable(dayToNum(day), i, true);
         }
+//        } catch (Exception exception) {
+//            System.out.println("*** Something wrong with addWorker");
+//            return false;
+//        }
 
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
@@ -414,39 +413,17 @@ public class Schedule {
         return true;
     }
 
-    private void addManager() throws FileNotFoundException {
+    void addManager(String name, String address, String pay, String day, String inHour, String outHour) {
 
-        Scanner input = new Scanner(System.in);
-        String response;
-        boolean repeat = true;
         Manager m = new Manager();
 
-        System.out.println("What is the manager'this name?");
-        response = input.nextLine();
-        m.setFullName(response);
-        System.out.println("What is the manager'this address?");
-        response = input.nextLine();
-        m.setAddress(response);
-        System.out.println("What is the manager'this salary?");
-        response = input.next();
-        m.setPay(Integer.parseInt(response));
-
-        while (repeat) {
-
-            int day = getInHour(response, input);
-            int inHour = getInHour(response, input);
-            int outHour = getOutHour(response, input);
-
-            for (int i = inHour; i < outHour; i++) {
-                m.setHoursAvailable(day, i, true);
-            }
-
-            System.out.println("Enter -1 to add another available time");
-            response = input.next();
-            if (!response.equals("-1")) {
-                repeat = false;
-            }
+        m.setFullName(name);
+        m.setAddress(address);
+        m.setPay(Integer.parseInt(pay));
+        for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
+            m.setHoursAvailable(dayToNum(day), i, true);
         }
+
         // Add manager to all employees
         System.out.println("Adding manager to employees");
         this.allEmployees.add(m);
@@ -689,7 +666,7 @@ public class Schedule {
 
     }
 
-    private void organizeEmployees() {
+    void organizeEmployees() {
 
         System.out.println("Organizing Employees");
 

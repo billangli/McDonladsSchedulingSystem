@@ -15,18 +15,9 @@ public class ManageWorkerPanel extends JPanel {
     private JButton editButton;
     private JButton removeButton;
     private JLabel titleLabel;
-    private JComboBox selectEmployee;
-    private String employeeType;
-    private String employeeName;
-    private String employeeAddress;
-    private String employeePay;
-    private String day;
-    private String inHour;
-    private String outHour;
 
     ManageWorkerPanel() {
-        this.setLayout(new FlowLayout());
-        titleLabel = new JLabel("Manage Worker");
+        titleLabel = new JLabel("                    Manage Worker                    ");
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
         this.add(titleLabel);
 
@@ -145,13 +136,23 @@ public class ManageWorkerPanel extends JPanel {
             addButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    Scheduler.s.addWorker(employeeNameTextField.getText(),
-                            employeeAddressTextField.getText(),
-                            employeePayTextField.getText(),
-                            employeeDayTextField.getText(),
-                            employeeInHoursTextField.getText(),
-                            employeeOutHoursTextField.getText());
-                    switchPanel(new MainPanel());
+                    if (employeeTypeComboBox.getSelectedIndex() == 0) {
+                        Scheduler.s.addManager(employeeNameTextField.getText(),
+                                employeeAddressTextField.getText(),
+                                employeePayTextField.getText(),
+                                employeeDayTextField.getText(),
+                                employeeInHoursTextField.getText(),
+                                employeeOutHoursTextField.getText());
+                        switchPanel(new MainPanel());
+                    } else {
+                        Scheduler.s.addWorker(employeeNameTextField.getText(),
+                                employeeAddressTextField.getText(),
+                                employeePayTextField.getText(),
+                                employeeDayTextField.getText(),
+                                employeeInHoursTextField.getText(),
+                                employeeOutHoursTextField.getText());
+                        switchPanel(new MainPanel());
+                    }
                 }
             });
 
@@ -205,8 +206,8 @@ public class ManageWorkerPanel extends JPanel {
             employeeNameLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
 
             employeeNameComboBox = new JComboBox();
-            for (int i = 0; i < Scheduler.s.getOnlyWorkers().size(); i++) {
-                employeeNameComboBox.addItem(Scheduler.s.getOnlyWorkers().get(i).getFullName());
+            for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
+                employeeNameComboBox.addItem(Scheduler.s.getAllEmployees().get(i).getFullName());
             }
 
             // Button to go back to menu
