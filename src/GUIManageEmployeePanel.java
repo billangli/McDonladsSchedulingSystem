@@ -201,7 +201,7 @@ class GUIManageEmployeePanel extends JPanel {
 
             // This displays the button array for the hours available
             for (int i = 0; i < 8; i++) {
-                dayLabel[i] = new JLabel(String.format("%1$18s", columnNames[i]));
+                dayLabel[i] = new JLabel(String.format("%1$17s", columnNames[i]));
             }
             for (int i = 0; i < 24; i++) {
                 timePanel[i] = new JPanel(new FlowLayout());
@@ -264,7 +264,7 @@ class GUIManageEmployeePanel extends JPanel {
             // Putting everything together on the panel
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(titleLabel);
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 8; i++) {
                 dayPanel.add(dayLabel[i]);
             }
             this.add(dayPanel);
@@ -302,7 +302,7 @@ class GUIManageEmployeePanel extends JPanel {
 
         // This is the default constructor
         EditEmployeePanel() {
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            this.setLayout(new BorderLayout());
             titleLabel = new JLabel("Edit Employee");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
@@ -339,7 +339,7 @@ class GUIManageEmployeePanel extends JPanel {
 
 
             // Putting everything together in the panel
-            topPanel.add(titleLabel);
+            this.add(titleLabel, BorderLayout.NORTH);
             topPanel.add(employeeNameLabel);
             topPanel.add(employeeNameComboBox);
             topPanel.add(changeLabel);
@@ -349,8 +349,8 @@ class GUIManageEmployeePanel extends JPanel {
             bottomPanel.add(BorderLayout.WEST, menuButton);
             bottomPanel.add(BorderLayout.EAST, editButton);
 
-            this.add(topPanel);
-            this.add(bottomPanel);
+            this.add(topPanel, BorderLayout.CENTER);
+            this.add(bottomPanel, BorderLayout.SOUTH);
         }
 
         /**

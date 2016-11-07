@@ -697,27 +697,10 @@ public class Schedule {
         }
     }
 
-    private String numToDay(int day) {
-        if (day == 0) {
-            return "M";
-        } else if (day == 1) {
-            return "T";
-        } else if (day == 2) {
-            return "W";
-        } else if (day == 3) {
-            return "R";
-        } else if (day == 4) {
-            return "F";
-        } else if (day == 5) {
-            return "this";
-        } else if (day == 6) {
-            return "U";
-        } else {
-            System.out.println("*** Day is wrong");
-            return "Error";
-        }
-    }
-
+    /**
+     * updateEmployeeFile
+     * It updates the employee text file
+     */
     void updateEmployeeFile() {
 
         // Making sure all employees are sorted before the output starts
@@ -762,42 +745,10 @@ public class Schedule {
 
         System.out.println("Organizing Employees");
 
+        // Sorting managers and employees
         Collections.sort(onlyManagers);
         Collections.sort(onlyWorkers);
-        /*
-        // Creating variables to swap employee objects
-        Employee swapToBack;
-        boolean repeat = true;
 
-        while (repeat) {
-            // Bubbles sorting the managers by pay
-            repeat = false;
-            for (int i = 0; i < this.onlyManagers.size() - 1; i++) {
-                if (this.onlyManagers.get(i).getPay() < this.onlyManagers.get(i + 1).getPay()) {
-                    // Swapping the manager objects
-                    swapToBack = this.onlyManagers.get(i);
-                    this.onlyManagers.set(i, this.onlyManagers.get(i + 1));
-                    this.onlyManagers.set(i + 1, swapToBack);
-                    repeat = true;
-                }
-            }
-        }
-
-        repeat = true;
-        while (repeat) {
-            // Bubbles sorting the workers by pay
-            repeat = false;
-            for (int i = 0; i < this.onlyWorkers.size() - 1; i++) {
-                if (this.onlyWorkers.get(i).getPay() < this.onlyWorkers.get(i + 1).getPay()) {
-                    // Swapping the worker objects
-                    swapToBack = this.onlyWorkers.get(i);
-                    this.onlyWorkers.set(i, this.onlyWorkers.get(i + 1));
-                    this.onlyWorkers.set(i + 1, swapToBack);
-                    repeat = true;
-                }
-            }
-        }
-        */
         // Displaying the employees
         for (int i = 0; i < this.onlyManagers.size(); i++) {
             System.out.println("Manager: " + this.onlyManagers.get(i).getFullName() + "\tSalary: " + this.onlyManagers.get(i).getPay());
