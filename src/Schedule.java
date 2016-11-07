@@ -110,8 +110,9 @@ public class Schedule {
 
     /**
      * Returns the 2D integer array containing the mumber of required employees
-     * @author Robbie Zhuang
+     *
      * @return int[][] totalRequiredEmployees
+     * @author Robbie Zhuang
      */
     public static int[][] getTotalRequiredEmployees() {
         return totalRequiredEmployees;
@@ -167,8 +168,9 @@ public class Schedule {
     /**
      * Step one of the algorithm which schedules the managers first
      * ADD A DESCRIPTION HERE OF HOW IT WORKS!!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     * @author Robbie Zhuang
+     *
      * @return nothing
+     * @author Robbie Zhuang
      */
     public void scheduleManagers() {
 
@@ -251,8 +253,9 @@ public class Schedule {
     /**
      * Step two of the algorithm which schedules the workers next
      * Figure out what number gives workers a roughly even amount of time to work and then puts them in.
-     * @author Robbie Zhuang
+     *
      * @return nothing
+     * @author Robbie Zhuang
      */
     public void scheduleWorkers() {
         // First figures out how long each worker should work for approximately
@@ -296,8 +299,9 @@ public class Schedule {
     /**
      * Step three of the algorithm which fills up empty spots with workers, then fill empty with managers
      * If managers haven't worked their 40h, add them in wherever (they can sweep the floor or something)
-     * @author Robbie Zhuang
+     *
      * @return nothing
+     * @author Robbie Zhuang
      */
     public void fillUpTheRest() {
         // Add all employees to the merged schedule
@@ -395,6 +399,7 @@ public class Schedule {
         }
         return filled;
     }
+
     private void readHours() throws FileNotFoundException {
 
         System.out.println("Reading hours from text file");
@@ -512,7 +517,7 @@ public class Schedule {
         return allEmployees;
     }
 
-    boolean addWorker(String name, String address, String pay, String day, String inHour, String outHour) {
+    void addWorker(String name, String address, String pay) {
 
         Worker w = new Worker();
 
@@ -520,9 +525,6 @@ public class Schedule {
         w.setFullName(name);
         w.setAddress(address);
         w.setPay(Double.parseDouble(pay));
-        for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
-            w.setHoursAvailable(dayToNum(day), i, true);
-        }
 //        } catch (Exception exception) {
 //            System.out.println("*** Something wrong with addWorker");
 //            return false;
@@ -534,20 +536,15 @@ public class Schedule {
 
         System.out.println("Updating employee file");
         updateEmployeeFile();
-
-        return true;
     }
 
-    void addManager(String name, String address, String pay, String day, String inHour, String outHour) {
+    void addManager(String name, String address, String pay) {
 
         Manager m = new Manager();
 
         m.setFullName(name);
         m.setAddress(address);
         m.setPay(Integer.parseInt(pay));
-        for (int i = Integer.parseInt(inHour); i < Integer.parseInt(outHour); i++) {
-            m.setHoursAvailable(dayToNum(day), i, true);
-        }
 
         // Add manager to all employees
         System.out.println("Adding manager to employees");
@@ -563,118 +560,98 @@ public class Schedule {
         return dayToNum(response);
     }
 
-    private void editEmployee() throws FileNotFoundException {
+//    private void editEmployee() throws FileNotFoundException {
+//
+//        Scanner input = new Scanner(System.in);
+//        String response;
+//        boolean repeat = true;
+//        int employeeNumber;
+//
+//        while (repeat) {
+//
+//            // Displaying all the employees and letting the user choose which one to change
+//            displayEmployees();
+//            System.out.println("Enter the employee # to select employee");
+//            employeeNumber = Integer.parseInt(input.next());
+//
+//            System.out.println("Enter 1 to change employee name.");
+//            System.out.println("Enter 2 to change employee address.");
+//            System.out.println("Enter 3 to change employee wage.");
+//            System.out.println("Enter 4 to change employee availability.");
+//            response = input.next();
+//
+//            switch (response) {
+//                case "1":
+//                    editName(employeeNumber);
+//                    break;
+//                case "2":
+//                    editAddress(employeeNumber);
+//                    break;
+//                case "3":
+//                    if (this.allEmployees.get(employeeNumber) instanceof Manager) {
+//                        editSalary(employeeNumber);
+//                    } else {
+//                        editWage(employeeNumber);
+//                    }
+//                    break;
+//                case "4":
+//                    editAvailability(employeeNumber);
+//                    break;
+//            }
+//
+//            System.out.println("Enter -1 to edit something else");
+//            response = input.next();
+//            if (!response.equals("-1")) {
+//                repeat = false;
+//            }
+//        }
+//
+//        System.out.println("Updating employee file");
+/////////////////////////////////////////////////        updateEmployeeFile();
+//    }
 
-        Scanner input = new Scanner(System.in);
-        String response;
-        boolean repeat = true;
-        int employeeNumber;
-
-        while (repeat) {
-
-            // Displaying all the employees and letting the user choose which one to change
-            displayEmployees();
-            System.out.println("Enter the employee # to select employee");
-            employeeNumber = Integer.parseInt(input.next());
-
-            System.out.println("Enter 1 to change employee name.");
-            System.out.println("Enter 2 to change employee address.");
-            System.out.println("Enter 3 to change employee wage.");
-            System.out.println("Enter 4 to change employee availability.");
-            response = input.next();
-
-            switch (response) {
-                case "1":
-                    editName(employeeNumber);
-                    break;
-                case "2":
-                    editAddress(employeeNumber);
-                    break;
-                case "3":
-                    if (this.allEmployees.get(employeeNumber) instanceof Manager) {
-                        editSalary(employeeNumber);
-                    } else {
-                        editWage(employeeNumber);
-                    }
-                    break;
-                case "4":
-                    editAvailability(employeeNumber);
-                    break;
-            }
-
-            System.out.println("Enter -1 to edit something else");
-            response = input.next();
-            if (!response.equals("-1")) {
-                repeat = false;
-            }
-        }
-
-        System.out.println("Updating employee file");
-        updateEmployeeFile();
+    void editName(int employeeNumber, String name) {
+        this.allEmployees.get(employeeNumber).setFullName(name);
     }
 
-    private void editName(int employeeNumber) {
-        Scanner input = new Scanner(System.in);
-        String response;
-        System.out.println("Enter the new name of " + this.allEmployees.get(employeeNumber).getFullName());
-        response = input.nextLine();
-        this.allEmployees.get(employeeNumber).setFullName(response);
+    void editAddress(int employeeNumber, String address) {
+        this.allEmployees.get(employeeNumber).setAddress(address);
     }
 
-    private void editAddress(int employeeNumber) {
-        Scanner input = new Scanner(System.in);
-        String response;
-        System.out.println("Enter the new address of " + this.allEmployees.get(employeeNumber).getFullName());
-        response = input.nextLine();
-        this.allEmployees.get(employeeNumber).setAddress(response);
+    void editPay(int employeeNumber, double pay) {
+        this.allEmployees.get(employeeNumber).setPay(pay);
     }
 
-    private void editSalary(int employeeNumber) {
-        Scanner input = new Scanner(System.in);
-        String response;
-        System.out.println("Enter the new salary of " + this.allEmployees.get(employeeNumber).getFullName());
-        response = input.nextLine();
-        this.allEmployees.get(employeeNumber).setPay(Integer.parseInt(response));
-    }
-
-    private void editWage(int employeeNumber) {
-        Scanner input = new Scanner(System.in);
-        String response;
-        System.out.println("Enter the new wage of " + this.allEmployees.get(employeeNumber).getFullName());
-        response = input.nextLine();
-        this.allEmployees.get(employeeNumber).setPay(Integer.parseInt(response));
-    }
-
-    private void editAvailability(int employeeNumber) {
-
-        // Creating variables
-        Scanner input = new Scanner(System.in);
-        String response;
-        int day;
-        int inHour;
-        int outHour;
-        boolean newAvailability;
-
-        // Displaying the availability to user
-        displayAvailability(this.allEmployees.get(employeeNumber));
-
-        // Selecting day and hours to change
-        System.out.println("Enter the day to change");
-        response = input.next();
-        day = dayToNum(response);
-        System.out.println("Enter the in hour to change");
-        response = input.next();
-        inHour = Integer.parseInt(response);
-        System.out.println("Enter the out hour to change");
-        response = input.next();
-        outHour = Integer.parseInt(response);
-        System.out.println("Enter new availability for those hours (1 for available");
-        response = input.next();
-        newAvailability = response.equals("1");
-        for (int i = inHour; i < outHour; i++) {
-            this.allEmployees.get(employeeNumber).setHoursAvailable(day, i, newAvailability);
-        }
-    }
+//    private void editAvailability(int employeeNumber) {
+//
+//        // Creating variables
+//        Scanner input = new Scanner(System.in);
+//        String response;
+//        int day;
+//        int inHour;
+//        int outHour;
+//        boolean newAvailability;
+//
+//        // Displaying the availability to user
+//        displayAvailability(this.allEmployees.get(employeeNumber));
+//
+//        // Selecting day and hours to change
+//        System.out.println("Enter the day to change");
+//        response = input.next();
+//        day = dayToNum(response);
+//        System.out.println("Enter the in hour to change");
+//        response = input.next();
+//        inHour = Integer.parseInt(response);
+//        System.out.println("Enter the out hour to change");
+//        response = input.next();
+//        outHour = Integer.parseInt(response);
+//        System.out.println("Enter new availability for those hours (1 for available");
+//        response = input.next();
+//        newAvailability = response.equals("1");
+//        for (int i = inHour; i < outHour; i++) {
+//            this.allEmployees.get(employeeNumber).setHoursAvailable(day, i, newAvailability);
+//        }
+//    }
 
     void removeEmployee(int response) {
         this.allEmployees.remove(response);
@@ -688,25 +665,25 @@ public class Schedule {
         }
     }
 
-    private void displayEmployees() {
-        for (int i = 0; i < this.allEmployees.size(); i++) {
-            System.out.println("Employee #" + i + ": " + this.allEmployees.get(i).getFullName());
-        }
-    }
+//    private void displayEmployees() {
+//        for (int i = 0; i < this.allEmployees.size(); i++) {
+//            System.out.println("Employee #" + i + ": " + this.allEmployees.get(i).getFullName());
+//        }
+//    }
 
-    private void displayAvailability(Employee employee) {
-        boolean[][] availabilty = employee.getHoursAvailable();
-        System.out.println("Availability: (1 is available)");
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 24; j++) {
-                if (availabilty[i][j]) {
-                    System.out.println("1");
-                } else {
-                    System.out.println("0");
-                }
-            }
-        }
-    }
+//    private void displayAvailability(Employee employee) {
+//        boolean[][] availabilty = employee.getHoursAvailable();
+//        System.out.println("Availability: (1 is available)");
+//        for (int i = 0; i < 7; i++) {
+//            for (int j = 0; j < 24; j++) {
+//                if (availabilty[i][j]) {
+//                    System.out.println("1");
+//                } else {
+//                    System.out.println("0");
+//                }
+//            }
+//        }
+//    }
 
     private int dayToNum(String day) {
         if (day.equalsIgnoreCase("M")) {
@@ -750,7 +727,7 @@ public class Schedule {
         }
     }
 
-    private void updateEmployeeFile() {
+    void updateEmployeeFile() {
 
         // Making sure all employees are sorted before the output starts
         organizeEmployees();
@@ -782,13 +759,6 @@ public class Schedule {
             System.out.println("*** Something wrong with updateEmployeeFile");
             exception.printStackTrace();
         }
-    }
-
-    void listEmployees() {
-
-        organizeEmployees();
-//        displayEmployees();
-
     }
 
     void organizeEmployees() {

@@ -13,7 +13,11 @@ public class Worker extends Employee {
 
     // Default constructor for worker
     Worker() {
-
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                this.setHoursAvailable(i, j, false);
+            }
+        }
     }
 
     public double getPay() {

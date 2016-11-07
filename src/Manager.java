@@ -14,7 +14,11 @@ public class Manager extends Employee {
 
     // Default constructor for manager
     Manager() {
-
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 24; j++) {
+                this.setHoursAvailable(i, j, false);
+            }
+        }
     }
 
     public double getPay() {
