@@ -18,16 +18,15 @@ public class ListEmployeesPanel extends JPanel {
     private JTable table;
     private JButton menuButton;
 
+    /**
+     * The default constructor for creating a listEmployeePanel
+     */
     ListEmployeesPanel() {
         this.setLayout(new BorderLayout());
 
         Scheduler.s.organizeEmployees();
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
-        /*
-        for (int i = 0; i < 5; i++) {
-            data[0][i] = columnNames[i];
-        }
-        */
+
         int counter = 0;
         for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
             if (Scheduler.s.getAllEmployees().get(i) instanceof Manager) {
@@ -72,6 +71,14 @@ public class ListEmployeesPanel extends JPanel {
         this.add(menuButton, BorderLayout.SOUTH);
     }
 
+    /**
+     * addManager
+     * This method adds a manager's information to the JTable
+     *
+     * @param counter is the location of the JTable to add to
+     * @param i       is the employee # to add
+     * @author Bill Li
+     */
     private void addManager(int counter, int i) {
         data[counter][0] = i;
         data[counter][1] = "Manager";
@@ -80,6 +87,14 @@ public class ListEmployeesPanel extends JPanel {
         data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/yr";
     }
 
+    /**
+     * addWorker
+     * This method add's a worker's information to the JTable
+     *
+     * @param counter is the location of the JTable to add to
+     * @param i       is the employee # to add
+     * @author Bill Li
+     */
     private void addWorker(int counter, int i) {
         data[counter][0] = i;
         data[counter][1] = "Worker";
@@ -88,7 +103,12 @@ public class ListEmployeesPanel extends JPanel {
         data[counter][4] = "$" + Scheduler.s.getAllEmployees().get(i).getPay() + "/hr";
     }
 
-
+    /**
+     * switchPanel
+     * This switches to another panel
+     *
+     * @param p is the new panel to switch to
+     */
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);
     }

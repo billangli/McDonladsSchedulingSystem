@@ -1,5 +1,6 @@
 /*
- 
+ GUIManageEmployeePanel.java
+ This is the panel for the user to manage and edit the employees
 
  Created by Bill Li on 2016-11-06.
  */
@@ -9,29 +10,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class GUIManageWorkerPanel extends JPanel {
+class GUIManageEmployeePanel extends JPanel {
+    // Creating variables
     private JButton menuButton;
     private JButton addButton;
     private JButton editButton;
     private JButton removeButton;
     private JLabel titleLabel;
-    private JComboBox selectEmployee;
-    private String employeeType;
-    private String employeeName;
-    private String employeeAddress;
-    private String employeePay;
-    private String day;
-    private String inHour;
-    private String outHour;
+    private JPanel optionsPanel = new JPanel();
 
-    GUIManageWorkerPanel() {
-        titleLabel = new JLabel("                    Manage Worker                    ");
+    /**
+     * This is the default constructor for creating a GUIManageEmployeePanel
+     */
+    GUIManageEmployeePanel() {
+        // This is the title label
+        titleLabel = new JLabel("Manage Employee");
         titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
-        this.add(titleLabel);
 
-
+        // This button adds an employee
         addButton = new JButton("Add");
-        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the add employee panel
@@ -39,8 +36,8 @@ class GUIManageWorkerPanel extends JPanel {
             }
         });
 
+        // This button edits the employee
         editButton = new JButton("Edit");
-        editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the remove employee panel
@@ -48,8 +45,8 @@ class GUIManageWorkerPanel extends JPanel {
             }
         });
 
+        // This button brings the user to remove an employee
         removeButton = new JButton("Remove");
-        removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Switch to the remove worker panel
@@ -59,7 +56,6 @@ class GUIManageWorkerPanel extends JPanel {
 
         // Button to go back to menu
         menuButton = new JButton("Menu");
-        menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
@@ -67,17 +63,33 @@ class GUIManageWorkerPanel extends JPanel {
             }
         });
 
-        this.add(addButton);
-        this.add(editButton);
-        this.add(removeButton);
-        this.add(menuButton);
+
+        // Putting everything together in the panel
+        optionsPanel.add(addButton);
+        optionsPanel.add(editButton);
+        optionsPanel.add(removeButton);
+        optionsPanel.add(menuButton);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(titleLabel);
+        this.add(optionsPanel);
     }
 
+    /**
+     * switchPanel
+     * This switches to another panel
+     *
+     * @param p is the new panel to switch to
+     */
     void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);
     }
 
+    /**
+     * AddEmployeePanel
+     * This panel allows the user to edit the employee
+     */
     class AddEmployeePanel extends JPanel {
+        // Creating variables
         private JLabel typeLabel = new JLabel("Employee Type");
         private JLabel nameLabel = new JLabel("Name");
         private JLabel addressLabel = new JLabel("Address");
@@ -94,29 +106,42 @@ class GUIManageWorkerPanel extends JPanel {
         private JPanel buttonPanel = new JPanel();
         private JButton addEmployeeButton = new JButton("Add Employee");
 
-
+        // Default constructor for AddEmployeePanel
         AddEmployeePanel() {
+            // This is the title
             titleLabel = new JLabel("Edit Employee Information");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
 
+            // These are the combo boxes for selecting manager and worker
             typeComboBox.addItem("Manager");
             typeComboBox.addItem("Worker");
 
 
+            // Button to go back to menu
+            menuButton = new JButton("Menu");
+            menuButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Open up the menu
+                    switchPanel(new GUIMainPanel());
+                }
+            });
+
+            // Adding a button listener to the add employee button
             addEmployeeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Adding the employee
                     if (typeComboBox.getSelectedIndex() == 0) {
+                        switchPanel(new EditHoursPanel(Scheduler.s.getAllEmployees().size() - 1));
                         Scheduler.s.addManager(nameTextField.getText(), addressTextField.getText(), payTextField.getText());
-                        switchPanel(new EditHoursPanel(Scheduler.s.getAllEmployees().size() - 1));
                     } else {
-                        Scheduler.s.addWorker(nameTextField.getText(), addressTextField.getText(), payTextField.getText());
                         switchPanel(new EditHoursPanel(Scheduler.s.getAllEmployees().size() - 1));
+                        Scheduler.s.addWorker(nameTextField.getText(), addressTextField.getText(), payTextField.getText());
                     }
                 }
             });
 
+            // Putting everything together on the panel
             titlePanel.add(titleLabel);
             typePanel.add(typeLabel);
             typePanel.add(typeComboBox);
@@ -138,29 +163,44 @@ class GUIManageWorkerPanel extends JPanel {
             this.add(buttonPanel);
         }
 
+        /**
+         * switchPanel
+         * This switches to another panel
+         *
+         * @param p is the new panel to switch to
+         */
         void switchPanel(JPanel p) {
+            System.out.println("Switching");
             Scheduler.g.switchPanel(this, p);
         }
     }
 
+    /**
+     * EditHoursPanel
+     * This panel allows the user to edit employee info
+     */
     class EditHoursPanel extends JPanel {
+        // Creating variables
         private JLabel titleLabel = new JLabel("Edit Hours Available");
         private JLabel[] dayLabel = new JLabel[8];
         private JLabel[] timeLabel = new JLabel[24];
-        private String[] columnNames = {"Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        private String[] columnNames = {"   Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         private JButton[][] timeButton = new JButton[24][7];
         private JPanel dayPanel = new JPanel();
         private JPanel[] timePanel = new JPanel[24];
+        private JPanel buttonPanel = new JPanel(new BorderLayout());
         private JButton menuButton;
         private JButton saveChangesButton;
 
+        // The is the default constructor for the panel
         EditHoursPanel(int employeeNumber) {
+            // This is the title
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+            // This displays the button array for the hours available
             for (int i = 0; i < 8; i++) {
-                dayLabel[i] = new JLabel(columnNames[i]);
+                dayLabel[i] = new JLabel(String.format("%1$18s", columnNames[i]));
             }
             for (int i = 0; i < 24; i++) {
                 timePanel[i] = new JPanel(new FlowLayout());
@@ -170,29 +210,25 @@ class GUIManageWorkerPanel extends JPanel {
                 for (int j = 0; j < 7; j++) {
                     if (Scheduler.s.getAllEmployees().get(employeeNumber).getHoursAvailable()[j][i]) {
                         timeButton[i][j] = new JButton("Available");
-                        timeButton[i][j].setFont(new Font("Mono", Font.PLAIN, 10));
-                        int finalI = i;
-                        int finalJ = j;
-                        timeButton[i][j].addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
+                    } else {
+                        timeButton[i][j] = new JButton("Not  Free");
+                    }
+                    timeButton[i][j].setFont(new Font("Mono", Font.PLAIN, 10));
+                    int finalI = i;
+                    int finalJ = j;
+                    timeButton[i][j].addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (timeButton[finalI][finalJ].getText().contains("Available")) {
                                 // Switching to not working
-                                timeButton[finalI][finalJ].setText("   Off   ");
+                                timeButton[finalI][finalJ].setText("Not  Free");
+                                timeButton[finalI][finalJ].setFont(new Font("Mono", Font.PLAIN, 10));
+                            } else {
+                                // Switching to working
+                                timeButton[finalI][finalJ].setText("Available");
                                 timeButton[finalI][finalJ].setFont(new Font("Mono", Font.PLAIN, 10));
                             }
-                        });
-                    } else {
-                        timeButton[i][j] = new JButton("   Off   ");
-                        timeButton[i][j].setFont(new Font("Mono", Font.PLAIN, 10));
-                        int finalI = i;
-                        int finalJ1 = j;
-                        timeButton[i][j].addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                // Switching to working
-                                timeButton[finalI][finalJ1].setText("Available");
-                                timeButton[finalI][finalJ1].setFont(new Font("Mono", Font.PLAIN, 10));
-                            }
-                        });
-                    }
+                        }
+                    });
                     timePanel[i].add(timeButton[i][j]);
                 }
             }
@@ -224,8 +260,8 @@ class GUIManageWorkerPanel extends JPanel {
                 }
             });
 
-            System.out.println("ok");
-
+            // Putting everything together on the panel
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(titleLabel);
             for (int i = 0; i < 7; i++) {
                 dayPanel.add(dayLabel[i]);
@@ -234,11 +270,27 @@ class GUIManageWorkerPanel extends JPanel {
             for (int i = 0; i < 24; i++) {
                 this.add(timePanel[i]);
             }
-            this.add(menuButton);
+            buttonPanel.add(BorderLayout.WEST, menuButton);
+            buttonPanel.add(BorderLayout.EAST, saveChangesButton);
+            this.add(buttonPanel);
+        }
+
+        /**
+         * This switches a panel to the new one
+         *
+         * @param p is the new panel
+         */
+        void switchPanel(JPanel p) {
+            Scheduler.g.switchPanel(this, p);
         }
     }
 
+    /**
+     * EditEmployeePanel
+     * This panel allows the user to edit employee info
+     */
     class EditEmployeePanel extends JPanel {
+        // Creating variables
         private JLabel employeeNameLabel = new JLabel("Employee Name");
         private JLabel changeLabel = new JLabel("Change");
         private JPanel topPanel = new JPanel();
@@ -247,9 +299,10 @@ class GUIManageWorkerPanel extends JPanel {
         private JComboBox optionsComboBox;
         private JButton editButton = new JButton("Edit");
 
+        // This is the default constructor
         EditEmployeePanel() {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            titleLabel = new JLabel("Edit Worker");
+            titleLabel = new JLabel("Edit Employee");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
             employeeNameComboBox = new JComboBox();
@@ -262,6 +315,16 @@ class GUIManageWorkerPanel extends JPanel {
             optionsComboBox.addItem("Availability");
 
 
+            // Button to go back to menu
+            menuButton = new JButton("Menu");
+            menuButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Open up the menu
+                    switchPanel(new GUIMainPanel());
+                }
+            });
+
+            // Adding button listener to the edit button
             editButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the edit information panel
@@ -274,6 +337,7 @@ class GUIManageWorkerPanel extends JPanel {
             });
 
 
+            // Putting everything together in the panel
             topPanel.add(titleLabel);
             topPanel.add(employeeNameLabel);
             topPanel.add(employeeNameComboBox);
@@ -288,11 +352,21 @@ class GUIManageWorkerPanel extends JPanel {
             this.add(bottomPanel);
         }
 
+        /**
+         * This switches to the new panel p
+         *
+         * @param p is the new panel
+         */
         void switchPanel(JPanel p) {
             Scheduler.g.switchPanel(this, p);
         }
 
+        /**
+         * EditInfoPanel
+         * This panel allows the user to change an employee's info
+         */
         class EditInfoPanel extends JPanel {
+            // Creating variables
             private JLabel nameLabel = new JLabel("Name");
             private JLabel addressLabel = new JLabel("Address");
             private JLabel payLabel = new JLabel("Salary/Wage");
@@ -304,27 +378,49 @@ class GUIManageWorkerPanel extends JPanel {
             private JPanel addressPanel = new JPanel();
             private JPanel payPanel = new JPanel();
             private JPanel buttonPanel = new JPanel();
+            private JButton menuButton = new JButton("Menu");
             private JButton saveChangesButton = new JButton("Save Changes");
 
+            /**
+             * This is the default constructor
+             *
+             * @param employeeNumber indicates which employee it is
+             */
             EditInfoPanel(int employeeNumber) {
+                // This is the title of the panel
                 titleLabel = new JLabel("Edit Employee Information");
                 titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
+
+                // Creating textfields
                 nameTextField = new JTextField(Scheduler.s.getAllEmployees().get(employeeNumber).getFullName(), 20);
                 addressTextField = new JTextField(Scheduler.s.getAllEmployees().get(employeeNumber).getAddress(), 20);
                 payTextField = new JTextField(Double.toString(Scheduler.s.getAllEmployees().get(employeeNumber).getPay()), 20);
 
+
+                // Button to go back to menu
+                menuButton = new JButton("Menu");
+                menuButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Open up the menu
+                        switchPanel(new GUIMainPanel());
+                    }
+                });
+
+                // Adding button listener to the save changes button
                 saveChangesButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Save changes
                         Scheduler.s.editName(employeeNumber, nameTextField.getText());
                         Scheduler.s.editAddress(employeeNumber, addressTextField.getText());
                         Scheduler.s.editPay(employeeNumber, Double.parseDouble(payTextField.getText()));
-                        switchPanel(new EditHoursPanel(employeeNumber));
-                        // TODO fix the bug where the bottom panel disappear
+                        System.out.println("You're here");
+                        switchPanel(new GUIMainPanel());
                     }
                 });
 
+
+                // Putting everything together in the panel
                 titlePanel.add(titleLabel);
                 namePanel.add(nameLabel);
                 namePanel.add(nameTextField);
@@ -333,7 +429,7 @@ class GUIManageWorkerPanel extends JPanel {
                 payPanel.add(payLabel);
                 payPanel.add(payTextField);
                 buttonPanel.add(BorderLayout.WEST, menuButton);
-                buttonPanel.add(BorderLayout.EAST, editButton);
+                buttonPanel.add(BorderLayout.EAST, saveChangesButton);
 
                 this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
                 this.add(titlePanel);
@@ -343,13 +439,23 @@ class GUIManageWorkerPanel extends JPanel {
                 this.add(buttonPanel);
             }
 
+            /**
+             * This switches to the new panel p
+             *
+             * @param p is the new panel
+             */
             void switchPanel(JPanel p) {
                 Scheduler.g.switchPanel(this, p);
             }
         }
     }
 
+    /**
+     * RemoveEmployeePanel
+     * This removes an employee
+     */
     class RemoveEmployeePanel extends JPanel {
+        // Creating variables
         private JPanel topPanel = new JPanel();
         private JPanel bottomPanel = new JPanel();
         private JLabel titleLabel;
@@ -357,17 +463,17 @@ class GUIManageWorkerPanel extends JPanel {
         private JComboBox employeeNameComboBox;
         private JButton removeButton = new JButton("Remove");
 
+        // This is the default constructor
         RemoveEmployeePanel() {
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
-            bottomPanel.setLayout(new BorderLayout());
-
+            // Creating some labels
             titleLabel = new JLabel("Remove Worker");
             titleLabel.setFont(titleLabel.getFont().deriveFont(52.0f));
 
             employeeNameLabel = new JLabel("Employee Name");
             employeeNameLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
 
+
+            // Creating the combobox for selecting employee
             employeeNameComboBox = new JComboBox();
             for (int i = 0; i < Scheduler.s.getAllEmployees().size(); i++) {
                 employeeNameComboBox.addItem(Scheduler.s.getAllEmployees().get(i).getFullName());
@@ -383,6 +489,7 @@ class GUIManageWorkerPanel extends JPanel {
             });
 
 
+            // Adding button listener to the remove button
             removeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
@@ -390,6 +497,11 @@ class GUIManageWorkerPanel extends JPanel {
                     switchPanel(new GUIMainPanel());
                 }
             });
+
+            // Putting everything together
+            topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+            bottomPanel.setLayout(new BorderLayout());
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             topPanel.add(titleLabel);
             topPanel.add(employeeNameLabel);
@@ -402,6 +514,11 @@ class GUIManageWorkerPanel extends JPanel {
             this.add(bottomPanel);
         }
 
+        /**
+         * Switching to the new panel p
+         *
+         * @param p is the new panel
+         */
         void switchPanel(JPanel p) {
             Scheduler.g.switchPanel(this, p);
         }

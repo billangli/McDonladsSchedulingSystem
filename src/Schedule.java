@@ -59,7 +59,14 @@ public class Schedule {
         }
     }
 
-    //TODO Bill please add comments here
+    /**
+     * determineHour method
+     * It converts an hour string to an integer value
+     *
+     * @param str is the string that the hour is converted from
+     * @return the integer value of the hour
+     * @author Bill Li
+     */
     private static int determineHour(String str) {
 
         int hour;
@@ -75,7 +82,14 @@ public class Schedule {
         return 0;
     }
 
-    //TODO Bill please add comments here
+    /**
+     * determineDay method
+     * This method takes in a string value of the day and returns the integer value of it
+     *
+     * @param str is the string value of the day
+     * @return the integer value of the day
+     * @author Bill Li
+     */
     private static int determineDay(String str) {
 
         if (str.substring(0, 1).equalsIgnoreCase("M")) {
@@ -94,7 +108,7 @@ public class Schedule {
             return 6;
         }
 
-        System.out.println("*** determineDay");
+        System.out.println("*** Something wrong with determineDay");
         return -1;
     }
 
@@ -120,20 +134,6 @@ public class Schedule {
         return totalRequiredEmployees;
     }
 
-    //TODO Bill please add comments here
-    private static int getInHour(String response, Scanner input) {
-        System.out.println("Enter hour in when available:");
-        response = input.next();
-        return Integer.parseInt(response);
-    }
-
-    //TODO Bill please add comments here
-    private static int getOutHour(String response, Scanner input) {
-        System.out.println("Enter hour out when available:");
-        response = input.next();
-        return Integer.parseInt(response);
-    }
-
     public static ArrayList<Recommendation> getRecs() {
         return recs;
     }
@@ -149,6 +149,7 @@ public class Schedule {
     public ArrayList<Employee> getOnlyWorkers() {
         return onlyWorkers;
     }
+    // Add all the managers in and make sure they work at least 40 hours
 
     public ArrayList<Employee> getAllEmployees() {
         return allEmployees;
@@ -372,8 +373,13 @@ public class Schedule {
         return filled;
     }
 
-    //TODO Bill add comments here
-    private void readHours() throws FileNotFoundException {
+    /**
+     * readHours method
+     * It reads the number of required employees for each time slot from the text file
+     *
+     * @author Bill Li
+     */
+    private void readHours() {
 
         System.out.println("Reading hours from text file");
 
@@ -423,7 +429,12 @@ public class Schedule {
         }
     }
 
-    //TODO Bill add comments here
+    /**
+     * readEmployeeInfo
+     * It reads information of each employee from the EmployeeInfo.txt
+     *
+     * @author Bill Li
+     */
     private void readEmployeeInfo() {
 
         // Creating variables
@@ -434,6 +445,7 @@ public class Schedule {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("assets/EmployeeInfo.txt")));
             while ((str = br.readLine()) != null) {
 
+                // Creating a new employee
                 Employee e;
 
                 // Read the file to find out what type of employee this person is
@@ -740,6 +752,12 @@ public class Schedule {
         }
     }
 
+    /**
+     * organizeEmployees
+     * Rearranging the employees in order of pay
+     *
+     * @author Bill Li
+     */
     void organizeEmployees() {
 
         System.out.println("Organizing Employees");

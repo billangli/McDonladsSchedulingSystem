@@ -27,7 +27,7 @@ public class GUIMainPanel extends JPanel {
         editWorker.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Open up the worker editing panel
-                switchPanel(new GUIManageWorkerPanel());
+                switchPanel(new GUIManageEmployeePanel());
             }
         });
 
@@ -43,7 +43,7 @@ public class GUIMainPanel extends JPanel {
         runScheduler.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Runs scheduler
-                Scheduler.runScheduler();
+                Scheduler.s.scheduleEmployees();
                 if (Scheduler.getS().isScheduleFilled()) {
                     JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "Servants successfully scheduled.");
