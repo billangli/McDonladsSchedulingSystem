@@ -23,6 +23,9 @@ public class Schedule {
     private ArrayList<Employee> onlyManagers = new ArrayList<>();
     private ArrayList<Employee> onlyWorkers = new ArrayList<>();
 
+    // Recommendation arraylist :D
+    private ArrayList<Recommendation> recs = new ArrayList<>();
+
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
     public Schedule() throws FileNotFoundException {
@@ -371,6 +374,18 @@ public class Schedule {
         }
     }
 
+    public boolean isScheduleFilled() {
+        boolean filled = true;
+        for (int i = 0; i < totalRequiredEmployees.length; i++) {
+            for (int j = 0; j < totalRequiredEmployees[i].length; j++) {
+                if (totalRequiredEmployees[i][j] - schedule[i][j].size() > 0) {
+                    filled = false;
+                    recs.add(new Recommendation(totalRequiredEmployees[i][j] - schedule[i][j].size(), i, j));
+                }
+            }
+        }
+        return filled;
+    }
     private void readHours() throws FileNotFoundException {
 
         System.out.println("Reading hours from text file");

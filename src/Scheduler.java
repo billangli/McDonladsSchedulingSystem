@@ -522,6 +522,9 @@ public class Scheduler {
 
     private static void runScheduler() {
         s.scheduleEmployees();
+        if (!s.isScheduleFilled()) {
+            System.out.println("You FAILED!!!");
+        }
     }
 
     private static void displaySchedule() {
