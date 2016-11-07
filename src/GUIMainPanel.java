@@ -7,7 +7,6 @@
  */
 
 // Imports
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,7 +51,7 @@ public class GUIMainPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Runs scheduler
                 Scheduler.s.scheduleEmployees();
-                if (Scheduler.getS().isScheduleFilled()) {
+                if (Scheduler.s.isScheduleFilled()) {
                     JFrame frame = new JFrame();
                     JOptionPane.showMessageDialog(frame, "Servants successfully scheduled.");
                 } else {

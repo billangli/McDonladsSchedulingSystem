@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class Schedule {
+class Schedule {
 
     // Each element of the schedule 2D array contains Timeslot objects
     // which is essentially an arraylist containing employees
@@ -40,7 +40,7 @@ public class Schedule {
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
-    public Schedule() throws FileNotFoundException {
+    Schedule() throws FileNotFoundException {
 
         // Declare schedules & initialize
         schedule = new Timeslot[7][24];
@@ -130,7 +130,7 @@ public class Schedule {
      * @return Timeslot[][] schedule
      * @author Robbie Zhuang
      */
-    public static Timeslot[][] getSchedule() {
+    static Timeslot[][] getSchedule() {
         return schedule;
     }
 
@@ -140,7 +140,7 @@ public class Schedule {
      * @return int[][] totalRequiredEmployees
      * @author Robbie Zhuang
      */
-    public static int[][] getTotalRequiredEmployees() {
+    static int[][] getTotalRequiredEmployees() {
         return totalRequiredEmployees;
     }
 
@@ -168,6 +168,7 @@ public class Schedule {
     /**
      * scheduleEmployees
      * Schedule Employees method that calls the three steps to scheduling employees
+     *
      * @author Robbie Zhuang
      */
     public void scheduleEmployees() {
@@ -179,6 +180,8 @@ public class Schedule {
     /**
      * scheduleManagers
      * Step one of the algorithm which schedules the managers first
+     * ADD A DESCRIPTION HERE OF HOW IT WORKS!!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *
      * @author Robbie Zhuang
      */
     public void scheduleManagers() {
@@ -246,6 +249,7 @@ public class Schedule {
      * scheduleWorkers
      * Step two of the algorithm which schedules the workers next
      * Figure out what number gives workers a roughly even amount of time to work and then puts them in.
+     *
      * @return nothing
      * @author Robbie Zhuang
      */
@@ -282,6 +286,7 @@ public class Schedule {
      * fillUpTheRest
      * Step three of the algorithm which fills up empty spots with workers, then fill empty with managers
      * If managers haven't worked their 40h, add them in wherever (they can sweep the floor or something)
+     *
      * @return nothing
      * @author Robbie Zhuang
      */
@@ -483,7 +488,16 @@ public class Schedule {
 
     }
 
-    //TODO Bill add comments here
+    /**
+     * readManager
+     * This method reads info from the EmployeeInfo.txt to create a worker
+     *
+     * @param m  is the manager object to be added
+     * @param br is the BufferedReader
+     * @return the updated manager object
+     * @throws IOException in case something goes on with IO
+     * @author Bill Li
+     */
     private Manager readManager(Manager m, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -504,7 +518,16 @@ public class Schedule {
         return m;
     }
 
-    //TODO Bill add comments here
+    /**
+     * readWorker
+     * This method reads info from the EmployeeInfo.txt to create a worker
+     *
+     * @author Bill Li
+     * @param w is the worker object to be added
+     * @param br is the BufferedReader
+     * @return the updated worker object
+     * @throws IOException in case something goes on with IO
+     */
     private Worker readWorker(Worker w, BufferedReader br) throws IOException {
 
         // Reading some general information
@@ -525,18 +548,22 @@ public class Schedule {
         return w;
     }
 
+    /**
+     * addWorker
+     * This method adds a worker to the employee arrayList
+     *
+     * @author Bill Li
+     * @param name is the name of the new worker
+     * @param address is the address of the new worker
+     * @param pay is the wage of the new worker
+     */
     void addWorker(String name, String address, String pay) {
 
         Worker w = new Worker();
 
-//        try {
         w.setFullName(name);
         w.setAddress(address);
         w.setPay(Double.parseDouble(pay));
-//        } catch (Exception exception) {
-//            System.out.println("*** Something wrong with addWorker");
-//            return false;
-//        }
 
         // Add worker to all employees
         System.out.println("Adding worker to all employees");
@@ -546,6 +573,15 @@ public class Schedule {
         updateEmployeeFile();
     }
 
+    /**
+     * addManager
+     * This method adds a manager to employee arrayList
+     *
+     * @author Bill Li
+     * @param name is the name of the new manager
+     * @param address is the address of the new manager
+     * @param pay is the salary of the new manager
+     */
     void addManager(String name, String address, String pay) {
 
         Manager m = new Manager();
@@ -608,6 +644,7 @@ public class Schedule {
      * removeEmployee
      * This method removes a selected employee
      *
+     * @author Bill Li
      * @param response is the employee #
      */
     void removeEmployee(int response) {
@@ -626,6 +663,7 @@ public class Schedule {
      * dayToNum method
      * This method converts day from from String to int
      *
+     * @author Bill Li
      * @param day is the day in String
      * @return day in int
      */
@@ -653,6 +691,8 @@ public class Schedule {
     /**
      * updateEmployeeFile
      * It updates the employee text file
+     *
+     * @author Bill Li
      */
     void updateEmployeeFile() {
 
@@ -703,11 +743,11 @@ public class Schedule {
         Collections.sort(onlyWorkers);
 
         // Displaying the employees
-        for (int i = 0; i < this.onlyManagers.size(); i++) {
-            System.out.println("Manager: " + this.onlyManagers.get(i).getFullName() + "\tSalary: " + this.onlyManagers.get(i).getPay());
+        for (Employee onlyManager : this.onlyManagers) {
+            System.out.println("Manager: " + onlyManager.getFullName() + "\tSalary: " + onlyManager.getPay());
         }
-        for (int i = 0; i < this.onlyWorkers.size(); i++) {
-            System.out.println("Employee: " + this.onlyWorkers.get(i).getFullName() + "\tWage: " + this.onlyWorkers.get(i).getPay());
+        for (Employee onlyWorker : this.onlyWorkers) {
+            System.out.println("Employee: " + onlyWorker.getFullName() + "\tWage: " + onlyWorker.getPay());
         }
     }
 }

@@ -3,8 +3,7 @@
  @version 1.0
  @author Bill Li
  @date 7/11/2016
- This panel lists the existing employees on a panel
- TODO Bill, Comment This Stuff
+ This panel lists the existing employees on a panel\
  */
 
 // Imports
@@ -19,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUIListEmployeesPanel extends JPanel {
-
     Object[][] data = new Object[Scheduler.s.getAllEmployees().size()][6];
     private JLabel titleLabel = new JLabel("Employee List", SwingConstants.CENTER);
     private String[] columnNames = {"Employee #", "Type", "Name", "Address", "Salary/Wage", "Hours Worked"};
@@ -38,16 +36,12 @@ public class GUIListEmployeesPanel extends JPanel {
 
         int counter = 0;
         for (int i = 0; i < Scheduler.s.getOnlyManagers().size(); i++) {
-            //if (Scheduler.s.getOnlyManagers().get(i) instanceof Manager) {
-                addManager(counter, i);
-                counter++;
-            //}
+            addManager(counter, i);
+            counter++;
         }
         for (int i = 0; i < Scheduler.s.getOnlyWorkers().size(); i++) {
-            //if (Scheduler.s.getOnlyWorkers().get(i) instanceof Worker) {
-                addWorker(counter, i);
-                counter++;
-            //}
+            addWorker(counter, i);
+            counter++;
         }
 
         int maxRowHeight = 0;
@@ -89,12 +83,12 @@ public class GUIListEmployeesPanel extends JPanel {
      * @author Bill Li
      */
     private void addManager(int counter, int i) {
-        data[counter][0] = i;
+        data[counter][0] = "000" + i;
         data[counter][1] = "Manager";
         data[counter][2] = Scheduler.s.getOnlyManagers().get(i).getFullName();
         data[counter][3] = Scheduler.s.getOnlyManagers().get(i).getAddress();
         data[counter][4] = "$" + Scheduler.s.getOnlyManagers().get(i).getPay() + "/yr";
-        data[counter][5] = Scheduler.getS().getOnlyManagers().get(i).getTotalHours();
+        data[counter][5] = Scheduler.s.getOnlyManagers().get(i).getTotalHours();
     }
 
     /**
@@ -106,12 +100,12 @@ public class GUIListEmployeesPanel extends JPanel {
      * @author Bill Li
      */
     private void addWorker(int counter, int i) {
-        data[counter][0] = i;
+        data[counter][0] = "100" + i;
         data[counter][1] = "Worker";
         data[counter][2] = Scheduler.s.getOnlyWorkers().get(i).getFullName();
         data[counter][3] = Scheduler.s.getOnlyWorkers().get(i).getAddress();
         data[counter][4] = "$" + Scheduler.s.getOnlyWorkers().get(i).getPay() + "/hr";
-        data[counter][5] = Scheduler.getS().getOnlyWorkers().get(i).getTotalHours();
+        data[counter][5] = Scheduler.s.getOnlyWorkers().get(i).getTotalHours();
     }
 
     /**
