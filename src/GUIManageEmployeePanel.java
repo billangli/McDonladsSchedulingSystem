@@ -4,7 +4,6 @@
  @author Bill Li
  @date 7/11/2016
  This is the employee managing panel
- TODO Bill, Comment This Stuff
  */
 
 import javax.swing.*;
@@ -83,7 +82,7 @@ class GUIManageEmployeePanel extends JPanel {
      *
      * @param p is the new panel to switch to
      */
-    void switchPanel(JPanel p) {
+    private void switchPanel(JPanel p) {
         Scheduler.g.switchPanel(this, p);
     }
 
@@ -91,7 +90,7 @@ class GUIManageEmployeePanel extends JPanel {
      * AddEmployeePanel
      * This panel allows the user to edit the employee
      */
-    class AddEmployeePanel extends JPanel {
+    private class AddEmployeePanel extends JPanel {
         // Creating variables
         private JLabel typeLabel = new JLabel("Employee Type");
         private JLabel nameLabel = new JLabel("Name");
@@ -182,7 +181,7 @@ class GUIManageEmployeePanel extends JPanel {
      * EditHoursPanel
      * This panel allows the user to edit employee info
      */
-    class EditHoursPanel extends JPanel {
+    private class EditHoursPanel extends JPanel {
         // Creating variables
         private JLabel titleLabel = new JLabel("Edit Hours Available");
         private JLabel[] dayLabel = new JLabel[8];
@@ -292,7 +291,7 @@ class GUIManageEmployeePanel extends JPanel {
      * EditEmployeePanel
      * This panel allows the user to edit employee info
      */
-    class EditEmployeePanel extends JPanel {
+    private class EditEmployeePanel extends JPanel {
         // Creating variables
         private JLabel employeeNameLabel = new JLabel("Employee Name");
         private JLabel changeLabel = new JLabel("Change");
@@ -499,7 +498,7 @@ class GUIManageEmployeePanel extends JPanel {
             removeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Open up the worker editing panel
-                    Scheduler.getS().removeEmployee(employeeNameComboBox.getSelectedIndex());
+                    Scheduler.s.removeEmployee(employeeNameComboBox.getSelectedIndex());
                     switchPanel(new GUIMainPanel());
                 }
             });

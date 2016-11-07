@@ -6,7 +6,6 @@
  */
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Scheduler {
@@ -29,21 +28,5 @@ public class Scheduler {
 
         // Main program
         g = new GUI();
-    }
-
-    public static GUI getGUI() {
-        return g;
-    }
-
-    public static Schedule getS() {
-        return s;
-    }
-
-    public static void setS(Schedule s) {
-        Scheduler.s = s;
-    }
-
-    private static ArrayList<Employee> getE() {
-        return s.getAllEmployees();
     }
 }

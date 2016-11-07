@@ -12,6 +12,9 @@ import javax.swing.*;
 
 class GUI extends JFrame {
 
+    /**
+     * Default constructor for making a GUI Frame
+     */
     GUI() {
         this.setName("McDonlads Scheduling System");
         this.setTitle("McDonlads Scheduling System");

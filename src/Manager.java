@@ -8,8 +8,8 @@
 
 public class Manager extends Employee {
 
-    private static int minWorkHours = 40;
     // Setting up variables
+    private static int minWorkHours = 40;
     private double salary;
 
     // Default constructor for manager
@@ -21,15 +21,34 @@ public class Manager extends Employee {
         }
     }
 
+    /**
+     * getPay
+     * Overrides the abstract method
+     * It gets the salary of a manager
+     *
+     * @return double as the salary
+     */
     public double getPay() {
         return salary;
     }
 
+    /**
+     * setPay
+     * Overrides the abstract method
+     *
+     * @param salary is the double salary to be set
+     */
     public void setPay(double salary) {
         this.salary = salary;
     }
 
-    public int getMinWorkHours() {
+    /**
+     * getMinWorkHours
+     * Gets the min hours for a manager to work
+     *
+     * @return the int of minimum hours
+     */
+    int getMinWorkHours() {
         return minWorkHours;
     }
 }

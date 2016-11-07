@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
  * @Author Robbie Zhuang, Bill Li
  * The schedule objects holds and generates the schedule
  */
-public class Schedule {
+class Schedule {
 
     // Each element of the schedule 2D array contains Timeslot objects
     // which is essentially an arraylist containing employees
@@ -29,7 +29,7 @@ public class Schedule {
 
     // Build constructor for a schedule
     // The schedule keeps track of how many people are in each 1h block
-    public Schedule() throws FileNotFoundException {
+    Schedule() throws FileNotFoundException {
 
         // Declare schedules & initialize
         schedule = new Timeslot[7][24];
@@ -119,7 +119,7 @@ public class Schedule {
      * @return Timeslot[][] schedule
      * @author Robbie Zhuang
      */
-    public static Timeslot[][] getSchedule() {
+    static Timeslot[][] getSchedule() {
         return schedule;
     }
 
@@ -129,7 +129,7 @@ public class Schedule {
      * @return int[][] totalRequiredEmployees
      * @author Robbie Zhuang
      */
-    public static int[][] getTotalRequiredEmployees() {
+    static int[][] getTotalRequiredEmployees() {
         return totalRequiredEmployees;
     }
 
@@ -620,6 +620,7 @@ public class Schedule {
      * removeEmployee
      * This method removes a selected employee
      *
+     * @author Bill Li
      * @param response is the employee #
      */
     void removeEmployee(int response) {
@@ -638,6 +639,7 @@ public class Schedule {
      * dayToNum method
      * This method converts day from from String to int
      *
+     * @author Bill Li
      * @param day is the day in String
      * @return day in int
      */
@@ -665,6 +667,8 @@ public class Schedule {
     /**
      * updateEmployeeFile
      * It updates the employee text file
+     *
+     * @author Bill Li
      */
     void updateEmployeeFile() {
 
@@ -715,11 +719,11 @@ public class Schedule {
         Collections.sort(onlyWorkers);
 
         // Displaying the employees
-        for (int i = 0; i < this.onlyManagers.size(); i++) {
-            System.out.println("Manager: " + this.onlyManagers.get(i).getFullName() + "\tSalary: " + this.onlyManagers.get(i).getPay());
+        for (Employee onlyManager : this.onlyManagers) {
+            System.out.println("Manager: " + onlyManager.getFullName() + "\tSalary: " + onlyManager.getPay());
         }
-        for (int i = 0; i < this.onlyWorkers.size(); i++) {
-            System.out.println("Employee: " + this.onlyWorkers.get(i).getFullName() + "\tWage: " + this.onlyWorkers.get(i).getPay());
+        for (Employee onlyWorker : this.onlyWorkers) {
+            System.out.println("Employee: " + onlyWorker.getFullName() + "\tWage: " + onlyWorker.getPay());
         }
     }
 }
