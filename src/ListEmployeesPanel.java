@@ -1,6 +1,6 @@
 /*
  ListEmployeesPanel.java
- This panel lists the existing employees
+ This panel lists the existing employees on a panel
 
  Created by Bill Li on 2016-11-07.
  */
